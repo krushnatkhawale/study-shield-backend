@@ -1,0 +1,30 @@
+FROM eclipse-temurin:21-jdk-jammy AS builder
+
+WORKDIR /app
+
+COPY gradlew gradlew.bat ./
+COPY gradle ./gradle
+COPY build.gradle settings.gradle ./
+
+RUN chmod +x gradlew && chmod -R +x gradle/wrapper
+
+COPY ss-quiz-attempts/build.gradle ss-quiz-attempts/build.gradle
+
+RUN ./gradlew :ss-quiz-attempts:dependencies --no-daemon || true
+
+COPY ss-quiz-attempts ss-quiz-attempts/
+
+RUN ./gradlew :ss-quiz-attempts:bootJar --no-daemon
+
+FROM eclipse-temurin:21-jre-jammy
+
+WORKDIR /app
+
+COPY --from=builder /app/ss-quiz-attempts/build/libs/*.jar app.jar
+
+EXPOSE 8083
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8083/actuator/health || exit 1
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
