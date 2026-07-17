@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    testImplementation platform('io.cucumber:cucumber-bom:7.20.1')
+    testImplementation 'io.cucumber:cucumber-java'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine'
+    testImplementation 'io.cucumber:cucumber-picocontainer'
+
+    testImplementation 'org.junit.platform:junit-platform-suite'
+    testImplementation 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'org.assertj:assertj-core'
+
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.32.0'
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.32.0'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind'
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    systemProperty 'cucumber.filter.tags', System.getenv('CUCUMBER_FILTER_TAGS') ?: 'not @wip'
+    systemProperty 'allure.results.directory', 'build/allure-results'
+    systemProperty 'cucumber.publish.quiet', 'true'
+    reports {
+        junitXml.required = true
+        html.required = true
+    }
+}

@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: ss-api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: content-service
+          uri: ${CONTENT_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/v1/boards/**, /api/v1/class-grades/**, /api/v1/subjects/**, /api/v1/content-packs/**, /api/v1/quizzes/**, /api/v1/questions/**, /api/v1/freemium/**
+
+        - id: user-service
+          uri: ${USER_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/users/**, /api/v1/parents/**, /api/v1/children/**
+
+        - id: quiz-attempts
+          uri: ${QUIZ_ATTEMPTS_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/quiz-attempts/**, /api/v1/attempt-answers/**, /api/v1/quiz-results/**
+
+        - id: tv-device-service
+          uri: ${TV_DEVICE_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/wifi-networks/**, /api/v1/connected-tvs/**, /api/v1/tv-users/**
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+  main:
+    web-application-type: reactive
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      enabled: true

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ss-content-service
+    runtime: java
+    buildCommand: "./gradlew :ss-content-service:bootJar"
+    startCommand: "java -jar ss-content-service/build/libs/ss-content-service-0.0.1-SNAPSHOT.jar"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JAVA_VERSION
+        value: "21"
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: "update"

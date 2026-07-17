@@ -1,0 +1,8 @@
+rootProject.name = 'study-shield-backend'
+
+include 'ss-content-service'
+include 'ss-api-gateway'
+include 'ss-user-service'
+include 'ss-quiz-attempts'
+include 'ss-tv-device-service'
+include 'ss-regression-suite'
