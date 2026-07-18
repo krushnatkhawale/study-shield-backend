@@ -29,6 +29,12 @@ public class ChildProfile {
 
     private Long classGradeId;
 
+    private String gender;
+
+    private Integer birthYear;
+
+    private String studentClass;
+
     @Column(nullable = false)
     private boolean active = true;
 
@@ -55,6 +61,12 @@ public class ChildProfile {
     public void setClassGradeId(Long classGradeId) { this.classGradeId = classGradeId; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+    public Integer getBirthYear() { return birthYear; }
+    public void setBirthYear(Integer birthYear) { this.birthYear = birthYear; }
+    public String getStudentClass() { return studentClass; }
+    public void setStudentClass(String studentClass) { this.studentClass = studentClass; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 
@@ -66,6 +78,9 @@ public class ChildProfile {
         private User user;
         private Long boardId;
         private Long classGradeId;
+        private String gender;
+        private Integer birthYear;
+        private String studentClass;
         private boolean active = true;
 
         public Builder name(String name) { this.name = name; return this; }
@@ -73,6 +88,9 @@ public class ChildProfile {
         public Builder user(User user) { this.user = user; return this; }
         public Builder boardId(Long boardId) { this.boardId = boardId; return this; }
         public Builder classGradeId(Long classGradeId) { this.classGradeId = classGradeId; return this; }
+        public Builder gender(String gender) { this.gender = gender; return this; }
+        public Builder birthYear(Integer birthYear) { this.birthYear = birthYear; return this; }
+        public Builder studentClass(String studentClass) { this.studentClass = studentClass; return this; }
         public Builder active(boolean active) { this.active = active; return this; }
 
         public ChildProfile build() {
@@ -82,6 +100,9 @@ public class ChildProfile {
             cp.user = this.user;
             cp.boardId = this.boardId;
             cp.classGradeId = this.classGradeId;
+            cp.gender = this.gender;
+            cp.birthYear = this.birthYear;
+            cp.studentClass = this.studentClass;
             cp.active = this.active;
             return cp;
         }

@@ -1,6 +1,8 @@
 package com.studyshield.regression.hooks;
 
+import com.studyshield.regression.client.AuthApi;
 import com.studyshield.regression.client.GatewayClient;
+import com.studyshield.regression.context.AuthContext;
 import com.studyshield.regression.context.ScenarioContext;
 import com.studyshield.regression.context.SuiteConfig;
 import com.studyshield.regression.support.CleanupService;
@@ -19,18 +21,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GlobalHooks {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalHooks.class);
+    private static final String TEST_PASSWORD = "Test1234!";
 
     private static final ServiceLauncher serviceLauncher = new ServiceLauncher();
 
     private final GatewayClient client;
+    private final AuthApi authApi;
+    private final AuthContext authContext;
     private final ScenarioContext context;
     private final SuiteConfig config;
     private final IdRegistry registry;
     private final CleanupService cleanupService;
 
-    public GlobalHooks(GatewayClient client, ScenarioContext context, SuiteConfig config,
+    public GlobalHooks(GatewayClient client, AuthApi authApi, AuthContext authContext,
+                       ScenarioContext context, SuiteConfig config,
                        IdRegistry registry, CleanupService cleanupService) {
         this.client = client;
+        this.authApi = authApi;
+        this.authContext = authContext;
         this.context = context;
         this.config = config;
         this.registry = registry;
@@ -51,7 +59,30 @@ public class GlobalHooks {
             serviceLauncher.startAllServices();
         }
         context.reset();
+        authenticateAsParentUser();
         log.info("[Hooks] Scenario started, prefix={}", context.getSuitePrefix());
+    }
+
+    private void authenticateAsParentUser() {
+        try {
+            String email = context.uniqueName("auth_parent@test.com");
+            Response signupResponse = authApi.signUp(email, TEST_PASSWORD, context.uniqueName("Auth Parent"));
+            if (signupResponse.getStatusCode() == 200) {
+                String token = signupResponse.jsonPath().getString("sessionId");
+                if (token != null && !token.isEmpty()) {
+                    authContext.setJwtToken(token);
+                    Long accountId = signupResponse.jsonPath().getLong("accountId");
+                    context.setCurrentUserId(accountId);
+                    registry.register("auth_user", accountId);
+                    log.info("[Hooks] Authenticated as parent user, accountId={}", accountId);
+                    return;
+                }
+            }
+            log.warn("[Hooks] Auth signup returned status={}, body={}",
+                    signupResponse.getStatusCode(), signupResponse.getBody().asString());
+        } catch (Exception e) {
+            log.warn("[Hooks] Authentication failed: {}", e.getMessage());
+        }
     }
 
     @After(order = 100)

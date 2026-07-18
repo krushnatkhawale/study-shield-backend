@@ -11,5 +11,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+  security:
+    filter:
+      skip: true
 server:
   port: 0
+
+app:
+  jwt:
+    secret: test-secret-key-for-unit-tests-min-32-chars!!
+    expiration-ms: 2592000000

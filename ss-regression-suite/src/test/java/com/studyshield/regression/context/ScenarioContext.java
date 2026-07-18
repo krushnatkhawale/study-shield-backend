@@ -30,6 +30,7 @@ public class ScenarioContext {
     private Long currentWifiNetworkId;
     private Long currentConnectedTvId;
     private Long currentTvUserId;
+    private Long capturedId;
 
     public ScenarioContext() {
         this.suitePrefix = "reg_" + System.currentTimeMillis() + "_";
@@ -82,6 +83,8 @@ public class ScenarioContext {
     public void setCurrentConnectedTvId(Long id) { this.currentConnectedTvId = id; }
     public Long getCurrentTvUserId() { return currentTvUserId; }
     public void setCurrentTvUserId(Long id) { this.currentTvUserId = id; }
+    public Long getCapturedId() { return capturedId; }
+    public void setCapturedId(Long id) { this.capturedId = id; }
 
     public String getGatewayUrl() {
         return System.getenv("GATEWAY_BASE_URL") != null
@@ -111,5 +114,6 @@ public class ScenarioContext {
         currentWifiNetworkId = null;
         currentConnectedTvId = null;
         currentTvUserId = null;
+        capturedId = null;
     }
 }

@@ -5,6 +5,7 @@ import com.studyshield.user.dto.UserResponse;
 import com.studyshield.user.entity.User;
 import com.studyshield.user.exception.ResourceNotFoundException;
 import com.studyshield.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +16,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponse create(UserRequest request) {
@@ -26,6 +29,7 @@ public class UserService {
         }
         User user = User.builder()
                 .email(request.email())
+                .password(request.password() != null ? passwordEncoder.encode(request.password()) : null)
                 .name(request.name())
                 .phone(request.phone())
                 .role(request.role() != null ? User.UserRole.valueOf(request.role()) : User.UserRole.PARENT)
@@ -45,6 +49,14 @@ public class UserService {
         return userRepository.findAll().stream().map(this::mapToResponse).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<UserResponse> getAllByRole(User.UserRole role) {
+        return userRepository.findAll().stream()
+                .filter(u -> u.getRole() == role)
+                .map(this::mapToResponse)
+                .toList();
+    }
+
     public UserResponse update(Long id, UserRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", id));
@@ -60,6 +72,17 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", id));
         userRepository.delete(user);
+    }
+
+    @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User with email: " + email));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     private UserResponse mapToResponse(User user) {

@@ -23,6 +23,9 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String name;
 
     private String phone;
@@ -47,6 +50,8 @@ public class User {
     public void setId(Long id) { this.id = id; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getPhone() { return phone; }
@@ -62,12 +67,14 @@ public class User {
 
     public static class Builder {
         private String email;
+        private String password;
         private String name;
         private String phone;
         private UserRole role = UserRole.PARENT;
         private boolean active = true;
 
         public Builder email(String email) { this.email = email; return this; }
+        public Builder password(String password) { this.password = password; return this; }
         public Builder name(String name) { this.name = name; return this; }
         public Builder phone(String phone) { this.phone = phone; return this; }
         public Builder role(UserRole role) { this.role = role; return this; }
@@ -76,6 +83,7 @@ public class User {
         public User build() {
             User u = new User();
             u.email = this.email;
+            u.password = this.password;
             u.name = this.name;
             u.phone = this.phone;
             u.role = this.role;

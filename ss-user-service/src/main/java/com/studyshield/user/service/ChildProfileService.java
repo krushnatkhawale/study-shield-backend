@@ -33,6 +33,9 @@ public class ChildProfileService {
                 .user(user)
                 .boardId(request.boardId())
                 .classGradeId(request.classGradeId())
+                .gender(request.gender())
+                .birthYear(request.birthYear())
+                .studentClass(request.studentClass())
                 .active(request.active())
                 .build();
         return mapToResponse(childProfileRepository.save(cp));
@@ -59,6 +62,9 @@ public class ChildProfileService {
         cp.setUser(user);
         cp.setBoardId(request.boardId());
         cp.setClassGradeId(request.classGradeId());
+        cp.setGender(request.gender());
+        cp.setBirthYear(request.birthYear());
+        cp.setStudentClass(request.studentClass());
         cp.setActive(request.active());
         return mapToResponse(childProfileRepository.save(cp));
     }
@@ -72,7 +78,8 @@ public class ChildProfileService {
     private ChildProfileResponse mapToResponse(ChildProfile cp) {
         return new ChildProfileResponse(cp.getId(), cp.getName(), cp.getAge(),
                 cp.getUser().getId(), cp.getUser().getName(),
-                cp.getBoardId(), cp.getClassGradeId(), cp.isActive(),
-                cp.getCreatedAt(), cp.getUpdatedAt());
+                cp.getBoardId(), cp.getClassGradeId(),
+                cp.getGender(), cp.getBirthYear(), cp.getStudentClass(),
+                cp.isActive(), cp.getCreatedAt(), cp.getUpdatedAt());
     }
 }

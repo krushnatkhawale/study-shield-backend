@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @Transactional
 class UserControllerTest {
@@ -33,7 +34,7 @@ class UserControllerTest {
 
     @Test
     void shouldCreateUser() throws Exception {
-        UserRequest request = new UserRequest("test@test.com", "Test User", "1234567890", "PARENT", true);
+        UserRequest request = new UserRequest("test@test.com", "password123", "Test User", "1234567890", "PARENT", true);
         mockMvc.perform(post("/api/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -44,7 +45,7 @@ class UserControllerTest {
 
     @Test
     void shouldGetUserById() throws Exception {
-        User user = userRepository.save(User.builder().email("test@test.com").name("Test").role(User.UserRole.PARENT).active(true).build());
+        User user = userRepository.save(User.builder().email("test@test.com").password("encoded").name("Test").role(User.UserRole.PARENT).active(true).build());
         mockMvc.perform(get("/api/v1/users/{id}", user.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("test@test.com"));
@@ -52,8 +53,8 @@ class UserControllerTest {
 
     @Test
     void shouldGetAllUsers() throws Exception {
-        userRepository.save(User.builder().email("a@test.com").name("A").role(User.UserRole.PARENT).active(true).build());
-        userRepository.save(User.builder().email("b@test.com").name("B").role(User.UserRole.PARENT).active(true).build());
+        userRepository.save(User.builder().email("a@test.com").password("encoded").name("A").role(User.UserRole.PARENT).active(true).build());
+        userRepository.save(User.builder().email("b@test.com").password("encoded").name("B").role(User.UserRole.PARENT).active(true).build());
         mockMvc.perform(get("/api/v1/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -61,8 +62,8 @@ class UserControllerTest {
 
     @Test
     void shouldUpdateUser() throws Exception {
-        User user = userRepository.save(User.builder().email("test@test.com").name("Test").role(User.UserRole.PARENT).active(true).build());
-        UserRequest request = new UserRequest("test@test.com", "Updated Name", "9999999999", "PARENT", true);
+        User user = userRepository.save(User.builder().email("test@test.com").password("encoded").name("Test").role(User.UserRole.PARENT).active(true).build());
+        UserRequest request = new UserRequest("test@test.com", null, "Updated Name", "9999999999", "PARENT", true);
         mockMvc.perform(put("/api/v1/users/{id}", user.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -72,7 +73,7 @@ class UserControllerTest {
 
     @Test
     void shouldDeleteUser() throws Exception {
-        User user = userRepository.save(User.builder().email("test@test.com").name("Test").role(User.UserRole.PARENT).active(true).build());
+        User user = userRepository.save(User.builder().email("test@test.com").password("encoded").name("Test").role(User.UserRole.PARENT).active(true).build());
         mockMvc.perform(delete("/api/v1/users/{id}", user.getId()))
                 .andExpect(status().isNoContent());
     }

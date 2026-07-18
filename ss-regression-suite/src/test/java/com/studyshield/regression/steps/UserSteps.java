@@ -1,7 +1,9 @@
 package com.studyshield.regression.steps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.studyshield.regression.client.AuthApi;
 import com.studyshield.regression.client.UserApi;
+import com.studyshield.regression.context.AuthContext;
 import com.studyshield.regression.context.ScenarioContext;
 import com.studyshield.regression.support.IdRegistry;
 import io.cucumber.java.en.Given;
@@ -14,21 +16,50 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserSteps {
 
+    private static final String TEST_PASSWORD = "Test1234!";
+
     private final UserApi userApi;
+    private final AuthApi authApi;
     private final ScenarioContext context;
+    private final AuthContext authContext;
     private final IdRegistry registry;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public UserSteps(UserApi userApi, ScenarioContext context, IdRegistry registry) {
+    public UserSteps(UserApi userApi, AuthApi authApi, ScenarioContext context, AuthContext authContext, IdRegistry registry) {
         this.userApi = userApi;
+        this.authApi = authApi;
         this.context = context;
+        this.authContext = authContext;
         this.registry = registry;
+    }
+
+    @Given("I am authenticated as a parent user")
+    public void iAmAuthenticatedAsAParentUser() {
+        String email = context.uniqueName("auth_parent@test.com");
+        Response signupResponse = authApi.signUp(email, TEST_PASSWORD, context.uniqueName("Auth Parent"));
+        assertThat(signupResponse.getStatusCode())
+                .as("Signup failed: %s", signupResponse.getBody().asString())
+                .isEqualTo(200);
+
+        String token = signupResponse.jsonPath().getString("sessionId");
+        assertThat(token).as("JWT token must not be null").isNotNull();
+        authContext.setJwtToken(token);
+
+        Long accountId = signupResponse.jsonPath().getLong("accountId");
+        context.setCurrentUserId(accountId);
+        registry.register("auth_user", accountId);
+
+        context.setLastResponse(signupResponse);
+        context.setLastStatusCode(signupResponse.getStatusCode());
+        context.setLastResponseBody(signupResponse.getBody().asString());
     }
 
     @Given("a parent user exists")
     public void aParentUserExists() throws Exception {
+        iAmAuthenticatedAsAParentUser();
+        String email = context.uniqueName("parent@test.com");
         String json = mapper.writeValueAsString(Map.of(
-                "email", context.uniqueName("parent@test.com"),
+                "email", email,
                 "name", context.uniqueName("Test Parent"),
                 "phone", "9876543210",
                 "role", "PARENT",
@@ -45,8 +76,10 @@ public class UserSteps {
 
     @When("I create a parent user with name {string}")
     public void iCreateParentUserWithName(String name) throws Exception {
+        iAmAuthenticatedAsAParentUser();
+        String email = context.uniqueName(name.toLowerCase().replace(" ", "_") + "@test.com");
         String json = mapper.writeValueAsString(Map.of(
-                "email", context.uniqueName(name.toLowerCase().replace(" ", "_") + "@test.com"),
+                "email", email,
                 "name", context.uniqueName(name),
                 "phone", "9876543210",
                 "role", "PARENT",

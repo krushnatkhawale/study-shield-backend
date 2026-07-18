@@ -1,7 +1,9 @@
 package com.studyshield.regression.steps;
 
+import com.studyshield.regression.client.GatewayClient;
 import com.studyshield.regression.context.ScenarioContext;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,9 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CommonHttpSteps {
 
     private final ScenarioContext context;
+    private final GatewayClient client;
 
-    public CommonHttpSteps(ScenarioContext context) {
+    public CommonHttpSteps(ScenarioContext context, GatewayClient client) {
         this.context = context;
+        this.client = client;
     }
 
     @Then("the response status should be {int}")
@@ -79,6 +83,45 @@ public class CommonHttpSteps {
         Response response = getLastResponse();
         Object id = response.jsonPath().get("id");
         assertThat((Object) id).isNotNull();
+    }
+
+    @When("I capture the response id")
+    public void iCaptureTheResponseId() {
+        Response response = getLastResponse();
+        Long id = response.jsonPath().getLong("id");
+        assertThat(id).as("Response must contain an 'id' field").isNotNull();
+        context.setCapturedId(id);
+    }
+
+    @When("I DELETE the captured parent")
+    public void iDeleteTheCapturedParent() {
+        Long id = context.getCapturedId();
+        assertThat(id).as("No captured id to delete").isNotNull();
+        Response response = client.delete("/api/parents/" + id);
+        updateContext(response);
+    }
+
+    @When("I DELETE the captured student")
+    public void iDeleteTheCapturedStudent() {
+        Long id = context.getCapturedId();
+        assertThat(id).as("No captured id to delete").isNotNull();
+        Response response = client.delete("/api/students/" + id);
+        updateContext(response);
+    }
+
+    @When("I update the captured student with body:")
+    public void iUpdateTheCapturedStudentWithBody(String body) {
+        Long id = context.getCapturedId();
+        assertThat(id).as("No captured id to update").isNotNull();
+        Response response = client.put("/api/students/" + id, body);
+        updateContext(response);
+    }
+
+    private void updateContext(Response response) {
+        context.setLastStatusCode(response.getStatusCode());
+        context.setLastResponseBody(response.getBody().asString());
+        context.setLastResponseTimeMs(response.getTime());
+        context.setLastResponse(response);
     }
 
     private Response getLastResponse() {

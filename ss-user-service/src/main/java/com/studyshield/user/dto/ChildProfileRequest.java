@@ -9,5 +9,8 @@ public record ChildProfileRequest(
     @NotNull(message = "User ID is required") Long userId,
     Long boardId,
     Long classGradeId,
+    String gender,
+    Integer birthYear,
+    String studentClass,
     boolean active
 ) {}
