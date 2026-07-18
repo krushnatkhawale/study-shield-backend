@@ -8,6 +8,8 @@ COPY build.gradle settings.gradle ./
 
 RUN chmod +x gradlew && chmod -R +x gradle/wrapper
 
+RUN mkdir -p ss-content-service ss-api-gateway ss-user-service ss-quiz-attempts ss-tv-device-service ss-regression-suite
+
 COPY ss-content-service/build.gradle ss-content-service/build.gradle
 
 RUN ./gradlew :ss-content-service:dependencies --no-daemon || true
