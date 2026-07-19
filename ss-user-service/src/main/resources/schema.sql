@@ -1,13 +1,7 @@
 -- Full schema recreation for ss-user-service
--- Drops and recreates all tables on every startup
-
--- Drop tables in dependency order
-DROP TABLE IF EXISTS child_profiles CASCADE;
-DROP TABLE IF EXISTS parent_profiles CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
 
 -- users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -20,7 +14,7 @@ CREATE TABLE users (
 );
 
 -- parent_profiles table
-CREATE TABLE parent_profiles (
+CREATE TABLE IF NOT EXISTS parent_profiles (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id),
     name VARCHAR(255) NOT NULL,
@@ -34,7 +28,7 @@ CREATE TABLE parent_profiles (
 );
 
 -- child_profiles table
-CREATE TABLE child_profiles (
+CREATE TABLE IF NOT EXISTS child_profiles (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     age INTEGER NOT NULL DEFAULT 0,
