@@ -46,12 +46,11 @@ public class AuthController {
         }
 
         String name = request.name() != null ? request.name() : request.loginId();
-        String encodedPassword = passwordEncoder.encode(request.password());
 
         UserResponse saved = userService.create(
                 new com.studyshield.user.dto.UserRequest(
                         request.loginId(),
-                        encodedPassword,
+                        request.password(),
                         name,
                         null,
                         User.UserRole.PARENT.name(),
