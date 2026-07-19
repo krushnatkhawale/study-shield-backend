@@ -1,0 +1,9 @@
+services:
+  content-service:
+    url: https://ss-content-service.onrender.com
+  user-service:
+    url: https://ss-user-service.onrender.com
+  quiz-attempts:
+    url: https://ss-quiz-attempts.onrender.com
+  tv-device-service:
+    url: https://ss-tv-device-service.onrender.com

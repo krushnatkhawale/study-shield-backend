@@ -2,31 +2,34 @@ spring:
   application:
     name: ss-api-gateway
 
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+
   cloud:
     gateway:
       routes:
         - id: auth-service
-          uri: ${USER_SERVICE_URL:http://localhost:8082}
+          uri: ${services.user-service.url}
           predicates:
             - Path=/api/auth/**
 
         - id: content-service
-          uri: ${CONTENT_SERVICE_URL:http://localhost:8081}
+          uri: ${services.content-service.url}
           predicates:
             - Path=/api/v1/boards/**, /api/v1/class-grades/**, /api/v1/subjects/**, /api/v1/content-packs/**, /api/v1/quizzes/**, /api/v1/questions/**, /api/v1/freemium/**
 
         - id: user-service
-          uri: ${USER_SERVICE_URL:http://localhost:8082}
+          uri: ${services.user-service.url}
           predicates:
             - Path=/api/v1/users/**, /api/v1/parents/**, /api/v1/children/**, /api/parents/**, /api/students/**
 
         - id: quiz-attempts
-          uri: ${QUIZ_ATTEMPTS_URL:http://localhost:8083}
+          uri: ${services.quiz-attempts.url}
           predicates:
             - Path=/api/v1/quiz-attempts/**, /api/v1/attempt-answers/**, /api/v1/quiz-results/**
 
         - id: tv-device-service
-          uri: ${TV_DEVICE_SERVICE_URL:http://localhost:8084}
+          uri: ${services.tv-device-service.url}
           predicates:
             - Path=/api/v1/wifi-networks/**, /api/v1/connected-tvs/**, /api/v1/tv-users/**
 

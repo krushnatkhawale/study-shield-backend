@@ -2,19 +2,18 @@ package com.studyshield.gateway.health;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthComponent;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @Component
 public class GatewayHealthIndicator implements HealthIndicator {
@@ -29,16 +28,17 @@ public class GatewayHealthIndicator implements HealthIndicator {
     private final String quizAttemptsUrl;
     private final String tvDeviceServiceUrl;
 
-    public GatewayHealthIndicator(WebClient.Builder builder) {
+    public GatewayHealthIndicator(
+            WebClient.Builder builder,
+            @Value("${services.content-service.url}") String contentServiceUrl,
+            @Value("${services.user-service.url}") String userServiceUrl,
+            @Value("${services.quiz-attempts.url}") String quizAttemptsUrl,
+            @Value("${services.tv-device-service.url}") String tvDeviceServiceUrl) {
         this.webClient = builder.build();
-        this.contentServiceUrl = System.getenv("CONTENT_SERVICE_URL") != null
-                ? System.getenv("CONTENT_SERVICE_URL") : "http://localhost:8081";
-        this.userServiceUrl = System.getenv("USER_SERVICE_URL") != null
-                ? System.getenv("USER_SERVICE_URL") : "http://localhost:8082";
-        this.quizAttemptsUrl = System.getenv("QUIZ_ATTEMPTS_URL") != null
-                ? System.getenv("QUIZ_ATTEMPTS_URL") : "http://localhost:8083";
-        this.tvDeviceServiceUrl = System.getenv("TV_DEVICE_SERVICE_URL") != null
-                ? System.getenv("TV_DEVICE_SERVICE_URL") : "http://localhost:8084";
+        this.contentServiceUrl = contentServiceUrl;
+        this.userServiceUrl = userServiceUrl;
+        this.quizAttemptsUrl = quizAttemptsUrl;
+        this.tvDeviceServiceUrl = tvDeviceServiceUrl;
     }
 
     @Override

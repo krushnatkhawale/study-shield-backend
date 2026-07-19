@@ -1,0 +1,9 @@
+services:
+  content-service:
+    url: http://localhost:8081
+  user-service:
+    url: http://localhost:8082
+  quiz-attempts:
+    url: http://localhost:8083
+  tv-device-service:
+    url: http://localhost:8084
