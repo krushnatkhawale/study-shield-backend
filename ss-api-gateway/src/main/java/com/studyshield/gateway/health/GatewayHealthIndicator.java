@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthComponent;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.stereotype.Component;
@@ -56,16 +55,17 @@ public class GatewayHealthIndicator implements HealthIndicator {
         for (ServiceCheck check : checks) {
             try {
                 long start = System.currentTimeMillis();
-                HealthComponent result = webClient.get()
+                @SuppressWarnings("unchecked")
+                Map<String, Object> result = webClient.get()
                         .uri(check.url + "/actuator/health")
                         .retrieve()
-                        .bodyToMono(HealthComponent.class)
+                        .bodyToMono(Map.class)
                         .timeout(TIMEOUT)
                         .block();
 
                 long duration = System.currentTimeMillis() - start;
 
-                if (result != null && Status.UP.equals(result.getStatus())) {
+                if (result != null && "UP".equals(result.get("status"))) {
                     details.put(check.name, Map.of(
                             "status", "UP",
                             "responseTimeMs", duration));
@@ -74,7 +74,7 @@ public class GatewayHealthIndicator implements HealthIndicator {
                     details.put(check.name, Map.of(
                             "status", "DOWN",
                             "message", "Service returned status: " +
-                                    (result != null ? result.getStatus() : "null")));
+                                    (result != null ? result.get("status") : "null")));
                 }
             } catch (Exception e) {
                 log.warn("Health check failed for {}: {}", check.name, e.getMessage());
