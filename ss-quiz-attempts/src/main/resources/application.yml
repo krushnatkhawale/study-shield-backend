@@ -23,6 +23,9 @@ server:
   port: 8083
 
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
