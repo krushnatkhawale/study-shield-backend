@@ -2,9 +2,6 @@ spring:
   application:
     name: ss-api-gateway
 
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:local}
-
   cloud:
     gateway:
       routes:
@@ -52,3 +49,13 @@ management:
     web:
       exposure:
         include: health,info,gateway
+
+services:
+  content-service:
+    url: https://ss-content-service.onrender.com
+  user-service:
+    url: https://ss-user-service.onrender.com
+  quiz-attempts:
+    url: https://ss-quiz-attempts.onrender.com
+  tv-device-service:
+    url: https://ss-tv-device-service.onrender.com
