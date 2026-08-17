@@ -47,13 +47,6 @@ public class GlobalHooks {
 
     @Before
     public void beforeScenario() {
-        String databaseUrl = System.getenv("DATABASE_URL");
-        log.info("[Hooks] DATABASE_URL='{}'", databaseUrl);
-        if (databaseUrl == null || databaseUrl.isEmpty()) {
-            log.warn("[Hooks] DATABASE_URL not set - skipping regression tests");
-            return;
-        }
-
         if (!serviceLauncher.isStarted()) {
             log.info("[Hooks] Starting all services...");
             serviceLauncher.startAllServices();

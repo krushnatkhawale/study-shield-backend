@@ -7,7 +7,7 @@ Feature: Quiz Attempt Lifecycle
     Given a parent user exists
     And a child profile "Test Child" exists under current user
     And a board named "Attempt Board" exists
-    And a class grade 10 exists under current board
+    And a class grade "10" exists under current board
     And a subject "Science" exists under current class grade
     And a content pack "Chemistry" exists under current subject
     And a STANDARD quiz exists in current pack
@@ -19,7 +19,7 @@ Feature: Quiz Attempt Lifecycle
     Given a parent user exists
     And a child profile "Answer Child" exists under current user
     And a board named "Answer Board" exists
-    And a class grade 10 exists under current board
+    And a class grade "10" exists under current board
     And a subject "Physics" exists under current class grade
     And a content pack "Optics" exists under current subject
     And a STANDARD quiz exists in current pack
@@ -32,7 +32,7 @@ Feature: Quiz Attempt Lifecycle
     Given a parent user exists
     And a child profile "Complete Child" exists under current user
     And a board named "Complete Board" exists
-    And a class grade 10 exists under current board
+    And a class grade "10" exists under current board
     And a subject "Math" exists under current class grade
     And a content pack "Algebra" exists under current subject
     And a STANDARD quiz exists in current pack

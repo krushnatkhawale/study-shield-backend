@@ -31,11 +31,11 @@ public class ContentFixtures {
         return id;
     }
 
-    public Long createClassGrade(int gradeNumber, Long boardId) {
+    public Long createClassGrade(String className, Long boardId) {
         Response response = io.restassured.RestAssured.given()
                 .baseUri(context.getGatewayUrl())
                 .contentType("application/json")
-                .body(payloads.classGrade(gradeNumber, boardId))
+                .body(payloads.classGrade(className, boardId))
                 .post("/api/content/class-grades")
                 .then().statusCode(201).extract().response();
         Long id = response.jsonPath().getLong("id");
@@ -95,7 +95,7 @@ public class ContentFixtures {
 
     public void createFullContentHierarchy() {
         Long boardId = createBoard("Regression Board");
-        Long classGradeId = createClassGrade(10, boardId);
+        Long classGradeId = createClassGrade("Class 10", boardId);
         Long subjectId = createSubject("Physics", classGradeId);
         Long contentPackId = createContentPack("Electromagnetism", subjectId);
         createQuiz("Magnetism Quiz", contentPackId, "STANDARD");

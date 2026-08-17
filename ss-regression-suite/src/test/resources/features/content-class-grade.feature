@@ -5,13 +5,16 @@ Feature: Class Grade CRUD Operations
 
   Scenario Outline: Create a class grade under a board
     Given a board named "Grade Board" exists
-    When I create a class grade <gradeNumber> under current board
+    When I create a class grade "<className>" under current board
     Then the response status should be 201
     And the response should have an id field
 
     Examples:
-      | gradeNumber |
-      | 1           |
-      | 5           |
-      | 10          |
-      | 12          |
+      | className  |
+      | Class 1    |
+      | Class 5    |
+      | Class 10   |
+      | Class 12   |
+      | Nursery    |
+      | Junior KG  |
+      | Senior KG  |

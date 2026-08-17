@@ -21,10 +21,9 @@ public class PayloadFactory {
         );
     }
 
-    public Map<String, Object> classGrade(int gradeNumber, Long boardId) {
+    public Map<String, Object> classGrade(String className, Long boardId) {
         return Map.of(
-                "gradeNumber", gradeNumber,
-                "name", context.uniqueName("Class " + gradeNumber),
+                "name", context.uniqueName(className),
                 "description", "Regression test fixture",
                 "boardId", boardId,
                 "active", true

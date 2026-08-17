@@ -93,6 +93,22 @@ public class CommonHttpSteps {
         context.setCapturedId(id);
     }
 
+    @When("I capture the response parentId")
+    public void iCaptureTheResponseParentId() {
+        Response response = getLastResponse();
+        String parentId = response.jsonPath().getString("parentId");
+        assertThat(parentId).as("Response must contain a 'parentId' field").isNotNull();
+        context.setCapturedId(Long.parseLong(parentId));
+    }
+
+    @When("I capture the response studentId")
+    public void iCaptureTheResponseStudentId() {
+        Response response = getLastResponse();
+        String studentId = response.jsonPath().getString("studentId");
+        assertThat(studentId).as("Response must contain a 'studentId' field").isNotNull();
+        context.setCapturedId(Long.parseLong(studentId));
+    }
+
     @When("I DELETE the captured parent")
     public void iDeleteTheCapturedParent() {
         Long id = context.getCapturedId();

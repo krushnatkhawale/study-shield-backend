@@ -48,31 +48,19 @@ public class ServiceLauncher {
             return;
         }
 
-        log.info("[ServiceLauncher] Starting all services from {}", PROJECT_ROOT);
+        log.info("[ServiceLauncher] Starting modulith from {}", PROJECT_ROOT);
         log.info("[ServiceLauncher] JAVA_HOME={}", JAVA_HOME);
 
         try {
-            startService("ss-content-service", 8081);
-            waitForService("Content Service", 8081);
-
-            startService("ss-user-service", 8082);
-            waitForService("User Service", 8082);
-
-            startService("ss-quiz-attempts", 8083);
-            waitForService("Quiz Attempts Service", 8083);
-
-            startService("ss-tv-device-service", 8084);
-            waitForService("TV Device Service", 8084);
-
-            startService("ss-api-gateway", 8080);
-            waitForService("API Gateway", 8080);
+            startService("ss-modulith", 8080);
+            waitForService("Study Shield Modulith", 8080);
 
             started = true;
-            log.info("[ServiceLauncher] All services started successfully");
+            log.info("[ServiceLauncher] Modulith started successfully");
         } catch (Exception e) {
-            log.error("[ServiceLauncher] Failed to start services", e);
+            log.error("[ServiceLauncher] Failed to start modulith", e);
             stopAllServices();
-            throw new RuntimeException("Failed to start services", e);
+            throw new RuntimeException("Failed to start modulith", e);
         }
     }
 
@@ -80,13 +68,17 @@ public class ServiceLauncher {
         String jarPath = PROJECT_ROOT + "/" + serviceName + "/build/libs/" + serviceName + "-0.0.1-SNAPSHOT.jar";
         File jarFile = new File(jarPath);
         if (!jarFile.exists()) {
-            throw new IOException("JAR not found: " + jarPath + ". Run './gradlew build' first.");
+            throw new IOException("JAR not found: " + jarPath + ". Run './gradlew :ss-modulith:build' first.");
         }
 
         log.info("[ServiceLauncher] Starting {} on port {} with jar: {}", serviceName, port, jarPath);
 
         Map<String, String> env = new HashMap<>(System.getenv());
         env.put("SERVER_PORT", String.valueOf(port));
+
+        if (System.getenv("SPRING_PROFILES_ACTIVE") == null) {
+            env.put("SPRING_PROFILES_ACTIVE", "test");
+        }
 
         String databaseUrl = System.getenv("DATABASE_URL");
         String dbUsername = System.getenv("DB_USERNAME");

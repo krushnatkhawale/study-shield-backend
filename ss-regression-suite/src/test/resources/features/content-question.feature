@@ -5,7 +5,7 @@ Feature: Question CRUD Operations
 
   Scenario: Create and retrieve questions for a quiz
     Given a board named "Question Board" exists
-    And a class grade 10 exists under current board
+    And a class grade "10" exists under current board
     And a subject "Physics" exists under current class grade
     And a content pack "Mechanics" exists under current subject
     And a STANDARD quiz exists in current pack

@@ -77,11 +77,10 @@ public class ContentSteps {
         updateContext(response);
     }
 
-    @Given("a class grade {int} exists under current board")
-    public void aClassGradeExistsUnderCurrentBoard(int gradeNumber) throws Exception {
+    @Given("a class grade {string} exists under current board")
+    public void aClassGradeExistsUnderCurrentBoard(String className) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
-                "gradeNumber", gradeNumber,
-                "name", "Class " + gradeNumber,
+                "name", className,
                 "description", "Regression test",
                 "boardId", context.getCurrentBoardId()
         ));
@@ -94,11 +93,10 @@ public class ContentSteps {
         registry.register("class-grade", id);
     }
 
-    @When("I create a class grade {int} under current board")
-    public void iCreateClassGradeUnderCurrentBoard(int gradeNumber) throws Exception {
+    @When("I create a class grade {string} under current board")
+    public void iCreateClassGradeUnderCurrentBoard(String className) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
-                "gradeNumber", gradeNumber,
-                "name", context.uniqueName("Class " + gradeNumber),
+                "name", context.uniqueName(className),
                 "boardId", context.getCurrentBoardId(),
                 "active", true
         ));
@@ -226,8 +224,8 @@ public class ContentSteps {
         updateContext(response);
     }
 
-    @When("I request a freemium pack for class {string} with device id {string}")
-    public void iRequestFreemiumPack(String className, String deviceId) throws Exception {
+    @When("I request a quiz bundle for class {string} with device id {string}")
+    public void iRequestQuizBundle(String className, String deviceId) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
                 "className", className,
                 "boardCode", "all",
@@ -235,25 +233,23 @@ public class ContentSteps {
                 "deviceId", context.uniqueName(deviceId),
                 "allowPartial", false
         ));
-        Response response = contentApi.issueFreemiumPack(json);
+        Response response = contentApi.issueQuizBundle(json);
         updateContext(response);
         if (response.getStatusCode() == 200 || response.getStatusCode() == 201) {
             Long packId = response.jsonPath().getLong("packId");
-            context.setCurrentFreemiumPackId(packId);
-            registry.register("freemium-pack", packId);
+            context.setCurrentQuizBundleId(packId);
+            registry.register("quiz-bundle", packId);
         }
     }
 
-    @When("I get freemium pack by id")
-    public void iGetFreemiumPackById() {
-        Response response = contentApi.getFreemiumPack(context.getCurrentFreemiumPackId());
+    @When("I get quiz bundle by id")
+    public void iGetQuizBundleById() {
+        Response response = contentApi.getQuizBundle(context.getCurrentQuizBundleId());
         updateContext(response);
     }
 
-    @When("I request the same freemium pack for class {string} with device id {string}")
-    public void iRequestSameFreemiumPack(String className, String deviceId) throws Exception {
-        // Uses same unique prefix so deviceId matches prior request only if same string after uniqueName
-        // For true idempotency test, store last device id — use pack re-fetch style with fixed device from context
+    @When("I request the same quiz bundle for class {string} with device id {string}")
+    public void iRequestSameQuizBundle(String className, String deviceId) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
                 "className", className,
                 "boardCode", "all",
@@ -261,7 +257,7 @@ public class ContentSteps {
                 "deviceId", context.getSuitePrefix() + deviceId,
                 "allowPartial", false
         ));
-        Response response = contentApi.issueFreemiumPack(json);
+        Response response = contentApi.issueQuizBundle(json);
         updateContext(response);
     }
 

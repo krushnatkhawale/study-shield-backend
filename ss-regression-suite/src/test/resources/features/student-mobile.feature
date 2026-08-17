@@ -15,7 +15,7 @@ Feature: Student Mobile API
       {"name": "Mobile Student", "gender": "MALE", "birthYear": 2015, "studentClass": "8th"}
       """
     Then the response status should be 201
-    And the response should have an id field
+    And the response JSON path "studentId" should be present
     And the response JSON path "name" should equal "Mobile Student"
 
   Scenario: Update a student via mobile endpoint
@@ -24,7 +24,7 @@ Feature: Student Mobile API
       {"name": "Original Student", "gender": "FEMALE", "birthYear": 2016, "studentClass": "7th"}
       """
     Then the response status should be 201
-    When I capture the response id
+    When I capture the response studentId
     When I update the captured student with body:
       """
       {"name": "Updated Student", "birthYear": 2016}
@@ -38,6 +38,6 @@ Feature: Student Mobile API
       {"name": "To Be Deleted", "gender": "MALE", "birthYear": 2014, "studentClass": "9th"}
       """
     Then the response status should be 201
-    When I capture the response id
+    When I capture the response studentId
     When I DELETE the captured student
     Then the response status should be 204

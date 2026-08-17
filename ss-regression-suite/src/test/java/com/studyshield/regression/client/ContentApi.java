@@ -76,12 +76,12 @@ public class ContentApi {
         return client.post("/api/v1/questions", json);
     }
 
-    public Response issueFreemiumPack(String json) {
-        return client.post("/api/v1/freemium/packs", json);
+    public Response issueQuizBundle(String json) {
+        return client.post("/api/v1/quiz-bundles", json);
     }
 
-    public Response getFreemiumPack(Long packId) {
-        return client.get("/api/v1/freemium/packs/" + packId);
+    public Response getQuizBundle(Long packId) {
+        return client.get("/api/v1/quiz-bundles/" + packId);
     }
 
     public Response getQuestionsByQuiz(Long quizId) {

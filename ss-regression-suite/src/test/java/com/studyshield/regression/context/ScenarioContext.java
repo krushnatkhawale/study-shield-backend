@@ -25,7 +25,7 @@ public class ScenarioContext {
     private Long currentSubjectId;
     private Long currentContentPackId;
     private Long currentQuizId;
-    private Long currentFreemiumPackId;
+    private Long currentQuizBundleId;
     private Long currentAttemptId;
     private Long currentWifiNetworkId;
     private Long currentConnectedTvId;
@@ -73,8 +73,8 @@ public class ScenarioContext {
     public void setCurrentContentPackId(Long id) { this.currentContentPackId = id; }
     public Long getCurrentQuizId() { return currentQuizId; }
     public void setCurrentQuizId(Long id) { this.currentQuizId = id; }
-    public Long getCurrentFreemiumPackId() { return currentFreemiumPackId; }
-    public void setCurrentFreemiumPackId(Long id) { this.currentFreemiumPackId = id; }
+    public Long getCurrentQuizBundleId() { return currentQuizBundleId; }
+    public void setCurrentQuizBundleId(Long id) { this.currentQuizBundleId = id; }
     public Long getCurrentAttemptId() { return currentAttemptId; }
     public void setCurrentAttemptId(Long id) { this.currentAttemptId = id; }
     public Long getCurrentWifiNetworkId() { return currentWifiNetworkId; }
@@ -109,7 +109,7 @@ public class ScenarioContext {
         currentSubjectId = null;
         currentContentPackId = null;
         currentQuizId = null;
-        currentFreemiumPackId = null;
+        currentQuizBundleId = null;
         currentAttemptId = null;
         currentWifiNetworkId = null;
         currentConnectedTvId = null;

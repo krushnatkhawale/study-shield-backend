@@ -15,7 +15,7 @@ Feature: Cross-Service Journey
 
     # Step 3: Create content hierarchy
     Given a board named "Journey Board" exists
-    And a class grade 8 exists under current board
+    And a class grade "8" exists under current board
     And a subject "Math" exists under current class grade
     And a content pack "Algebra" exists under current subject
     And a STANDARD quiz exists in current pack

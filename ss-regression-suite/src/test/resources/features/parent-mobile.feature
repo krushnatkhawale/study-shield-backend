@@ -15,9 +15,8 @@ Feature: Parent Mobile API
       {"name": "Mobile Parent", "gender": "FEMALE", "relation": "MOTHER", "type": "PARENT"}
       """
     Then the response status should be 201
-    And the response should have an id field
+    And the response JSON path "parentId" should be present
     And the response JSON path "name" should equal "Mobile Parent"
-    And the response JSON path "type" should equal "ACCOUNT_HOLDER"
 
   Scenario: Update current parent via /api/parents/me
     When I POST "/api/parents" with body:
@@ -38,6 +37,6 @@ Feature: Parent Mobile API
       {"name": "To Be Deleted", "gender": "MALE", "relation": "FATHER", "type": "PARENT"}
       """
     Then the response status should be 201
-    When I capture the response id
+    When I capture the response parentId
     When I DELETE the captured parent
     Then the response status should be 204

@@ -35,6 +35,9 @@ public class UserSteps {
 
     @Given("I am authenticated as a parent user")
     public void iAmAuthenticatedAsAParentUser() {
+        if (authContext.hasToken()) {
+            return;
+        }
         String email = context.uniqueName("auth_parent@test.com");
         Response signupResponse = authApi.signUp(email, TEST_PASSWORD, context.uniqueName("Auth Parent"));
         assertThat(signupResponse.getStatusCode())
@@ -63,7 +66,8 @@ public class UserSteps {
                 "name", context.uniqueName("Test Parent"),
                 "phone", "9876543210",
                 "role", "PARENT",
-                "active", true
+                "active", true,
+                "password", TEST_PASSWORD
         ));
         Response response = userApi.createUser(json);
         assertThat(response.getStatusCode()).isEqualTo(201);
@@ -83,7 +87,8 @@ public class UserSteps {
                 "name", context.uniqueName(name),
                 "phone", "9876543210",
                 "role", "PARENT",
-                "active", true
+                "active", true,
+                "password", TEST_PASSWORD
         ));
         Response response = userApi.createUser(json);
         updateContext(response);
