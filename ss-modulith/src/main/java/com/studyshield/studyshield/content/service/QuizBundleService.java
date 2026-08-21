@@ -21,7 +21,7 @@ import java.util.Locale;
 @Transactional
 public class QuizBundleService {
 
-    public static final int QUIZZES_PER_SUBJECT = QuizBundleSeeder.QUIZZES_PER_SUBJECT;
+    public static final int QUIZZES_PER_CLASS = QuizBundleSeeder.QUIZZES_PER_CLASS;
     /** Minimum real questions a freemium quiz must carry for a session to start. */
     public static final int MIN_ACTIVE_QUESTIONS_PER_QUIZ = 3;
 
@@ -89,9 +89,12 @@ public class QuizBundleService {
 
         List<Long> quizIds = new ArrayList<>();
         List<String> subjectNames = new ArrayList<>();
-        int requiredQuizzes = subjects.size() * QUIZZES_PER_SUBJECT;
+        int requiredQuizzes = Math.min(QUIZZES_PER_CLASS, subjects.size());
 
         for (Subject subject : subjects) {
+            if (quizIds.size() >= QUIZZES_PER_CLASS) {
+                break;
+            }
             subjectNames.add(subject.getName());
             ContentPack pack = contentPackRepository.findBySubjectId(subject.getId()).stream()
                     .filter(ContentPack::isActive)
@@ -103,14 +106,14 @@ public class QuizBundleService {
             List<Quiz> quizzes = quizRepository
                     .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
                             pack.getId(), ContentTier.FREEMIUM);
-            if (quizzes.size() < QUIZZES_PER_SUBJECT && !allowPartial) {
+            if (quizzes.isEmpty() && !allowPartial) {
                 throw new InsufficientStockException(
                         "Insufficient freemium quizzes for subject " + subject.getName(),
-                        quizzes.size(),
-                        QUIZZES_PER_SUBJECT
+                        0,
+                        1
                 );
             }
-            int take = Math.min(QUIZZES_PER_SUBJECT, quizzes.size());
+            int take = Math.min(QUIZZES_PER_CLASS - quizIds.size(), quizzes.size());
             for (int i = 0; i < take; i++) {
                 Quiz quiz = quizzes.get(i);
                 int activeQs = questionRepository.findByQuizIdAndBlacklistedFalse(quiz.getId()).size();
@@ -160,7 +163,7 @@ public class QuizBundleService {
                 bundle.getLanguage(),
                 bundle.getBoardCode(),
                 bundle.getSubjects(),
-                QUIZZES_PER_SUBJECT,
+                QUIZZES_PER_CLASS,
                 bundle.getQuizCount(),
                 bundle.getDeviceId(),
                 bundle.getChildId(),
