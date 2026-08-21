@@ -4,6 +4,7 @@ import com.studyshield.studyshield.content.dto.QuizBundleRequest;
 import com.studyshield.studyshield.content.dto.QuizBundleResponse;
 import com.studyshield.studyshield.content.dto.QuestionResponse;
 import com.studyshield.studyshield.content.dto.QuizResponse;
+import com.studyshield.studyshield.content.seed.QuestionBankContent;
 import com.studyshield.studyshield.content.entity.*;
 import com.studyshield.studyshield.common.exception.InsufficientStockException;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
@@ -20,6 +21,8 @@ import java.util.Locale;
 public class QuizBundleService {
 
     public static final int QUIZZES_PER_SUBJECT = QuizBundleSeeder.QUIZZES_PER_SUBJECT;
+    /** Minimum real questions a freemium quiz must carry for a session to start. */
+    public static final int MIN_ACTIVE_QUESTIONS_PER_QUIZ = 3;
 
     private final QuizBundleRepository quizBundleRepository;
     private final QuizBundleSeeder catalogSeeder;
@@ -49,7 +52,7 @@ public class QuizBundleService {
 
     public QuizBundleResponse issue(QuizBundleRequest request) {
         validateHolder(request);
-        String className = QuizBundleSeeder.normalizeClassName(request.className());
+        String className = resolveClassName(request);
         String language = blankToDefault(request.language(), "English");
         String boardCode = blankToDefault(request.boardCode(), "all");
         boolean allowPartial = Boolean.TRUE.equals(request.allowPartial());
@@ -110,11 +113,11 @@ public class QuizBundleService {
             for (int i = 0; i < take; i++) {
                 Quiz quiz = quizzes.get(i);
                 int activeQs = questionRepository.findByQuizIdAndBlacklistedFalse(quiz.getId()).size();
-                if (activeQs < QuizBundleSeeder.QUESTIONS_PER_QUIZ && !allowPartial) {
+                if (activeQs < MIN_ACTIVE_QUESTIONS_PER_QUIZ && !allowPartial) {
                     throw new InsufficientStockException(
                             "Insufficient questions for quiz " + quiz.getTitle(),
                             activeQs,
-                            QuizBundleSeeder.QUESTIONS_PER_QUIZ
+                            MIN_ACTIVE_QUESTIONS_PER_QUIZ
                     );
                 }
                 quizIds.add(quiz.getId());
@@ -187,6 +190,21 @@ public class QuizBundleService {
         if (request.childId() == null && (request.deviceId() == null || request.deviceId().isBlank())) {
             throw new IllegalArgumentException("Either childId or deviceId is required");
         }
+        if ((request.className() == null || request.className().isBlank()) && request.age() == null) {
+            throw new IllegalArgumentException("Either className or age is required");
+        }
+    }
+
+    /**
+     * Class drives question filtering. When className is absent, derive it from the child's
+     * age so sessions are still age-appropriate (issue #1: filter by class/age).
+     */
+    private static String resolveClassName(QuizBundleRequest request) {
+        String className = request.className();
+        if (className != null && !className.isBlank()) {
+            return QuizBundleSeeder.normalizeClassName(className);
+        }
+        return QuestionBankContent.classNameForAge(request.age());
     }
 
     private static String buildKey(String className, String language, String boardCode, Long childId, String deviceId) {
