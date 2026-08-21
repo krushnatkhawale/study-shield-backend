@@ -9,6 +9,7 @@ import com.studyshield.studyshield.content.entity.*;
 import com.studyshield.studyshield.common.exception.InsufficientStockException;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
 import com.studyshield.studyshield.content.repository.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -139,7 +140,13 @@ public class QuizBundleService {
         issued.setQuizIds(quizIds);
         issued.setSubjects(subjectNames);
         issued.setQuizCount(quizIds.size());
-        return toResponse(quizBundleRepository.save(issued));
+        try {
+            return toResponse(quizBundleRepository.saveAndFlush(issued));
+        } catch (DataIntegrityViolationException e) {
+            return quizBundleRepository.findByIdempotencyKey(idempotencyKey)
+                    .map(this::toResponse)
+                    .orElseThrow(() -> e);
+        }
     }
 
     private QuizBundleResponse toResponse(QuizBundle bundle) {
