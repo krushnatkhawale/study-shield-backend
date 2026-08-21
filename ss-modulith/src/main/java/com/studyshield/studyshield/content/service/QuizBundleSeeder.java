@@ -15,7 +15,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Ensures freemium catalog exists for a class: subjects with 5 FREEMIUM quizzes.
+ * Ensures freemium catalog exists for a class: subjects with {@value #QUIZZES_PER_CLASS}
+ * FREEMIUM quizzes total (10 questions each).
  * <p>
  * Curated bands ({@code Sr KG}, {@code Class 1}) are seeded from {@link QuestionBankContent}
  * (real age-appropriate questions); any other class is topped up from a real fallback bank so a
@@ -25,7 +26,7 @@ import java.util.Map;
 public class QuizBundleSeeder {
 
     private static final Logger log = LoggerFactory.getLogger(QuizBundleSeeder.class);
-    public static final int QUIZZES_PER_SUBJECT = 5;
+    public static final int QUIZZES_PER_CLASS = 2;
     public static final int QUESTIONS_PER_QUIZ = 10;
 
     private static final List<String> DEFAULT_SUBJECTS = List.of(
@@ -71,7 +72,10 @@ public class QuizBundleSeeder {
             subjects = createDefaultSubjects(classGrade, band);
         }
 
-        for (Subject subject : subjects) {
+        // Right-sized catalog: QUIZZES_PER_CLASS quizzes total per class (one per subject,
+        // first subjects win), 10 questions each — never the old 5-per-subject sprawl.
+        int seededSubjects = Math.min(QUIZZES_PER_CLASS, subjects.size());
+        for (Subject subject : subjects.subList(0, seededSubjects)) {
             ensureQuizBundleForSubject(subject, band);
         }
         return classGrade;
@@ -141,17 +145,15 @@ public class QuizBundleSeeder {
                 .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
                         pack.getId(), ContentTier.FREEMIUM);
 
-        for (int index = 1; index <= QUIZZES_PER_SUBJECT; index++) {
-            final int freemiumIndex = index;
-            Quiz quiz = existing.stream()
-                    .filter(q -> freemiumIndex == (q.getFreemiumIndex() == null ? -1 : q.getFreemiumIndex()))
-                    .findFirst()
-                    .orElseGet(() -> createQuiz(pack, subject.getName(), freemiumIndex));
+        final int freemiumIndex = 1;
+        Quiz quiz = existing.stream()
+                .filter(q -> freemiumIndex == (q.getFreemiumIndex() == null ? -1 : q.getFreemiumIndex()))
+                .findFirst()
+                .orElseGet(() -> createQuiz(pack, subject.getName(), freemiumIndex));
 
-            long activeCount = questionRepository.findByQuizIdAndBlacklistedFalse(quiz.getId()).size();
-            if (activeCount < QUESTIONS_PER_QUIZ) {
-                seedQuestions(quiz, band, subject.getName(), freemiumIndex, (int) activeCount);
-            }
+        long activeCount = questionRepository.findByQuizIdAndBlacklistedFalse(quiz.getId()).size();
+        if (activeCount < QUESTIONS_PER_QUIZ) {
+            seedQuestions(quiz, band, subject.getName(), freemiumIndex, (int) activeCount);
         }
     }
 
@@ -192,15 +194,12 @@ public class QuizBundleSeeder {
         }
     }
 
-    /** Curated bands split their per-subject bank evenly across quizzes; others share the fallback. */
+    /** Curated bands draw from their per-subject bank; others share the fallback. */
     private List<SeedQuestion> pickSource(String band, String subjectName, int freemiumIndex) {
         if (band != null) {
             List<SeedQuestion> bank = QuestionBankContent.BANK.getOrDefault(band, Map.of()).get(subjectName);
             if (bank != null && !bank.isEmpty()) {
-                int chunk = Math.max(1, bank.size() / QUIZZES_PER_SUBJECT);
-                int from = Math.max(0, (freemiumIndex - 1) * chunk);
-                int to = Math.min(bank.size(), freemiumIndex * chunk);
-                return from < to ? bank.subList(from, to) : bank;
+                return bank;
             }
         }
         return QuestionBankContent.FALLBACK_BANK;

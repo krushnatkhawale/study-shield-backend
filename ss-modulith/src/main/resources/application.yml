@@ -11,7 +11,7 @@ spring:
       minimum-idle: 0
       idle-timeout: 30000
       max-lifetime: 180000
-      leak-detection-threshold: 5000
+      leak-detection-threshold: 60000
 
   jpa:
     hibernate:
@@ -22,6 +22,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           timeout: 10000
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
         format_sql: true
     show-sql: false
 
