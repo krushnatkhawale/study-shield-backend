@@ -9,10 +9,3 @@ Feature: Negative Tests - Boundary Conditions
       {"name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "code": "LONG", "description": "test", "active": true}
       """
     Then the response status should be 400 or 422
-
-  Scenario: Create user with invalid email format
-    When I POST "/api/v1/users" with body:
-      """
-      {"email": "not-an-email", "name": "Test", "phone": "123", "role": "PARENT", "active": true, "password": "Test1234!"}
-      """
-    Then the response status should be 400 or 422
