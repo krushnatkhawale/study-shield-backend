@@ -7,6 +7,8 @@ import com.studyshield.studyshield.quizresult.service.QuizResultService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,16 +25,23 @@ public class QuizResultController {
 
     @PostMapping
     public ResponseEntity<QuizResultResponse> save(@Valid @RequestBody QuizResultRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(quizResultService.save(request));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(quizResultService.save(request, currentAccountId()));
     }
 
     @GetMapping
     public ResponseEntity<List<QuizResultListItem>> list() {
-        return ResponseEntity.ok(quizResultService.listAll());
+        return ResponseEntity.ok(quizResultService.listAll(currentAccountId()));
     }
 
     @GetMapping("/child/{childName}")
     public ResponseEntity<List<QuizResultListItem>> listByChild(@PathVariable String childName) {
-        return ResponseEntity.ok(quizResultService.listByChildName(childName));
+        return ResponseEntity.ok(quizResultService.listByChildName(currentAccountId(), childName));
+    }
+
+    private Long currentAccountId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = (String) auth.getPrincipal();
+        return Long.parseLong(userId);
     }
 }

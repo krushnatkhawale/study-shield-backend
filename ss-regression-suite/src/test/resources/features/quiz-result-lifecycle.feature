@@ -1,3 +1,4 @@
+@quiz-result-lifecycle
 Feature: Quiz Results Lifecycle
   As a mobile app user
   I want to save and retrieve quiz results
@@ -44,3 +45,17 @@ Feature: Quiz Results Lifecycle
     Given a parent user exists
     When I save a quiz result with negative score
     Then the response status should be 400
+
+  Scenario: Results are isolated between accounts
+    Given a parent user exists
+    When I save a quiz result for child "IsolatedChildA" with score 6, 10 total questions, and content "Account A Quiz"
+    Then the response status should be 201
+    When another parent user signs up
+    And I list all quiz results
+    Then the response status should be 200
+    And the response body should be a JSON array
+    And the quiz result list should not contain child "IsolatedChildA"
+    When I switch back to the original parent user
+    And I list all quiz results
+    Then the response status should be 200
+    And the quiz result list should contain child "IsolatedChildA"

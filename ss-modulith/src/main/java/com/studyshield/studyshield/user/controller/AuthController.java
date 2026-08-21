@@ -9,6 +9,7 @@ import com.studyshield.studyshield.user.dto.auth.SignUpRequest;
 import com.studyshield.studyshield.user.dto.auth.ValidationResponse;
 import com.studyshield.studyshield.user.entity.User;
 import com.studyshield.studyshield.user.security.JwtProvider;
+import com.studyshield.studyshield.user.service.ChildProfileService;
 import com.studyshield.studyshield.user.service.ParentProfileService;
 import com.studyshield.studyshield.user.service.UserService;
 import jakarta.validation.Valid;
@@ -27,13 +28,16 @@ public class AuthController {
 
     private final UserService userService;
     private final ParentProfileService parentProfileService;
+    private final ChildProfileService childProfileService;
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
 
     public AuthController(UserService userService, ParentProfileService parentProfileService,
+                          ChildProfileService childProfileService,
                           JwtProvider jwtProvider, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.parentProfileService = parentProfileService;
+        this.childProfileService = childProfileService;
         this.jwtProvider = jwtProvider;
         this.passwordEncoder = passwordEncoder;
     }
@@ -57,6 +61,7 @@ public class AuthController {
                         true));
 
         ParentProfileResponse defaultParent = parentProfileService.createDefault(saved.id(), saved.name());
+        childProfileService.createDefault(saved.id());
 
         String token = jwtProvider.generateToken(null, saved.id(), saved.email(), saved.role());
 

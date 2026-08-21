@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuizResultRepository extends JpaRepository<QuizResult, Long> {
     List<QuizResult> findByChildNameOrderByCompletedAtDesc(String childName);
     List<QuizResult> findAllByOrderByCompletedAtDesc();
+    List<QuizResult> findByAccountIdOrderByCompletedAtDesc(Long accountId);
+    List<QuizResult> findByAccountIdAndChildNameOrderByCompletedAtDesc(Long accountId, String childName);
 }

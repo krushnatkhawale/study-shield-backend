@@ -29,6 +29,8 @@ public class QuizResult {
 
     private String category;
 
+    private Long accountId;
+
     @Column(nullable = false)
     private LocalDateTime completedAt;
 
@@ -52,6 +54,8 @@ public class QuizResult {
     public void setContentName(String contentName) { this.contentName = contentName; }
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
+    public Long getAccountId() { return accountId; }
+    public void setAccountId(Long accountId) { this.accountId = accountId; }
     public LocalDateTime getCompletedAt() { return completedAt; }
     public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
     public LocalDateTime getCreatedAt() { return createdAt; }
@@ -65,6 +69,7 @@ public class QuizResult {
         private Long timeSpentSeconds;
         private String contentName;
         private String category;
+        private Long accountId;
         private LocalDateTime completedAt;
 
         public Builder childName(String childName) { this.childName = childName; return this; }
@@ -73,6 +78,7 @@ public class QuizResult {
         public Builder timeSpentSeconds(Long timeSpentSeconds) { this.timeSpentSeconds = timeSpentSeconds; return this; }
         public Builder contentName(String contentName) { this.contentName = contentName; return this; }
         public Builder category(String category) { this.category = category; return this; }
+        public Builder accountId(Long accountId) { this.accountId = accountId; return this; }
         public Builder completedAt(LocalDateTime completedAt) { this.completedAt = completedAt; return this; }
 
         public QuizResult build() {
@@ -83,6 +89,7 @@ public class QuizResult {
             qr.timeSpentSeconds = this.timeSpentSeconds;
             qr.contentName = this.contentName;
             qr.category = this.category;
+            qr.accountId = this.accountId;
             qr.completedAt = this.completedAt;
             return qr;
         }

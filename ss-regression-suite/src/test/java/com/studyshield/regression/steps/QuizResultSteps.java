@@ -1,7 +1,9 @@
 package com.studyshield.regression.steps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.studyshield.regression.client.AuthApi;
 import com.studyshield.regression.client.QuizResultApi;
+import com.studyshield.regression.context.AuthContext;
 import com.studyshield.regression.context.ScenarioContext;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -14,12 +16,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuizResultSteps {
 
+    private static final String TEST_PASSWORD = "Test1234!";
+
     private final QuizResultApi quizResultApi;
+    private final AuthApi authApi;
+    private final AuthContext authContext;
     private final ScenarioContext context;
     private final ObjectMapper mapper = new ObjectMapper();
+    private String tokenBeforeSecondUser;
 
-    public QuizResultSteps(QuizResultApi quizResultApi, ScenarioContext context) {
+    public QuizResultSteps(QuizResultApi quizResultApi, AuthApi authApi,
+                           AuthContext authContext, ScenarioContext context) {
         this.quizResultApi = quizResultApi;
+        this.authApi = authApi;
+        this.authContext = authContext;
         this.context = context;
     }
 
@@ -117,7 +127,7 @@ public class QuizResultSteps {
         assertThat(errorCode).isNull();
     }
 
-    @Then("the quiz result list should contain at least {int} result(s)")
+    @Then("the quiz result list should contain at least {int} result\\(s)")
     public void theQuizResultListShouldContainAtLeastResults(int minSize) {
         Response response = context.getLastResponse();
         java.util.List<?> results = response.jsonPath().getList("$");
@@ -139,6 +149,32 @@ public class QuizResultSteps {
         Response response = context.getLastResponse();
         java.util.List<String> childNames = response.jsonPath().getList("childName");
         assertThat(childNames).contains(childName);
+    }
+
+    @When("another parent user signs up")
+    public void anotherParentUserSignsUp() {
+        tokenBeforeSecondUser = authContext.getJwtToken();
+        String email = context.uniqueName("second_parent@test.com");
+        Response response = authApi.signUp(email, TEST_PASSWORD, context.uniqueName("Second Parent"));
+        assertThat(response.getStatusCode())
+                .as("Second parent signup failed: {}", response.getBody().asString())
+                .isEqualTo(200);
+        authContext.setJwtToken(response.jsonPath().getString("sessionId"));
+    }
+
+    @When("I switch back to the original parent user")
+    public void iSwitchBackToTheOriginalParentUser() {
+        assertThat(tokenBeforeSecondUser).isNotNull();
+        authContext.setJwtToken(tokenBeforeSecondUser);
+    }
+
+    @Then("the quiz result list should not contain child {string}")
+    public void theQuizResultListShouldNotContainChild(String childName) {
+        Response response = context.getLastResponse();
+        java.util.List<String> childNames = response.jsonPath().getList("childName");
+        assertThat(childNames == null ? java.util.List.<String>of() : childNames)
+                .as("Results of another account must not be visible")
+                .doesNotContain(childName);
     }
 
     private void updateContext(Response response) {

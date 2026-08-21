@@ -23,7 +23,7 @@ public class QuizResultService {
         this.quizResultRepository = quizResultRepository;
     }
 
-    public QuizResultResponse save(QuizResultRequest request) {
+    public QuizResultResponse save(QuizResultRequest request, Long accountId) {
         LocalDateTime completedAt = Instant.ofEpochMilli(request.completedAt())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
@@ -35,6 +35,7 @@ public class QuizResultService {
                 .timeSpentSeconds(request.timeSpentSeconds())
                 .contentName(request.contentName())
                 .category(request.category())
+                .accountId(accountId)
                 .completedAt(completedAt)
                 .build();
 
@@ -43,15 +44,15 @@ public class QuizResultService {
     }
 
     @Transactional(readOnly = true)
-    public List<QuizResultListItem> listAll() {
-        return quizResultRepository.findAllByOrderByCompletedAtDesc().stream()
+    public List<QuizResultListItem> listAll(Long accountId) {
+        return quizResultRepository.findByAccountIdOrderByCompletedAtDesc(accountId).stream()
                 .map(this::mapToListItem)
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public List<QuizResultListItem> listByChildName(String childName) {
-        return quizResultRepository.findByChildNameOrderByCompletedAtDesc(childName).stream()
+    public List<QuizResultListItem> listByChildName(Long accountId, String childName) {
+        return quizResultRepository.findByAccountIdAndChildNameOrderByCompletedAtDesc(accountId, childName).stream()
                 .map(this::mapToListItem)
                 .toList();
     }

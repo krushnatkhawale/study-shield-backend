@@ -7,6 +7,7 @@ import com.studyshield.regression.context.AuthContext;
 import com.studyshield.regression.context.ScenarioContext;
 import com.studyshield.regression.support.IdRegistry;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 
@@ -157,6 +158,24 @@ public class UserSteps {
     public void iGetChildrenForCurrentUser() {
         Response response = userApi.getChildrenByUser(context.getCurrentUserId());
         updateContext(response);
+    }
+
+    @Then("the student list should contain kid {string} with class {string}")
+    public void theStudentListShouldContainKidWithClass(String name, String studentClass) {
+        Response response = context.getLastResponse();
+        assertThat(response)
+                .as("No response captured. A When step must run before this Then step.")
+                .isNotNull();
+        java.util.List<java.util.Map<String, Object>> students = response.jsonPath().getList("");
+        assertThat(students)
+                .as("Expected a JSON array of students but got: %s", response.getBody().asString())
+                .isNotNull();
+        boolean found = students.stream().anyMatch(s ->
+                name.equals(s.get("name")) && studentClass.equals(s.get("studentClass")));
+        assertThat(found)
+                .as("Expected a student named %s with class %s in: %s",
+                        name, studentClass, response.getBody().asString())
+                .isTrue();
     }
 
     private void updateContext(Response response) {

@@ -16,12 +16,32 @@ import java.util.List;
 @Transactional
 public class ChildProfileService {
 
+    public static final String DEFAULT_KID_NAME = "Kid1";
+    public static final String DEFAULT_KID_CLASS = "Exp";
+
     private final ChildProfileRepository childProfileRepository;
     private final UserRepository userRepository;
 
     public ChildProfileService(ChildProfileRepository childProfileRepository, UserRepository userRepository) {
         this.childProfileRepository = childProfileRepository;
         this.userRepository = userRepository;
+    }
+
+    /**
+     * Creates the default kid profile ("Kid1", class "Exp") for a newly registered account,
+     * mirroring the default parent profile. The "Exp" class maps to hello-world/promo content
+     * so there is always something safe to run before real kid details are provided.
+     */
+    public ChildProfileResponse createDefault(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
+        ChildProfile cp = ChildProfile.builder()
+                .name(DEFAULT_KID_NAME)
+                .user(user)
+                .studentClass(DEFAULT_KID_CLASS)
+                .active(true)
+                .build();
+        return mapToResponse(childProfileRepository.save(cp));
     }
 
     public ChildProfileResponse create(ChildProfileRequest request) {

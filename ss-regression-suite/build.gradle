@@ -22,7 +22,10 @@ dependencies {
 
 tasks.named('test', Test) {
     useJUnitPlatform()
-    systemProperty 'cucumber.filter.tags', System.getenv('CUCUMBER_FILTER_TAGS') ?: 'not @wip'
+    systemProperty 'cucumber.filter.tags',
+            System.getenv('CUCUMBER_FILTER_TAGS')
+                    ?: project.findProperty('cucumberTags')
+                    ?: 'not @wip'
     systemProperty 'allure.results.directory', 'build/allure-results'
     systemProperty 'cucumber.publish.quiet', 'true'
     reports {

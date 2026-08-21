@@ -9,6 +9,12 @@ Feature: Student Mobile API
     Then the response status should be 200
     And the response body should be a JSON array
 
+  Scenario: Signup creates a default kid profile with Exp class
+    Given I am authenticated as a parent user
+    When I GET "/api/students"
+    Then the response status should be 200
+    And the student list should contain kid "Kid1" with class "Exp"
+
   Scenario: Create a student via mobile endpoint
     When I POST "/api/students" with body:
       """

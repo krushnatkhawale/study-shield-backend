@@ -12,6 +12,6 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "com.studyshield.regression")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "pretty")
 @ConfigurationParameter(key = Constants.FILTER_TAGS_PROPERTY_NAME, value = "not @WIP")
-@ConfigurationParameter(key = Constants.SNIPPET_TYPE_PROPERTY_NAME, value = "PRETTY")
+@ConfigurationParameter(key = Constants.SNIPPET_TYPE_PROPERTY_NAME, value = "underscore")
 public class CucumberTest {
 }
