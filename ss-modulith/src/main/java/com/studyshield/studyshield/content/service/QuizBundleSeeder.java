@@ -66,10 +66,10 @@ public class QuizBundleSeeder {
                 .orElseGet(() -> createClassGrade(board, className));
 
         List<Subject> subjects = subjectRepository.findByClassGradeId(classGrade.getId());
-        if (subjects.isEmpty()) {
-            subjects = createDefaultSubjects(classGrade);
-        }
         String band = QuestionBankContent.bandForClassName(classGrade.getName());
+        if (subjects.isEmpty()) {
+            subjects = createDefaultSubjects(classGrade, band);
+        }
 
         for (Subject subject : subjects) {
             ensureQuizBundleForSubject(subject, band);
@@ -100,9 +100,13 @@ public class QuizBundleSeeder {
                 .build());
     }
 
-    private List<Subject> createDefaultSubjects(ClassGrade classGrade) {
+    private List<Subject> createDefaultSubjects(ClassGrade classGrade, String band) {
+        List<String> subjectNames = curatedSubjectNames(band);
+        if (subjectNames.isEmpty()) {
+            subjectNames = DEFAULT_SUBJECTS;
+        }
         List<Subject> created = new ArrayList<>();
-        for (String subjectName : DEFAULT_SUBJECTS) {
+        for (String subjectName : subjectNames) {
             String code = subjectName.toUpperCase().replace(" ", "_");
             created.add(subjectRepository.save(Subject.builder()
                     .name(subjectName)
@@ -112,6 +116,12 @@ public class QuizBundleSeeder {
                     .build()));
         }
         return created;
+    }
+
+    /** Subject names from a curated band's bank, so e.g. Exp gets only its Welcome subject. */
+    private List<String> curatedSubjectNames(String band) {
+        if (band == null) return List.of();
+        return List.copyOf(QuestionBankContent.BANK.getOrDefault(band, Map.of()).keySet());
     }
 
     private void ensureQuizBundleForSubject(Subject subject, String band) {

@@ -79,6 +79,21 @@ class QuestionBankContentTest {
     }
 
     @Test
+    void theExpPromoBandHasEnoughQuestionsForEveryQuiz() {
+        var welcome = QuestionBankContent.BANK.get(QuestionBankContent.BAND_EXP).get("Welcome");
+        assertThat(welcome).as("Exp Welcome bank").isNotNull();
+        // 5 freemium quizzes, at least 3 active questions each before a session can start
+        assertThat(welcome.size()).isGreaterThanOrEqualTo(15);
+    }
+
+    @Test
+    void expIsRecognizedAsACuratedBand() {
+        assertThat(QuestionBankContent.bandForClassName("Exp")).isEqualTo(QuestionBankContent.BAND_EXP);
+        assertThat(QuestionBankContent.bandForClassName("exp")).isEqualTo(QuestionBankContent.BAND_EXP);
+        assertThat(QuestionBankContent.bandForClassName("Experimental")).isEqualTo(QuestionBankContent.BAND_EXP);
+    }
+
+    @Test
     void theFallbackBankIsRealAndUsableSoSessionsNeverStartEmpty() {
         assertThat(QuestionBankContent.FALLBACK_BANK.size()).isGreaterThanOrEqualTo(10);
         for (QuestionBankContent.SeedQuestion q : QuestionBankContent.FALLBACK_BANK) {

@@ -28,6 +28,7 @@ public final class QuestionBankContent {
 
     public static final String BAND_SR_KG = "Sr KG";
     public static final String BAND_CLASS_1 = "Class 1";
+    public static final String BAND_EXP = "Exp";
 
     /** Maps a normalized class name to its band key, or null when no curated bank exists. */
     public static String bandForClassName(String normalizedClassName) {
@@ -35,6 +36,7 @@ public final class QuestionBankContent {
         String t = normalizedClassName.trim().toLowerCase(Locale.ROOT);
         if (t.contains("sr") || t.contains("senior") || t.contains("ukg")) return BAND_SR_KG;
         if (t.equals("class 1") || t.equals("grade 1") || t.equals("std 1") || t.equals("1")) return BAND_CLASS_1;
+        if (t.equals("exp") || t.equals("experimental") || t.equals("promo")) return BAND_EXP;
         return null;
     }
 
@@ -195,6 +197,25 @@ public final class QuestionBankContent {
                             mcq("Green light on traffic signals means…", "Go", "Stop", "Wait", "Turn back"),
                             mcq("Who repairs our cars?", "Mechanic", "Doctor", "Teacher", "Farmer"),
                             tf("We should not go with strangers.", true)
+                    )
+            ),
+            BAND_EXP, Map.of(
+                    "Welcome", List.of(
+                            mcq("What does StudyShield turn your TV time into?", "Learning time", "Sleeping time", "Arguing time", "Advertising time"),
+                            mcq("Which profile setting unlocks tests for your own class?", "My kid profile (class and syllabus)", "The Wi-Fi password", "The TV remote batteries", "Screen brightness"),
+                            mcq("When do StudyShield quizzes appear on the TV?", "During TV ad breaks", "Only at midnight", "Never", "After bedtime"),
+                            mcq("Who can update a kid's class profile?", "A parent", "The TV", "The remote control", "Nobody"),
+                            mcq("What appears once your class profile is set?", "Tests for my real class appear", "Nothing changes", "The TV stops working", "The app deletes itself"),
+                            mcq("Which one of these is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
+                            mcq("Which number comes right after 4?", "5", "3", "6", "40"),
+                            mcq("Which animal says 'meow'?", "Cat", "Dog", "Cow", "Lion"),
+                            mcq("What colour is the sky on a clear day?", "Blue", "Green", "Black", "Pink"),
+                            mcq("How many days are there in a week?", "7", "5", "10", "2"),
+                            mcq("Which body part helps us walk?", "Legs", "Ears", "Eyes", "Nose"),
+                            mcq("What is 2 + 2?", "4", "3", "5", "22"),
+                            mcq("Which one of these is a vehicle?", "Bus", "Mango", "Chair", "Cloud"),
+                            mcq("We read books to…", "Learn new things", "Forget everything", "Lose friends", "Break the TV"),
+                            mcq("StudyShield quizzes are…", "Fun learning breaks", "Punishments", "Commercials", "Homework for parents")
                     )
             ));
 
