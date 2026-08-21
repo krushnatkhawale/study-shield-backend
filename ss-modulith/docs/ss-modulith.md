@@ -80,6 +80,13 @@ Single deployable Spring Boot application containing all business modules. Repla
 - `V4__tv_schema.sql` - TV device tables
 - `V5__schema_changes.sql` - Drop grade_number, rename freemium_packs→quiz_bundles, add superseded_by_id, add version columns
 
+## Question Bank (issue #1)
+- `content/seed/QuestionBankContent.java` — curated seed bank: 120 real questions across two age bands (**Sr KG**, **Class 1**) × four subjects (Math, EVS, English, General Knowledge), SINGLE_CHOICE + TRUE_FALSE only.
+- `QuizBundleSeeder` fills freemium quizzes from the curated bank (3 questions per quiz for known bands); any class without a curated band is topped up from a real **fallback bank** so a session never starts empty.
+- Filtering: bundles are per class (via ClassGrade → Subjects → ContentPacks → Quizzes). If a bundle request omits `className` and supplies `age`, the class band is derived from the child's age (≤5 → Sr KG, ≤7 → Class 1).
+- A freemium quiz needs ≥ 3 active questions (`QuizBundleService.MIN_ACTIVE_QUESTIONS_PER_QUIZ`) for a session to start; otherwise it fails fast unless `allowPartial=true`.
+- Adding questions later: append to `QuestionBankContent` or use the content admin APIs (`/api/v1/questions`).
+
 ## Configuration
 - `spring.jpa.hibernate.ddl-auto=validate` (Flyway manages schema)
 - `spring.flyway.schemas=public,content,user_,quiz,tv`

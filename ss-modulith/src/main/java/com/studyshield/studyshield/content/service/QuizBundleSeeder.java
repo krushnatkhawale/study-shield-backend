@@ -2,6 +2,8 @@ package com.studyshield.studyshield.content.service;
 
 import com.studyshield.studyshield.content.entity.*;
 import com.studyshield.studyshield.content.repository.*;
+import com.studyshield.studyshield.content.seed.QuestionBankContent;
+import com.studyshield.studyshield.content.seed.QuestionBankContent.SeedQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -9,9 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * Ensures freemium catalog exists for a class: subjects with 5 FREEMIUM quizzes × 10 questions.
+ * Ensures freemium catalog exists for a class: subjects with 5 FREEMIUM quizzes.
+ * <p>
+ * Curated bands ({@code Sr KG}, {@code Class 1}) are seeded from {@link QuestionBankContent}
+ * (real age-appropriate questions); any other class is topped up from a real fallback bank so a
+ * session never starts empty.
  */
 @Service
 public class QuizBundleSeeder {
@@ -58,12 +66,13 @@ public class QuizBundleSeeder {
                 .orElseGet(() -> createClassGrade(board, className));
 
         List<Subject> subjects = subjectRepository.findByClassGradeId(classGrade.getId());
+        String band = QuestionBankContent.bandForClassName(classGrade.getName());
         if (subjects.isEmpty()) {
-            subjects = createDefaultSubjects(classGrade);
+            subjects = createDefaultSubjects(classGrade, band);
         }
 
         for (Subject subject : subjects) {
-            ensureQuizBundleForSubject(subject);
+            ensureQuizBundleForSubject(subject, band);
         }
         return classGrade;
     }
@@ -91,9 +100,13 @@ public class QuizBundleSeeder {
                 .build());
     }
 
-    private List<Subject> createDefaultSubjects(ClassGrade classGrade) {
+    private List<Subject> createDefaultSubjects(ClassGrade classGrade, String band) {
+        List<String> subjectNames = curatedSubjectNames(band);
+        if (subjectNames.isEmpty()) {
+            subjectNames = DEFAULT_SUBJECTS;
+        }
         List<Subject> created = new ArrayList<>();
-        for (String subjectName : DEFAULT_SUBJECTS) {
+        for (String subjectName : subjectNames) {
             String code = subjectName.toUpperCase().replace(" ", "_");
             created.add(subjectRepository.save(Subject.builder()
                     .name(subjectName)
@@ -105,7 +118,13 @@ public class QuizBundleSeeder {
         return created;
     }
 
-    private void ensureQuizBundleForSubject(Subject subject) {
+    /** Subject names from a curated band's bank, so e.g. Exp gets only its Welcome subject. */
+    private List<String> curatedSubjectNames(String band) {
+        if (band == null) return List.of();
+        return List.copyOf(QuestionBankContent.BANK.getOrDefault(band, Map.of()).keySet());
+    }
+
+    private void ensureQuizBundleForSubject(Subject subject, String band) {
         ContentPack pack = contentPackRepository.findBySubjectId(subject.getId()).stream()
                 .filter(ContentPack::isActive)
                 .filter(p -> p.getName() != null && p.getName().toLowerCase().contains("freemium"))
@@ -131,7 +150,7 @@ public class QuizBundleSeeder {
 
             long activeCount = questionRepository.findByQuizIdAndBlacklistedFalse(quiz.getId()).size();
             if (activeCount < QUESTIONS_PER_QUIZ) {
-                seedQuestions(quiz, subject.getName(), freemiumIndex, (int) activeCount);
+                seedQuestions(quiz, band, subject.getName(), freemiumIndex, (int) activeCount);
             }
         }
     }
@@ -150,36 +169,84 @@ public class QuizBundleSeeder {
                 .build());
     }
 
-    private void seedQuestions(Quiz quiz, String subjectName, int freemiumIndex, int startOrder) {
+    /**
+     * Fill a quiz from the curated bank (3 real questions per quiz for known bands) or the
+     * real fallback bank (full 10 per quiz) so every session has usable, age-appropriate content.
+     */
+    private void seedQuestions(Quiz quiz, String band, String subjectName, int freemiumIndex, int activeCount) {
+        List<SeedQuestion> source = pickSource(band, subjectName, freemiumIndex);
+        int slots = Math.min(QUESTIONS_PER_QUIZ, source.size());
         List<Question> batch = new ArrayList<>();
-        for (int i = startOrder; i < QUESTIONS_PER_QUIZ; i++) {
-            int n = i + 1;
-            String resourceId = "seed_" + subjectName.toLowerCase().replace(" ", "_")
-                    + "_q" + freemiumIndex + "_" + n;
-            List<QuestionOption> options = List.of(
-                    new QuestionOption("a", "Option A for " + subjectName + " #" + n, null),
-                    new QuestionOption("b", "Option B for " + subjectName + " #" + n, null),
-                    new QuestionOption("c", "Option C for " + subjectName + " #" + n, null),
-                    new QuestionOption("d", "Option D for " + subjectName + " #" + n, null)
-            );
-            batch.add(Question.builder()
-                    .resourceId(resourceId)
-                    .questionText("[" + subjectName + "] Sample question " + n + " (quiz " + freemiumIndex + ")?")
-                    .questionType(QuestionType.SINGLE_CHOICE)
-                    .options(options)
-                    .correctAnswers(List.of("a"))
-                    .points(1)
-                    .difficulty(Difficulty.EASY)
-                    .languages(List.of("English"))
-                    .tags(List.of("seed", subjectName.toLowerCase()))
-                    .quiz(quiz)
-                    .orderIndex(i)
-                    .blacklisted(false)
-                    .build());
+        String bandSlug = band == null ? "common" : slug(band);
+
+        for (int order = activeCount; order < slots; order++) {
+            SeedQuestion sq = source.get(order % source.size());
+            int n = order + 1;
+            batch.add(toQuestion(sq, quiz, "qb_" + bandSlug + "_" + slug(subjectName)
+                    + "_q" + freemiumIndex + "_" + n, order));
         }
         if (!batch.isEmpty()) {
             questionRepository.saveAll(batch);
+            log.info("[QuestionBank] Seeded {} curated/fallback questions into quiz {} ({}/{})",
+                    batch.size(), quiz.getId(), slots, subjectName);
         }
+    }
+
+    /** Curated bands split their per-subject bank evenly across quizzes; others share the fallback. */
+    private List<SeedQuestion> pickSource(String band, String subjectName, int freemiumIndex) {
+        if (band != null) {
+            List<SeedQuestion> bank = QuestionBankContent.BANK.getOrDefault(band, Map.of()).get(subjectName);
+            if (bank != null && !bank.isEmpty()) {
+                int chunk = Math.max(1, bank.size() / QUIZZES_PER_SUBJECT);
+                int from = Math.max(0, (freemiumIndex - 1) * chunk);
+                int to = Math.min(bank.size(), freemiumIndex * chunk);
+                return from < to ? bank.subList(from, to) : bank;
+            }
+        }
+        return QuestionBankContent.FALLBACK_BANK;
+    }
+
+    private Question toQuestion(SeedQuestion sq, Quiz quiz, String resourceId, int orderIndex) {
+        boolean tf = sq.trueFalse();
+        List<String> texts = sq.options();
+        List<QuestionOption> options = new ArrayList<>();
+        for (int i = 0; i < texts.size(); i++) {
+            options.add(new QuestionOption(OPTION_IDS.get(i), texts.get(i), null));
+        }
+        String correctId = correctOptionId(options, sq.correct());
+        return Question.builder()
+                .resourceId(resourceId)
+                .questionText(sq.text())
+                .questionType(tf ? QuestionType.TRUE_FALSE : QuestionType.SINGLE_CHOICE)
+                .options(options)
+                .correctAnswers(List.of(correctId))
+                .correctOption(correctId.toUpperCase(Locale.ROOT))
+                .optionA(texts.size() > 0 ? texts.get(0) : "")
+                .optionB(texts.size() > 1 ? texts.get(1) : "")
+                .optionC(texts.size() > 2 ? texts.get(2) : "")
+                .optionD(texts.size() > 3 ? texts.get(3) : "")
+                .points(1)
+                .difficulty(Difficulty.EASY)
+                .languages(List.of("English"))
+                .tags(List.of("question-bank", tf ? "true-false" : "single-choice"))
+                .quiz(quiz)
+                .orderIndex(orderIndex)
+                .blacklisted(false)
+                .build();
+    }
+
+    private static final List<String> OPTION_IDS = List.of("a", "b", "c", "d");
+
+    private static String correctOptionId(List<QuestionOption> options, String correctText) {
+        return options.stream()
+                .filter(o -> o.getText() != null && o.getText().equals(correctText))
+                .map(QuestionOption::getId)
+                .findFirst()
+                .orElse(options.get(0).getId());
+    }
+
+    private static String slug(String value) {
+        return value.toLowerCase(Locale.ROOT).replace(" ", "_").replaceAll("[^a-z0-9_]", "");
     }
 
     static String normalizeClassName(String className) {
