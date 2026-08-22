@@ -12,5 +12,5 @@ ALTER TABLE content.questions ADD CONSTRAINT fk_questions_superseded_by
     FOREIGN KEY (superseded_by_id) REFERENCES content.questions(id);
 
 -- 4. Add version column for optimistic locking
-ALTER TABLE public.users ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE public.quiz_attempts ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE user_.users ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE quiz.quiz_attempts ADD COLUMN version INTEGER NOT NULL DEFAULT 0;

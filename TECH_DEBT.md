@@ -31,3 +31,25 @@ after the move.
 
 - `POST /api/v1/quiz-bundles` completes in < 2s even for an unseen class.
 - No HikariCP leak warnings during seeding.
+
+## TD-4: Migrations assumed stale `public.*` tables; seeding now flag-gated (2026-08-22)
+
+Fresh-database rebuild exposed two issues:
+
+- V5 and V7 referenced `public.users` / `public.quiz_attempts` — tables that only
+  existed because Hibernate `ddl-auto: update` had created them before Flyway was
+  introduced. Fixed to point at the canonical `user_.users` and `quiz.quiz_attempts`.
+  The dev DB was dropped (`content`, `user_`, `quiz`, `tv`, `public` schemas) and
+  rebuilt from V1–V9; all migrations now run clean on an empty database.
+- `CatalogStartupSeeder` is gated by `app.catalog-seeding.enabled` (default `true`);
+  the dev DB currently runs with it disabled per product decision — catalog is empty
+  until data is set up deliberately.
+
+### Follow-ups
+
+- Hibernate re-creates duplicate copies of every table in `public` because entities
+  don't pin a schema. Set the default schema or add `@Table(schema=...)` and switch
+  `ddl-auto` to `validate`.
+- `POST /api/v1/users` accepts malformed emails (201) — add bean validation.
+- Regression scenarios "Issue quiz bundle seeds catalog..." assert auto-seeding;
+  update them for the flag-gated behavior.

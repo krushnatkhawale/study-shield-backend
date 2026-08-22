@@ -1,6 +1,7 @@
 package com.studyshield.studyshield.content.seed;
 
 import com.studyshield.studyshield.content.service.QuizBundleSeeder;
+import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -24,12 +25,19 @@ public class CatalogStartupSeeder implements ApplicationRunner {
 
     private final QuizBundleSeeder quizBundleSeeder;
 
+    @Value("${app.catalog-seeding.enabled:true}")
+    private boolean seedingEnabled;
+
     public CatalogStartupSeeder(QuizBundleSeeder quizBundleSeeder) {
         this.quizBundleSeeder = quizBundleSeeder;
     }
 
     @Override
     public void run(ApplicationArguments args) {
+        if (!seedingEnabled) {
+            log.info("[CatalogSeed] Disabled via app.catalog-seeding.enabled=false — skipping");
+            return;
+        }
         List<String> bands = QuestionBankContent.BANK.keySet().stream().toList();
         long start = System.currentTimeMillis();
         for (String className : bands) {

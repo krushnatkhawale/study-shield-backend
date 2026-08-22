@@ -14,13 +14,13 @@ END $$;
 
 -- Ensure version columns exist (V5 may have partially failed)
 DO $$ BEGIN
-    ALTER TABLE public.users ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE user_.users ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
 EXCEPTION WHEN duplicate_column THEN
     -- already exists
 END $$;
 
 DO $$ BEGIN
-    ALTER TABLE public.quiz_attempts ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE quiz.quiz_attempts ADD COLUMN version INTEGER NOT NULL DEFAULT 0;
 EXCEPTION WHEN duplicate_column THEN
     -- already exists
 END $$;
