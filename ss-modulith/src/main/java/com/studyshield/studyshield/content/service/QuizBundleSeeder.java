@@ -207,7 +207,11 @@ public class QuizBundleSeeder {
 
     private Question toQuestion(SeedQuestion sq, Quiz quiz, String resourceId, int orderIndex) {
         boolean tf = sq.trueFalse();
-        List<String> texts = sq.options();
+        List<String> texts = new ArrayList<>(sq.options());
+        if (!tf && texts.size() > 1) {
+            // Correct answer must not always sit at position A
+            java.util.Collections.shuffle(texts);
+        }
         List<QuestionOption> options = new ArrayList<>();
         for (int i = 0; i < texts.size(); i++) {
             options.add(new QuestionOption(OPTION_IDS.get(i), texts.get(i), null));
