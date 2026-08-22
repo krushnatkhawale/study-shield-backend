@@ -81,7 +81,7 @@ Single deployable Spring Boot application containing all business modules. Repla
 - `V5__schema_changes.sql` - Drop grade_number, rename freemium_packs→quiz_bundles, add superseded_by_id, add version columns
 
 ## Question Bank (issue #1)
-- `content/seed/QuestionBankContent.java` — curated seed bank: 120 real questions across two age bands (**Sr KG**, **Class 1**) × four subjects (Math, EVS, English, General Knowledge), SINGLE_CHOICE + TRUE_FALSE only.
+- `content/seed/QuestionBankContent.java` — curated seed bank: **Sr KG** and **Class 1–10**, four subjects each (Math, EVS, English, General Knowledge), 10 questions per subject per class (~475 total). Class 2–10 difficulty ramps to board level (algebra, trigonometry, electricity, civics); content follows the common CBSE/ICSE core on the board-agnostic ALL board.
 - `QuizBundleSeeder` fills freemium quizzes from the curated bank (3 questions per quiz for known bands); any class without a curated band is topped up from a real **fallback bank** so a session never starts empty.
 - Filtering: bundles are per class (via ClassGrade → Subjects → ContentPacks → Quizzes). If a bundle request omits `className` and supplies `age`, the class band is derived from the child's age (≤5 → Sr KG, ≤7 → Class 1).
 - A freemium quiz needs ≥ 3 active questions (`QuizBundleService.MIN_ACTIVE_QUESTIONS_PER_QUIZ`) for a session to start; otherwise it fails fast unless `allowPartial=true`.

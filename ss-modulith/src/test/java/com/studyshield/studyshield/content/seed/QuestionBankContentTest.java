@@ -15,12 +15,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 class QuestionBankContentTest {
 
     @Test
-    void theBankHasEnoughQuestionsForTheTwoAgeBands() {
+    void theBankHasEnoughQuestionsForAllCuratedBands() {
         long total = QuestionBankContent.BANK.values().stream()
                 .flatMap(s -> s.values().stream())
                 .mapToLong(List::size)
                 .sum();
-        assertThat(total).as("total curated questions across Sr KG and Class 1").isBetween(80L, 150L);
+        assertThat(total).as("total curated questions across all bands").isGreaterThanOrEqualTo(400L);
+    }
+
+    @Test
+    void everyClassBandFrom2To10CoversAllFourSubjects() {
+        for (int n = QuestionBankContent.MIN_CURATED_CLASS; n <= QuestionBankContent.MAX_CURATED_CLASS; n++) {
+            var band = QuestionBankContent.BANK.get("Class " + n);
+            assertThat(band).as("band Class %d", n).isNotNull();
+            assertThat(band).as("subjects of Class %d", n)
+                    .containsKeys("Math", "EVS", "English", "General Knowledge");
+        }
+    }
+
+    @Test
+    void everyClassBandHasAtLeastTenQuestionsPerSubjectSoQuizzesFillUp() {
+        for (String bandKey : QuestionBankContent.CLASS_BANDS) {
+            for (var bank : QuestionBankContent.BANK.get(bandKey).values()) {
+                assertThat(bank.size()).as("questions in %s", bandKey).isGreaterThanOrEqualTo(10);
+            }
+        }
     }
 
     @Test
@@ -91,6 +110,14 @@ class QuestionBankContentTest {
         assertThat(QuestionBankContent.bandForClassName("Exp")).isEqualTo(QuestionBankContent.BAND_EXP);
         assertThat(QuestionBankContent.bandForClassName("exp")).isEqualTo(QuestionBankContent.BAND_EXP);
         assertThat(QuestionBankContent.bandForClassName("Experimental")).isEqualTo(QuestionBankContent.BAND_EXP);
+    }
+
+    @Test
+    void classes2To10AreRecognizedAsCuratedBands() {
+        assertThat(QuestionBankContent.bandForClassName("Class 2")).isEqualTo("Class 2");
+        assertThat(QuestionBankContent.bandForClassName("grade 7")).isEqualTo("Class 7");
+        assertThat(QuestionBankContent.bandForClassName("std 10")).isEqualTo("Class 10");
+        assertThat(QuestionBankContent.bandForClassName("10")).isEqualTo("Class 10");
     }
 
     @Test

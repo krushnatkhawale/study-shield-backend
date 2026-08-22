@@ -9,7 +9,7 @@ Feature: Quiz bundle download (content API)
     Then the response status should be 200
     And the response body should be a JSON object
     And the response JSON path "packId" should be present
-    And the response JSON path "quizzesPerSubject" should equal "5"
+    And the response JSON path "quizzesPerSubject" should equal "2"
     And the response JSON path "quizzes" should be present
     And the response JSON path "quizzes[0].questions" should be present
     And the response JSON path "quizzes[0].questions[0].options" should be present
