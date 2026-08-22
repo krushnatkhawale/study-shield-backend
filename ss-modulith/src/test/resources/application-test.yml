@@ -11,9 +11,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        default_schema: PUBLIC
     show-sql: false
-  flyway:
-    enabled: false
   sql:
     init:
       mode: never

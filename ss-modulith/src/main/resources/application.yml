@@ -19,6 +19,7 @@ spring:
     open-in-view: false
     properties:
       hibernate:
+        default_schema: '"ss-dev"'
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           timeout: 10000
@@ -28,14 +29,10 @@ spring:
         format_sql: true
     show-sql: false
 
-  flyway:
-    enabled: true
-    schemas: public, content, user_, quiz, tv
-    locations: classpath:db/migration
-
   sql:
     init:
-      mode: never
+      mode: always
+      schema-locations: classpath:sql/schema.sql
 
   security:
     jwt:
