@@ -25,6 +25,12 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(questionService.create(request));
     }
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<QuestionResponse>> createBulk(@Valid @RequestBody List<QuestionRequest> requests) {
+        List<QuestionResponse> created = requests.stream().map(questionService::create).toList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<QuestionResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(questionService.getById(id));
