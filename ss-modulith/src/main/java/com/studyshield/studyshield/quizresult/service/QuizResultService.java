@@ -37,6 +37,7 @@ public class QuizResultService {
                 .category(request.category())
                 .accountId(accountId)
                 .completedAt(completedAt)
+                .fastAnswerCount(request.fastAnswerCount() == null ? 0 : request.fastAnswerCount())
                 .build();
 
         QuizResult saved = quizResultRepository.save(quizResult);
@@ -67,7 +68,8 @@ public class QuizResultService {
                 qr.getContentName(),
                 qr.getCategory(),
                 qr.getCompletedAt(),
-                qr.getCreatedAt()
+                qr.getCreatedAt(),
+                qr.getFastAnswerCount()
         );
     }
 }

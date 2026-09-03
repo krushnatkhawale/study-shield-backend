@@ -11,5 +11,6 @@ public record QuizResultListItem(
     String contentName,
     String category,
     LocalDateTime completedAt,
-    LocalDateTime createdAt
+    LocalDateTime createdAt,
+    Integer fastAnswerCount
 ) {}

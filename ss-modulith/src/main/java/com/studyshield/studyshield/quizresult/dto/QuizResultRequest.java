@@ -11,5 +11,6 @@ public record QuizResultRequest(
     @NotNull @Min(0) Long timeSpentSeconds,
     String contentName,
     String category,
-    @NotNull Long completedAt
+    @NotNull Long completedAt,
+    Integer fastAnswerCount
 ) {}

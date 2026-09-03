@@ -38,6 +38,16 @@ Single deployable Spring Boot application containing all business modules. Repla
 - **API Paths**: `/api/v1/quiz-attempts/**`, `/api/v1/attempt-answers/**`
 - **Dependencies**: content, user (for ID references)
 
+### feedback/ (Question Review / Feedback Module)
+- **Entities**: QuestionFeedback (`question_feedback` table, unique `(account_id, question_id)`)
+- **Enums**: FeedbackVote (`UP`/`DOWN`/`NONE`), DownCategory (`WRONG_ANSWER`/`TYPO`/`OFFENSIVE`/`OTHER`)
+- **DTOs**: QuestionFeedbackRequest, QuestionFeedbackResponse
+- **Controllers**: QuestionFeedbackController (mounted on `/api/v1/questions` alongside `QuestionController`)
+- **API Paths**: `PUT /api/v1/questions/{id}/feedback`, `GET /api/v1/questions/{id}/feedback`
+- **Dependencies**: content (validates the question exists via `QuestionRepository`)
+- **Behavior**: upserts one feedback row per (user, question); report requires a comment; clearing a vote = send `vote=NONE`. Offline-first on mobile via a pending queue + PUT upsert.
+
+
 ### tv/ (TV Device Module)
 - **Entities**: User (tv_users), WifiNetwork, ConnectedTV
 - **Controllers**: UserController, WifiNetworkController, ConnectedTVController
@@ -67,6 +77,10 @@ Single deployable Spring Boot application containing all business modules. Repla
 ### quiz schema
 - `quiz_attempts` - Quiz session tracking (version for optimistic locking)
 - `attempt_answers` - Individual answer records
+
+### question_feedback (feedback module)
+- `question_feedback` - one row per (account_id, question_id); vote, down_category, reported, comment, timestamps. Managed by Hibernate `ddl-auto` (not yet in Flyway).
+
 
 ### tv schema
 - `tv_users` - TV device users (external reference)

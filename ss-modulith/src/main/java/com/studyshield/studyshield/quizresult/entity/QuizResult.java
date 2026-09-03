@@ -34,6 +34,9 @@ public class QuizResult {
     @Column(nullable = false)
     private LocalDateTime completedAt;
 
+    // Number of questions answered suspiciously fast (parent-side learning signal only).
+    private Integer fastAnswerCount = 0;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -58,6 +61,8 @@ public class QuizResult {
     public void setAccountId(Long accountId) { this.accountId = accountId; }
     public LocalDateTime getCompletedAt() { return completedAt; }
     public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
+    public Integer getFastAnswerCount() { return fastAnswerCount; }
+    public void setFastAnswerCount(Integer fastAnswerCount) { this.fastAnswerCount = fastAnswerCount; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 
     public static Builder builder() { return new Builder(); }
@@ -71,6 +76,7 @@ public class QuizResult {
         private String category;
         private Long accountId;
         private LocalDateTime completedAt;
+        private Integer fastAnswerCount = 0;
 
         public Builder childName(String childName) { this.childName = childName; return this; }
         public Builder score(Integer score) { this.score = score; return this; }
@@ -80,6 +86,7 @@ public class QuizResult {
         public Builder category(String category) { this.category = category; return this; }
         public Builder accountId(Long accountId) { this.accountId = accountId; return this; }
         public Builder completedAt(LocalDateTime completedAt) { this.completedAt = completedAt; return this; }
+        public Builder fastAnswerCount(Integer fastAnswerCount) { this.fastAnswerCount = fastAnswerCount; return this; }
 
         public QuizResult build() {
             QuizResult qr = new QuizResult();
@@ -91,6 +98,7 @@ public class QuizResult {
             qr.category = this.category;
             qr.accountId = this.accountId;
             qr.completedAt = this.completedAt;
+            qr.fastAnswerCount = this.fastAnswerCount;
             return qr;
         }
     }
