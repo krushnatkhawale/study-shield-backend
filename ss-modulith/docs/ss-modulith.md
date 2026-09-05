@@ -94,12 +94,14 @@ Single deployable Spring Boot application containing all business modules. Repla
 - `V4__tv_schema.sql` - TV device tables
 - `V5__schema_changes.sql` - Drop grade_number, rename freemium_packs→quiz_bundles, add superseded_by_id, add version columns
 
-## Question Bank (issue #1)
-- `content/seed/QuestionBankContent.java` — curated seed bank: **Sr KG** and **Class 1–10**, four subjects each (Math, EVS, English, General Knowledge), 10 questions per subject per class (~475 total). Class 2–10 difficulty ramps to board level (algebra, trigonometry, electricity, civics); content follows the common CBSE/ICSE core on the board-agnostic ALL board.
-- `QuizBundleSeeder` fills freemium quizzes from the curated bank (3 questions per quiz for known bands); any class without a curated band is topped up from a real **fallback bank** so a session never starts empty.
-- Filtering: bundles are per class (via ClassGrade → Subjects → ContentPacks → Quizzes). If a bundle request omits `className` and supplies `age`, the class band is derived from the child's age (≤5 → Sr KG, ≤7 → Class 1).
+## Question Bank
+- **Full process & rules**: see [`QUESTION_BANK_GUIDE.md`](QUESTION_BANK_GUIDE.md) — structure, authorship rules, difficulty ramp, and how to author/load content for new subjects or grades.
+- `content/seed/QuestionBankContent.java` — curated source of truth bank. Bands: **Nursery** (age 3), **Junior KG/LKG** (4), **Sr KG/UKG** (5), **Class 1–10** (6–15). Every band has four subjects: **Math, English, EVS, Hindi**. Content ramps from counting/shapes for juniors to board-level (algebra, trigonometry, electricity, civics) for upper classes; follows the common CBSE/ICSE core on the board-agnostic `ALL` board.
+- **The backend starts empty**: startup seeding is disabled (`app.catalog-seeding.enabled: false`). Content is loaded on demand via **`POST /api/v1/questions/load`** (`QuestionBankLoader`), which auto-creates Board → ClassGrade → Subject → ContentPack → Quiz → Question from items carrying `boardCode`/`className`/`age`/`subject`.
+- `QuizBundleSeeder` fills freemium quizzes lazily from the curated bank; any class without a curated band is topped up from a real **fallback bank** so a session never starts empty.
+- Filtering: bundles are per class (via ClassGrade → Subjects → ContentPacks → Quizzes). If a bundle request omits `className` and supplies `age`, the class band is derived from the child's age.
 - A freemium quiz needs ≥ 3 active questions (`QuizBundleService.MIN_ACTIVE_QUESTIONS_PER_QUIZ`) for a session to start; otherwise it fails fast unless `allowPartial=true`.
-- Adding questions later: append to `QuestionBankContent` or use the content admin APIs (`/api/v1/questions`).
+- Adding questions later: append to `QuestionBankContent`, use the content admin APIs (`/api/v1/questions`), or POST via the on-demand loader.
 
 ## Configuration
 - `spring.jpa.hibernate.ddl-auto=validate` (Flyway manages schema)

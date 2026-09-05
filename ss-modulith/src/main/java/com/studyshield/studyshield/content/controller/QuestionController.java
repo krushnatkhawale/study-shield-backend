@@ -1,7 +1,10 @@
 package com.studyshield.studyshield.content.controller;
 
+import com.studyshield.studyshield.content.dto.QuestionBankLoadItem;
+import com.studyshield.studyshield.content.dto.QuestionBankLoadResponse;
 import com.studyshield.studyshield.content.dto.QuestionRequest;
 import com.studyshield.studyshield.content.dto.QuestionResponse;
+import com.studyshield.studyshield.content.service.QuestionBankLoader;
 import com.studyshield.studyshield.content.service.QuestionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,9 +18,11 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final QuestionBankLoader questionBankLoader;
 
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, QuestionBankLoader questionBankLoader) {
         this.questionService = questionService;
+        this.questionBankLoader = questionBankLoader;
     }
 
     @PostMapping
@@ -29,6 +34,11 @@ public class QuestionController {
     public ResponseEntity<List<QuestionResponse>> createBulk(@Valid @RequestBody List<QuestionRequest> requests) {
         List<QuestionResponse> created = requests.stream().map(questionService::create).toList();
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PostMapping("/load")
+    public ResponseEntity<QuestionBankLoadResponse> loadBank(@Valid @RequestBody List<QuestionBankLoadItem> items) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(questionBankLoader.load(items));
     }
 
     @GetMapping("/{id}")

@@ -29,7 +29,7 @@ class QuestionBankContentTest {
             var band = QuestionBankContent.BANK.get("Class " + n);
             assertThat(band).as("band Class %d", n).isNotNull();
             assertThat(band).as("subjects of Class %d", n)
-                    .containsKeys("Math", "EVS", "English", "General Knowledge");
+                    .containsKeys("Math", "EVS", "English", "Hindi");
         }
     }
 
@@ -45,9 +45,9 @@ class QuestionBankContentTest {
     @Test
     void srKgAndClass1BothCoverAllFourSubjects() {
         assertThat(QuestionBankContent.BANK.get(QuestionBankContent.BAND_SR_KG))
-                .containsKeys("Math", "EVS", "English", "General Knowledge");
+                .containsKeys("Math", "EVS", "English", "Hindi");
         assertThat(QuestionBankContent.BANK.get(QuestionBankContent.BAND_CLASS_1))
-                .containsKeys("Math", "EVS", "English", "General Knowledge");
+                .containsKeys("Math", "EVS", "English", "Hindi");
     }
 
     @Test
@@ -90,7 +90,8 @@ class QuestionBankContentTest {
 
     @Test
     void aChildsAgeMapsToAReasonableClass() {
-        assertThat(QuestionBankContent.classNameForAge(4)).isEqualTo("Sr KG");
+        assertThat(QuestionBankContent.classNameForAge(3)).isEqualTo("Nursery");
+        assertThat(QuestionBankContent.classNameForAge(4)).isEqualTo("Junior KG");
         assertThat(QuestionBankContent.classNameForAge(5)).isEqualTo("Sr KG");
         assertThat(QuestionBankContent.classNameForAge(6)).isEqualTo("Class 1");
         assertThat(QuestionBankContent.classNameForAge(7)).isEqualTo("Class 1");
@@ -98,18 +99,34 @@ class QuestionBankContentTest {
     }
 
     @Test
-    void theExpPromoBandHasEnoughQuestionsForEveryQuiz() {
-        var welcome = QuestionBankContent.BANK.get(QuestionBankContent.BAND_EXP).get("Welcome");
-        assertThat(welcome).as("Exp Welcome bank").isNotNull();
-        // 5 freemium quizzes, at least 3 active questions each before a session can start
-        assertThat(welcome.size()).isGreaterThanOrEqualTo(15);
+    void theNurseryBandHasEnoughQuestionsForEveryQuiz() {
+        var nursery = QuestionBankContent.BANK.get(QuestionBankContent.BAND_NURSERY);
+        assertThat(nursery).as("Nursery bank").isNotNull();
+        assertThat(nursery).as("Nursery subjects")
+                .containsKeys("Math", "EVS", "English", "Hindi");
+        for (var subject : nursery.values()) {
+            assertThat(subject.size()).isGreaterThanOrEqualTo(10);
+        }
     }
 
     @Test
-    void expIsRecognizedAsACuratedBand() {
-        assertThat(QuestionBankContent.bandForClassName("Exp")).isEqualTo(QuestionBankContent.BAND_EXP);
-        assertThat(QuestionBankContent.bandForClassName("exp")).isEqualTo(QuestionBankContent.BAND_EXP);
-        assertThat(QuestionBankContent.bandForClassName("Experimental")).isEqualTo(QuestionBankContent.BAND_EXP);
+    void theJuniorKgBandHasEnoughQuestionsForEveryQuiz() {
+        var lkg = QuestionBankContent.BANK.get(QuestionBankContent.BAND_LKG);
+        assertThat(lkg).as("Junior KG bank").isNotNull();
+        assertThat(lkg).as("Junior KG subjects")
+                .containsKeys("Math", "EVS", "English", "Hindi");
+        for (var subject : lkg.values()) {
+            assertThat(subject.size()).isGreaterThanOrEqualTo(10);
+        }
+    }
+
+    @Test
+    void trialAndExpAreRecognizedAsNurseryBand() {
+        assertThat(QuestionBankContent.bandForClassName("Trial")).isEqualTo(QuestionBankContent.BAND_NURSERY);
+        assertThat(QuestionBankContent.bandForClassName("trial")).isEqualTo(QuestionBankContent.BAND_NURSERY);
+        assertThat(QuestionBankContent.bandForClassName("Exp")).isEqualTo(QuestionBankContent.BAND_NURSERY);
+        assertThat(QuestionBankContent.bandForClassName("exp")).isEqualTo(QuestionBankContent.BAND_NURSERY);
+        assertThat(QuestionBankContent.bandForClassName("Experimental")).isEqualTo(QuestionBankContent.BAND_NURSERY);
     }
 
     @Test

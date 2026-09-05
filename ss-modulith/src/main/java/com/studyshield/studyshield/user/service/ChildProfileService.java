@@ -16,8 +16,8 @@ import java.util.List;
 @Transactional
 public class ChildProfileService {
 
-    public static final String DEFAULT_KID_NAME = "Kid1";
-    public static final String DEFAULT_KID_CLASS = "Exp";
+    public static final String DEFAULT_KID_NAME = "Kid 1";
+    public static final String DEFAULT_KID_CLASS = "Trial";
 
     private final ChildProfileRepository childProfileRepository;
     private final UserRepository userRepository;
@@ -28,8 +28,8 @@ public class ChildProfileService {
     }
 
     /**
-     * Creates the default kid profile ("Kid1", class "Exp") for a newly registered account,
-     * mirroring the default parent profile. The "Exp" class maps to hello-world/promo content
+     * Creates the default kid profile ("Kid 1", class "Trial") for a newly registered account,
+     * mirroring the default parent profile. The "Trial" class maps to Nursery content
      * so there is always something safe to run before real kid details are provided.
      */
     public ChildProfileResponse createDefault(Long userId) {

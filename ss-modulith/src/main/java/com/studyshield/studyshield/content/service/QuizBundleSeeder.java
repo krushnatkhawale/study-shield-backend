@@ -30,7 +30,7 @@ public class QuizBundleSeeder {
     public static final int QUESTIONS_PER_QUIZ = 10;
 
     private static final List<String> DEFAULT_SUBJECTS = List.of(
-            "Math", "EVS", "English", "General Knowledge"
+            "Math", "EVS", "English", "Hindi"
     );
 
     private final BoardRepository boardRepository;

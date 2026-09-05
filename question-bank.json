@@ -1,0 +1,5041 @@
+[ {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "The original Indian Constitution contained approximately how many Articles?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "395", "448", "250", "500" ],
+  "correctAnswer" : "395",
+  "orderIndex" : 0
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "The Revolt of 1857 started at…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Meerut", "Delhi", "Kanpur", "Jhansi" ],
+  "correctAnswer" : "Meerut",
+  "orderIndex" : 1
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "The World Wide Web was invented by Tim Berners-Lee.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 2
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "Which is the fastest land animal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cheetah", "Lion", "Horse", "Leopard" ],
+  "correctAnswer" : "Cheetah",
+  "orderIndex" : 3
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "The headquarters of ISRO is in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Bengaluru", "Chennai", "Mumbai", "Hyderabad" ],
+  "correctAnswer" : "Bengaluru",
+  "orderIndex" : 4
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "Who was the first woman Prime Minister of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Indira Gandhi", "Sarojini Naidu", "Pratibha Patil", "Sonia Gandhi" ],
+  "correctAnswer" : "Indira Gandhi",
+  "orderIndex" : 5
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "Which element has the symbol 'Fe'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Iron", "Fluorine", "Francium", "Lead" ],
+  "correctAnswer" : "Iron",
+  "orderIndex" : 6
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "Greenhouse effect leads to…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Global warming", "Cooling of Earth", "More rainfall only", "Earthquakes" ],
+  "correctAnswer" : "Global warming",
+  "orderIndex" : 7
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "The Battle of Plassey was fought in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1757", "1857", "1764", "1526" ],
+  "correctAnswer" : "1757",
+  "orderIndex" : 8
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Hindi",
+  "questionText" : "Renewable energy sources never run out.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 9
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "The SI unit of force is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Newton", "Joule", "Watt", "Pascal" ],
+  "correctAnswer" : "Newton",
+  "orderIndex" : 10
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Friction always opposes motion.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 11
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Which microorganism causes malaria?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Protozoa", "Bacteria", "Virus", "Fungus" ],
+  "correctAnswer" : "Protozoa",
+  "orderIndex" : 12
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Petrol, diesel and coal are examples of…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fossil fuels", "Renewable fuels", "Biofuels", "Nuclear fuels" ],
+  "correctAnswer" : "Fossil fuels",
+  "orderIndex" : 13
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "The pressure exerted by air is called…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Atmospheric pressure", "Water pressure", "Friction", "Tension" ],
+  "correctAnswer" : "Atmospheric pressure",
+  "orderIndex" : 14
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Which crop needs standing water to grow?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Paddy", "Wheat", "Cotton", "Jute" ],
+  "correctAnswer" : "Paddy",
+  "orderIndex" : 15
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Sound is produced when objects…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Vibrate", "Freeze", "Burn", "Shine" ],
+  "correctAnswer" : "Vibrate",
+  "orderIndex" : 16
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Robert Hooke first observed cells in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cork", "Blood", "Leaf", "Root" ],
+  "correctAnswer" : "Cork",
+  "orderIndex" : 17
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Metals are good conductors of heat.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 18
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "EVS",
+  "questionText" : "Which of these is NOT a fossil fuel?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Uranium", "Coal", "Petroleum", "Natural gas" ],
+  "correctAnswer" : "Uranium",
+  "orderIndex" : 19
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Passive voice of 'They built the bridge.':",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "The bridge was built by them.", "The bridge is built by them.", "The bridge built them.", "They are built the bridge." ],
+  "correctAnswer" : "The bridge was built by them.",
+  "orderIndex" : 20
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "The synonym of 'abundant' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Plentiful", "Scarce", "Rare", "Empty" ],
+  "correctAnswer" : "Plentiful",
+  "orderIndex" : 21
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Identify the modal verb: You should exercise daily.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "should", "exercise", "daily", "you" ],
+  "correctAnswer" : "should",
+  "orderIndex" : 22
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "An idiom's meaning cannot be understood from its individual words.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 23
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Choose the correctly punctuated sentence:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "It's raining, isn't it?", "Its raining isnt it?", "It's raining isn't it", "its raining, isn't it?" ],
+  "correctAnswer" : "It's raining, isn't it?",
+  "orderIndex" : 24
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Which word is a preposition?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "beneath", "quickly", "happy", "jump" ],
+  "correctAnswer" : "beneath",
+  "orderIndex" : 25
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "The antonym of 'artificial' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Natural", "Fake", "Synthetic", "Plastic" ],
+  "correctAnswer" : "Natural",
+  "orderIndex" : 26
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Reported speech: He said, \"I am tired.\" →",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "He said that he was tired.", "He says he is tired.", "He said I am tired.", "He said that I am tired." ],
+  "correctAnswer" : "He said that he was tired.",
+  "orderIndex" : 27
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Which is an abstract noun?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "honesty", "table", "river", "dog" ],
+  "correctAnswer" : "honesty",
+  "orderIndex" : 28
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "English",
+  "questionText" : "Editing means checking for grammar, spelling and clarity.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 29
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "What is 2³ × 2² ?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "32", "64", "16", "4" ],
+  "correctAnswer" : "32",
+  "orderIndex" : 30
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "The square root of 144 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "12", "14", "16", "24" ],
+  "correctAnswer" : "12",
+  "orderIndex" : 31
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "Solve: 2x + 5 = 15",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "x = 5", "x = 10", "x = −5", "x = 7.5" ],
+  "correctAnswer" : "x = 5",
+  "orderIndex" : 32
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "The cube of 3 is 27.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 33
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "A number divisible by both 2 and 3 is also divisible by…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6", "5", "8", "9" ],
+  "correctAnswer" : "6",
+  "orderIndex" : 34
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "What is 15% of ₹800?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "₹120", "₹80", "₹150", "₹12" ],
+  "correctAnswer" : "₹120",
+  "orderIndex" : 35
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "The value of (−1)^101 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "−1", "1", "0", "101" ],
+  "correctAnswer" : "−1",
+  "orderIndex" : 36
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "Area of a circle with radius 7 cm (π = 22/7):",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "154 sq cm", "44 sq cm", "49 sq cm", "22 sq cm" ],
+  "correctAnswer" : "154 sq cm",
+  "orderIndex" : 37
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "Factorise: x² − 9",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "(x+3)(x−3)", "(x+9)(x−1)", "(x−3)²", "(x+3)²" ],
+  "correctAnswer" : "(x+3)(x−3)",
+  "orderIndex" : 38
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 8",
+  "subject" : "Math",
+  "questionText" : "Which is irrational?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "√2", "0.25", "3/4", "−7" ],
+  "correctAnswer" : "√2",
+  "orderIndex" : 39
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "Who painted the Mona Lisa?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Leonardo da Vinci", "Picasso", "Van Gogh", "Michelangelo" ],
+  "correctAnswer" : "Leonardo da Vinci",
+  "orderIndex" : 40
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "Which is the deepest ocean trench?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mariana Trench", "Java Trench", "Puerto Rico Trench", "Tonga Trench" ],
+  "correctAnswer" : "Mariana Trench",
+  "orderIndex" : 41
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "The UN headquarters is in New York.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 42
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "Which Indian state has the longest coastline?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Gujarat", "Kerala", "Tamil Nadu", "Maharashtra" ],
+  "correctAnswer" : "Gujarat",
+  "orderIndex" : 43
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "The Harappan civilization was discovered in the year…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1921", "1857", "1947", "1750" ],
+  "correctAnswer" : "1921",
+  "orderIndex" : 44
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "Which vitamin deficiency causes night blindness?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Vitamin A", "Vitamin C", "Vitamin D", "Vitamin K" ],
+  "correctAnswer" : "Vitamin A",
+  "orderIndex" : 45
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "The currency of the USA is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dollar", "Euro", "Pound", "Yen" ],
+  "correctAnswer" : "Dollar",
+  "orderIndex" : 46
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "Which planet has prominent rings?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Saturn", "Mars", "Venus", "Mercury" ],
+  "correctAnswer" : "Saturn",
+  "orderIndex" : 47
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "Who founded the Indian National Army (INA)?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Subhash Chandra Bose", "Bhagat Singh", "Nehru", "Patel" ],
+  "correctAnswer" : "Subhash Chandra Bose",
+  "orderIndex" : 48
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Hindi",
+  "questionText" : "The brain is protected by the skull.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 49
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Heat transfer in solids happens mainly by…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Conduction", "Convection", "Radiation", "Evaporation" ],
+  "correctAnswer" : "Conduction",
+  "orderIndex" : 50
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Sound cannot travel through a vacuum.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 51
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Which acid is present in the stomach?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Hydrochloric acid", "Sulphuric acid", "Nitric acid", "Citric acid" ],
+  "correctAnswer" : "Hydrochloric acid",
+  "orderIndex" : 52
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "The process where a caterpillar becomes a butterfly is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Metamorphosis", "Pollination", "Germination", "Migration" ],
+  "correctAnswer" : "Metamorphosis",
+  "orderIndex" : 53
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Which blood cells fight infection?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "White blood cells", "Red blood cells", "Platelets", "Plasma" ],
+  "correctAnswer" : "White blood cells",
+  "orderIndex" : 54
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "A speed of 60 km/h means travelling 60 km in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1 hour", "60 hours", "6 minutes", "half an hour" ],
+  "correctAnswer" : "1 hour",
+  "orderIndex" : 55
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Which of these is a chemical change?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Rusting of iron", "Melting of ice", "Breaking glass", "Boiling water" ],
+  "correctAnswer" : "Rusting of iron",
+  "orderIndex" : 56
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Rainbows are formed by…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dispersion of light", "Reflection only", "Absorption of light", "Noise" ],
+  "correctAnswer" : "Dispersion of light",
+  "orderIndex" : 57
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Respiration releases energy from food.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 58
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "EVS",
+  "questionText" : "Which organ produces insulin?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Pancreas", "Liver", "Heart", "Kidney" ],
+  "correctAnswer" : "Pancreas",
+  "orderIndex" : 59
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "Choose the correct article: He is ___ honest man.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "an", "a", "the", "no article" ],
+  "correctAnswer" : "an",
+  "orderIndex" : 60
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "The synonym of 'courage' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Bravery", "Fear", "Anger", "Joy" ],
+  "correctAnswer" : "Bravery",
+  "orderIndex" : 61
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "Identify the tense: They had finished the work.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Past perfect", "Present perfect", "Future perfect", "Simple past" ],
+  "correctAnswer" : "Past perfect",
+  "orderIndex" : 62
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "'Their', 'there' and 'they're' sound the same but mean different things.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 63
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "Which is a superlative adjective?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "best", "better", "good", "well" ],
+  "correctAnswer" : "best",
+  "orderIndex" : 64
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "Rewrite correctly: 'he said me nothing'",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "He told me nothing.", "He said me nothing.", "He nothing said me.", "Me he said nothing." ],
+  "correctAnswer" : "He told me nothing.",
+  "orderIndex" : 65
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "The antonym of 'transparent' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Opaque", "Clear", "Visible", "Shiny" ],
+  "correctAnswer" : "Opaque",
+  "orderIndex" : 66
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "Which sentence contains a simile?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "As brave as a lion", "Brave lion roars", "The lion is brave", "Bravery of lions" ],
+  "correctAnswer" : "As brave as a lion",
+  "orderIndex" : 67
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "One wolf, many…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "wolves", "wolfs", "wolfes", "wolf" ],
+  "correctAnswer" : "wolves",
+  "orderIndex" : 68
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "English",
+  "questionText" : "A biography is written about someone by another person.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 69
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "What is 2/3 + 1/6?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5/6", "3/9", "1/2", "4/6" ],
+  "correctAnswer" : "5/6",
+  "orderIndex" : 70
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "If 3x = 27, then x =",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "9", "24", "81", "8" ],
+  "correctAnswer" : "9",
+  "orderIndex" : 71
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "Two angles that add up to 90° are called…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Complementary", "Supplementary", "Vertical", "Reflex" ],
+  "correctAnswer" : "Complementary",
+  "orderIndex" : 72
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "What is (−5) × (−4)?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "20", "−20", "9", "−9" ],
+  "correctAnswer" : "20",
+  "orderIndex" : 73
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "The product of two negative numbers is positive.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 74
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "Simple interest on ₹1000 at 10% per year for 2 years is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "₹200", "₹100", "₹210", "₹20" ],
+  "correctAnswer" : "₹200",
+  "orderIndex" : 75
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "Which fraction is largest: 1/2, 3/5, 2/3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2/3", "1/2", "3/5", "All equal" ],
+  "correctAnswer" : "2/3",
+  "orderIndex" : 76
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "Sum of interior angles of a triangle is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "180°", "360°", "270°", "90°" ],
+  "correctAnswer" : "180°",
+  "orderIndex" : 77
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "What is 25% expressed as a fraction?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1/4", "1/5", "1/2", "1/25" ],
+  "correctAnswer" : "1/4",
+  "orderIndex" : 78
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 7",
+  "subject" : "Math",
+  "questionText" : "If y − 7 = −2, then y =",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "−9", "9", "−5" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 79
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Which city is the capital of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "New Delhi", "Mumbai", "Kolkata", "Chennai" ],
+  "correctAnswer" : "New Delhi",
+  "orderIndex" : 80
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "The study of stars and planets is called…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Astronomy", "Geology", "Biology", "Chemistry" ],
+  "correctAnswer" : "Astronomy",
+  "orderIndex" : 81
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Mount Everest lies between Nepal and China.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 82
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Who is known as the Missile Man of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dr. A.P.J. Abdul Kalam", "Homi Bhabha", "Vikram Sarabhai", "C.V. Raman" ],
+  "correctAnswer" : "Dr. A.P.J. Abdul Kalam",
+  "orderIndex" : 83
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Which is the smallest continent?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Australia", "Europe", "Antarctica", "South America" ],
+  "correctAnswer" : "Australia",
+  "orderIndex" : 84
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "The ancient Olympic Games were held in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Greece", "Rome", "Egypt", "India" ],
+  "correctAnswer" : "Greece",
+  "orderIndex" : 85
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Which instrument measures atmospheric pressure?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Barometer", "Thermometer", "Speedometer", "Altimeter" ],
+  "correctAnswer" : "Barometer",
+  "orderIndex" : 86
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Silk is obtained from…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Silkworm", "Sheep", "Goat", "Camel" ],
+  "correctAnswer" : "Silkworm",
+  "orderIndex" : 87
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "How many main directions are there?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4", "2", "6", "8" ],
+  "correctAnswer" : "4",
+  "orderIndex" : 88
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Hindi",
+  "questionText" : "Photosynthesis happens mostly in leaves.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 89
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Which part of the cell controls its activities?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nucleus", "Cell wall", "Cytoplasm", "Vacuole" ],
+  "correctAnswer" : "Nucleus",
+  "orderIndex" : 90
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Light travels in a straight line.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 91
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Separating grain from stalk by beating is called…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Threshing", "Winnowing", "Sieving", "Filtering" ],
+  "correctAnswer" : "Threshing",
+  "orderIndex" : 92
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Which of these is a conductor of electricity?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Copper", "Rubber", "Wood", "Plastic" ],
+  "correctAnswer" : "Copper",
+  "orderIndex" : 93
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "The change of water vapour into liquid is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Condensation", "Evaporation", "Freezing", "Melting" ],
+  "correctAnswer" : "Condensation",
+  "orderIndex" : 94
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Which nutrient is the main source of energy?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Carbohydrates", "Proteins", "Vitamins", "Minerals" ],
+  "correctAnswer" : "Carbohydrates",
+  "orderIndex" : 95
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Motion of a pendulum is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Periodic motion", "Linear motion", "Random motion", "No motion" ],
+  "correctAnswer" : "Periodic motion",
+  "orderIndex" : 96
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Magnets always have two poles.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 97
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Fibres obtained from plants and animals are called…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Natural fibres", "Synthetic fibres", "Plastic fibres", "Metal fibres" ],
+  "correctAnswer" : "Natural fibres",
+  "orderIndex" : 98
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "EVS",
+  "questionText" : "Which gas do plants absorb during photosynthesis?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen" ],
+  "correctAnswer" : "Carbon dioxide",
+  "orderIndex" : 99
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "Choose the correct form: He has been working ___ morning.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "since", "for", "from", "at" ],
+  "correctAnswer" : "since",
+  "orderIndex" : 100
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "The synonym of 'generous' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Kind", "Greedy", "Selfish", "Rude" ],
+  "correctAnswer" : "Kind",
+  "orderIndex" : 101
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "Identify the adverb: She sings beautifully.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "beautifully", "she", "sings", "none" ],
+  "correctAnswer" : "beautifully",
+  "orderIndex" : 102
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "A metaphor compares two things without using 'like' or 'as'.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 103
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "Change to passive voice: 'Ria wrote a letter.' →",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "A letter was written by Ria.", "A letter wrote by Ria.", "Ria was written a letter.", "A letter is writing Ria." ],
+  "correctAnswer" : "A letter was written by Ria.",
+  "orderIndex" : 104
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "Which is a compound word?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sunflower", "Running", "Happily", "Kindness" ],
+  "correctAnswer" : "Sunflower",
+  "orderIndex" : 105
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "The plural of 'leaf' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "leaves", "leafs", "leafes", "leaf" ],
+  "correctAnswer" : "leaves",
+  "orderIndex" : 106
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "Pick the correct sentence:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Neither of them came.", "Neither them came.", "Neither of they came.", "Neither of them come." ],
+  "correctAnswer" : "Neither of them came.",
+  "orderIndex" : 107
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "A group of lions is called a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "pride", "pack", "herd", "school" ],
+  "correctAnswer" : "pride",
+  "orderIndex" : 108
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "English",
+  "questionText" : "Direct speech quotes the exact words spoken.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 109
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "Which number is smaller than −3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "−5", "−1", "0", "2" ],
+  "correctAnswer" : "−5",
+  "orderIndex" : 110
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "What is (−4) + 7?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "−3", "11", "−11" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 111
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "If x + 5 = 12, then x =",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "17", "−7", "60" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 112
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "Simplify the ratio 12 : 18:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2 : 3", "3 : 2", "6 : 9", "4 : 6" ],
+  "correctAnswer" : "2 : 3",
+  "orderIndex" : 113
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "Every natural number is a whole number.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 114
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "What is 15% of 400?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "60", "45", "15", "600" ],
+  "correctAnswer" : "60",
+  "orderIndex" : 115
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "The HCF of 12 and 18 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6", "3", "36", "12" ],
+  "correctAnswer" : "6",
+  "orderIndex" : 116
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "Perimeter of a square with side 7 cm:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "28 cm", "49 cm", "14 cm", "21 cm" ],
+  "correctAnswer" : "28 cm",
+  "orderIndex" : 117
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "What is 0.2 × 0.3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "0.06", "0.6", "6", "0.006" ],
+  "correctAnswer" : "0.06",
+  "orderIndex" : 118
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 6",
+  "subject" : "Math",
+  "questionText" : "Which is a prime number?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "13", "21", "27", "33" ],
+  "correctAnswer" : "13",
+  "orderIndex" : 119
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "Who invented the telephone?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Alexander Graham Bell", "Thomas Edison", "Isaac Newton", "Guglielmo Marconi" ],
+  "correctAnswer" : "Alexander Graham Bell",
+  "orderIndex" : 120
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "Which is the longest river in the world?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nile", "Amazon", "Ganga", "Yangtze" ],
+  "correctAnswer" : "Nile",
+  "orderIndex" : 121
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "The currency of Japan is the Yen.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 122
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "Which gas makes up most of Earth's atmosphere?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nitrogen", "Oxygen", "Carbon dioxide", "Hydrogen" ],
+  "correctAnswer" : "Nitrogen",
+  "orderIndex" : 123
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "The Olympic Games happen every…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4 years", "2 years", "year", "5 years" ],
+  "correctAnswer" : "4 years",
+  "orderIndex" : 124
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "Who was the first Indian woman in space?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Kalpana Chawla", "Sunita Williams", "Indira Gandhi", "Sania Mirza" ],
+  "correctAnswer" : "Kalpana Chawla",
+  "orderIndex" : 125
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "Which desert is the largest hot desert?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sahara", "Thar", "Gobi", "Kalahari" ],
+  "correctAnswer" : "Sahara",
+  "orderIndex" : 126
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "How many players are on a football team on the field?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "11", "9", "10", "12" ],
+  "correctAnswer" : "11",
+  "orderIndex" : 127
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "Which metal is liquid at room temperature?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mercury", "Iron", "Gold", "Silver" ],
+  "correctAnswer" : "Mercury",
+  "orderIndex" : 128
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Hindi",
+  "questionText" : "The Taj Mahal is in Agra.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 129
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Which organ filters blood?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Kidney", "Lungs", "Stomach", "Brain" ],
+  "correctAnswer" : "Kidney",
+  "orderIndex" : 130
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "The heart has four chambers.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 131
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Solar energy comes from…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "The Sun", "Wind", "Water", "Coal" ],
+  "correctAnswer" : "The Sun",
+  "orderIndex" : 132
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Which planet is known as the Red Planet?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mars", "Venus", "Jupiter", "Saturn" ],
+  "correctAnswer" : "Mars",
+  "orderIndex" : 133
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Deforestation means…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cutting down forests", "Planting trees", "Protecting animals", "Cleaning rivers" ],
+  "correctAnswer" : "Cutting down forests",
+  "orderIndex" : 134
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Which food is rich in protein?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Pulses", "Sugar", "Oil", "Salt" ],
+  "correctAnswer" : "Pulses",
+  "orderIndex" : 135
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "The force that pulls objects towards Earth is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Gravity", "Friction", "Magnetism", "Electricity" ],
+  "correctAnswer" : "Gravity",
+  "orderIndex" : 136
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Which vitamin do we get from sunlight?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Vitamin D", "Vitamin A", "Vitamin C", "Vitamin B" ],
+  "correctAnswer" : "Vitamin D",
+  "orderIndex" : 137
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "Recycling paper helps save trees.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 138
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "EVS",
+  "questionText" : "How many bones are there in an adult human body?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "206", "306", "106", "256" ],
+  "correctAnswer" : "206",
+  "orderIndex" : 139
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "Choose the synonym of 'begin':",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Start", "Finish", "Middle", "End" ],
+  "correctAnswer" : "Start",
+  "orderIndex" : 140
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "The antonym of 'victory' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Defeat", "Win", "Success", "Triumph" ],
+  "correctAnswer" : "Defeat",
+  "orderIndex" : 141
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "Which sentence is in the future tense?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "I will visit Goa.", "I visited Goa.", "I visit Goa.", "I am visiting Goa." ],
+  "correctAnswer" : "I will visit Goa.",
+  "orderIndex" : 142
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "'Quickly' is an adverb.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 143
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "Identify the conjunction: Ram and Shyam are friends.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "and", "Ram", "are", "friends" ],
+  "correctAnswer" : "and",
+  "orderIndex" : 144
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "One mouse, many…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "mice", "mouses", "mices", "mousees" ],
+  "correctAnswer" : "mice",
+  "orderIndex" : 145
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "Choose the correct spelling:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Necessary", "Neccessary", "Necesary", "Necessery" ],
+  "correctAnswer" : "Necessary",
+  "orderIndex" : 146
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "A person who writes books is an…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "author", "editor", "actor", "artist" ],
+  "correctAnswer" : "author",
+  "orderIndex" : 147
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "Fill in: If I ___ rich, I would help everyone.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "were", "am", "is", "be" ],
+  "correctAnswer" : "were",
+  "orderIndex" : 148
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "English",
+  "questionText" : "We use commas to separate items in a list.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 149
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "What is 0.5 + 0.25?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "0.75", "0.7", "0.30", "1.25" ],
+  "correctAnswer" : "0.75",
+  "orderIndex" : 150
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "What is 25% of 200?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "50", "25", "75", "100" ],
+  "correctAnswer" : "50",
+  "orderIndex" : 151
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "Which fraction equals 0.5?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1/2", "1/4", "1/5", "2/5" ],
+  "correctAnswer" : "1/2",
+  "orderIndex" : 152
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "The area of a square with side 5 cm is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "25 sq cm", "20 sq cm", "10 sq cm", "15 sq cm" ],
+  "correctAnswer" : "25 sq cm",
+  "orderIndex" : 153
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "All angles of a triangle add up to 180 degrees.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 154
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "What is 3/4 of 20?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "15", "10", "12", "16" ],
+  "correctAnswer" : "15",
+  "orderIndex" : 155
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "Convert 3 km into metres:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3000 m", "300 m", "30 m", "30000 m" ],
+  "correctAnswer" : "3000 m",
+  "orderIndex" : 156
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "Which decimal is greater: 0.7 or 0.65?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "0.7", "0.65", "They are equal", "Cannot compare" ],
+  "correctAnswer" : "0.7",
+  "orderIndex" : 157
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "The LCM of 4 and 6 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "12", "24", "6", "2" ],
+  "correctAnswer" : "12",
+  "orderIndex" : 158
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 5",
+  "subject" : "Math",
+  "questionText" : "What is 999 + 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1000", "990", "1001", "900" ],
+  "correctAnswer" : "1000",
+  "orderIndex" : 159
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "Who wrote the national anthem of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Rabindranath Tagore", "Bankim Chandra Chatterjee", "Sarojini Naidu", "Subhash Chandra Bose" ],
+  "correctAnswer" : "Rabindranath Tagore",
+  "orderIndex" : 160
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "Which is the highest mountain in the world?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mount Everest", "K2", "Kanchenjunga", "Nanda Devi" ],
+  "correctAnswer" : "Mount Everest",
+  "orderIndex" : 161
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "The peacock is the national bird of India.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 162
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "Which festival celebrates the birth of Jesus Christ?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Christmas", "Easter", "Diwali", "Onam" ],
+  "correctAnswer" : "Christmas",
+  "orderIndex" : 163
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "What does a thermometer measure?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Temperature", "Speed", "Weight", "Length" ],
+  "correctAnswer" : "Temperature",
+  "orderIndex" : 164
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "Which sport uses a bat, ball and wickets?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cricket", "Football", "Hockey", "Tennis" ],
+  "correctAnswer" : "Cricket",
+  "orderIndex" : 165
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "Which ocean is the largest?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean" ],
+  "correctAnswer" : "Pacific Ocean",
+  "orderIndex" : 166
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "The Great Wall is in which country?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "China", "India", "Japan", "Egypt" ],
+  "correctAnswer" : "China",
+  "orderIndex" : 167
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "Which bird is a symbol of peace?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dove", "Crow", "Eagle", "Owl" ],
+  "correctAnswer" : "Dove",
+  "orderIndex" : 168
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Hindi",
+  "questionText" : "The Sun is a star.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 169
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Water turns into ice by…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Freezing", "Boiling", "Melting", "Evaporating" ],
+  "correctAnswer" : "Freezing",
+  "orderIndex" : 170
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Which of these is a renewable resource?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sunlight", "Coal", "Petrol", "Diesel" ],
+  "correctAnswer" : "Sunlight",
+  "orderIndex" : 171
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "The process by which plants make food is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Photosynthesis", "Digestion", "Respiration", "Germination" ],
+  "correctAnswer" : "Photosynthesis",
+  "orderIndex" : 172
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Air has weight.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 173
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Which organ helps us breathe?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lungs", "Liver", "Kidney", "Heart" ],
+  "correctAnswer" : "Lungs",
+  "orderIndex" : 174
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "An animal that eats both plants and other animals is an…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Omnivore", "Herbivore", "Carnivore", "Producer" ],
+  "correctAnswer" : "Omnivore",
+  "orderIndex" : 175
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Which state of matter takes the shape of its container?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Liquid", "Solid", "Both solid and liquid", "None" ],
+  "correctAnswer" : "Liquid",
+  "orderIndex" : 176
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Earthworms help farmers by…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Making soil loose and fertile", "Eating crops", "Drinking water", "Singing" ],
+  "correctAnswer" : "Making soil loose and fertile",
+  "orderIndex" : 177
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "Which of these is NOT a sense organ?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Hair", "Eye", "Ear", "Skin" ],
+  "correctAnswer" : "Hair",
+  "orderIndex" : 178
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "EVS",
+  "questionText" : "We should drink at least 6–8 glasses of water a day.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 179
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "Choose the correct word: The cat sat ___ the mat.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "on", "in", "at", "of" ],
+  "correctAnswer" : "on",
+  "orderIndex" : 180
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "The opposite of 'accept' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Reject", "Except", "Agree", "Allow" ],
+  "correctAnswer" : "Reject",
+  "orderIndex" : 181
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "Which word is spelled correctly?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Beautiful", "Beutiful", "Beautifull", "Butiful" ],
+  "correctAnswer" : "Beautiful",
+  "orderIndex" : 182
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "An adjective describes a noun.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 183
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "She ___ her homework every day.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "does", "do", "doing", "done" ],
+  "correctAnswer" : "does",
+  "orderIndex" : 184
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "Pick the collective noun: a ___ of sheep",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "flock", "bunch", "team", "class" ],
+  "correctAnswer" : "flock",
+  "orderIndex" : 185
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "What is the past tense of 'eat'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "ate", "eated", "eaten", "eating" ],
+  "correctAnswer" : "ate",
+  "orderIndex" : 186
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "Which sentence uses punctuation correctly?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Where are you going?", "Where are you going", "where are you going?", "Where are you going!" ],
+  "correctAnswer" : "Where are you going?",
+  "orderIndex" : 187
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "Fill in: The ___ boy won the race.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "brave", "bravely", "braveness", "braving" ],
+  "correctAnswer" : "brave",
+  "orderIndex" : 188
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "English",
+  "questionText" : "A paragraph usually starts on a new line.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 189
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "What is 7 × 8?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "56", "48", "54", "63" ],
+  "correctAnswer" : "56",
+  "orderIndex" : 190
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "Which number is a factor of 12?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "5", "7", "8" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 191
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "What is 144 ÷ 12?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "12", "11", "14", "24" ],
+  "correctAnswer" : "12",
+  "orderIndex" : 192
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "How many minutes are in 2 hours?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "120", "100", "60", "200" ],
+  "correctAnswer" : "120",
+  "orderIndex" : 193
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "In 3/4, the number 4 is called the denominator.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 194
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "What is the place value of 7 in 4,752?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "700", "70", "7", "7000" ],
+  "correctAnswer" : "700",
+  "orderIndex" : 195
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "A rectangle is 6 cm long and 4 cm wide. What is its perimeter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "20 cm", "24 cm", "10 cm", "12 cm" ],
+  "correctAnswer" : "20 cm",
+  "orderIndex" : 196
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "Round 46 to the nearest ten.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "50", "40", "45", "100" ],
+  "correctAnswer" : "50",
+  "orderIndex" : 197
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "What is 2 × 2 × 2?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "8", "6", "4", "16" ],
+  "correctAnswer" : "8",
+  "orderIndex" : 198
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 4",
+  "subject" : "Math",
+  "questionText" : "A square has four equal sides.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 199
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "Who was the first President of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dr. Rajendra Prasad", "Dr. S. Radhakrishnan", "Jawaharlal Nehru", "Dr. A.P.J. Abdul Kalam" ],
+  "correctAnswer" : "Dr. Rajendra Prasad",
+  "orderIndex" : 200
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "How many continents are there on Earth?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "5", "6", "8" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 201
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "Which planet is closest to the Sun?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mercury", "Earth", "Venus", "Mars" ],
+  "correctAnswer" : "Mercury",
+  "orderIndex" : 202
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "The cheetah is the fastest land animal.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 203
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "Which instrument has black and white keys?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Piano", "Guitar", "Flute", "Drum" ],
+  "correctAnswer" : "Piano",
+  "orderIndex" : 204
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "What is the capital of Maharashtra?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mumbai", "Nagpur", "Pune", "Delhi" ],
+  "correctAnswer" : "Mumbai",
+  "orderIndex" : 205
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "Which gas do we breathe in to live?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Oxygen", "Carbon dioxide", "Helium", "Nitrogen" ],
+  "correctAnswer" : "Oxygen",
+  "orderIndex" : 206
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "A doctor who treats teeth is a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dentist", "Surgeon", "Optician", "Veterinarian" ],
+  "correctAnswer" : "Dentist",
+  "orderIndex" : 207
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "Which is the smallest state of India by area?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Goa", "Kerala", "Sikkim", "Tripura" ],
+  "correctAnswer" : "Goa",
+  "orderIndex" : 208
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Hindi",
+  "questionText" : "India got independence in 1947.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 209
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "Which body organ pumps blood?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Heart", "Lungs", "Stomach", "Brain" ],
+  "correctAnswer" : "Heart",
+  "orderIndex" : 210
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "Animals that eat only plants are called…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Herbivores", "Carnivores", "Omnivores", "Predators" ],
+  "correctAnswer" : "Herbivores",
+  "orderIndex" : 211
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "Why do birds build nests?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "To lay eggs and raise chicks", "To sleep at night only", "To store water", "To hide from rain forever" ],
+  "correctAnswer" : "To lay eggs and raise chicks",
+  "orderIndex" : 212
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "The Moon gets its light from the Sun.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 213
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "Which food group gives us energy?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Carbohydrates like rice", "Vitamins only", "Water only", "Salt" ],
+  "correctAnswer" : "Carbohydrates like rice",
+  "orderIndex" : 214
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "Where does rubber come from?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Rubber tree", "Rocks", "Sea shells", "Sand" ],
+  "correctAnswer" : "Rubber tree",
+  "orderIndex" : 215
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "Which is the longest river in India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ganga", "Yamuna", "Godavari", "Narmada" ],
+  "correctAnswer" : "Ganga",
+  "orderIndex" : 216
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "What should we do with waste?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Put it in a dustbin", "Throw it on the road", "Burn it in the room", "Push it under the bed" ],
+  "correctAnswer" : "Put it in a dustbin",
+  "orderIndex" : 217
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "We should never play with fire.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 218
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "EVS",
+  "questionText" : "A place where animals are protected from hunters is a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sanctuary", "Stadium", "Station", "School" ],
+  "correctAnswer" : "Sanctuary",
+  "orderIndex" : 219
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Yesterday I ___ to the market.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "went", "go", "gone", "going" ],
+  "correctAnswer" : "went",
+  "orderIndex" : 220
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Choose the correct spelling:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Friend", "Freind", "Frind", "Frienn" ],
+  "correctAnswer" : "Friend",
+  "orderIndex" : 221
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "The opposite of 'ancient' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Modern", "Old", "Antique", "Past" ],
+  "correctAnswer" : "Modern",
+  "orderIndex" : 222
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "'She' and 'they' are pronouns.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 223
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "One tooth, many…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Teeth", "Tooths", "Toothes", "Teeths" ],
+  "correctAnswer" : "Teeth",
+  "orderIndex" : 224
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Which word rhymes with 'night'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Light", "Noon", "Day", "Dark" ],
+  "correctAnswer" : "Light",
+  "orderIndex" : 225
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Pick the action word (verb):",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Swim", "Table", "Green", "Happy" ],
+  "correctAnswer" : "Swim",
+  "orderIndex" : 226
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Fill in: ___ umbrella is blue.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Her", "She", "Herself", "Hers" ],
+  "correctAnswer" : "Her",
+  "orderIndex" : 227
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Every sentence must begin with a capital letter.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 228
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "English",
+  "questionText" : "Which sentence is correct?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "I am reading a book.", "I reading a book am.", "Reading I a book am.", "Am I reading book a." ],
+  "correctAnswer" : "I am reading a book.",
+  "orderIndex" : 229
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "What is 6 × 4?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "24", "20", "18", "26" ],
+  "correctAnswer" : "24",
+  "orderIndex" : 230
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "What is 45 + 38?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "83", "73", "93", "82" ],
+  "correctAnswer" : "83",
+  "orderIndex" : 231
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "What is 18 ÷ 3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6", "5", "7", "9" ],
+  "correctAnswer" : "6",
+  "orderIndex" : 232
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "Any number multiplied by 1 stays the same.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 233
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "Which number is odd?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "27", "20", "36", "48" ],
+  "correctAnswer" : "27",
+  "orderIndex" : 234
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "How many 100s are there in 500?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "50", "500", "15" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 235
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "Ravi has ₹50 and spends ₹20. How much is left?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "₹30", "₹20", "₹70", "₹25" ],
+  "correctAnswer" : "₹30",
+  "orderIndex" : 236
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "What is half of 16?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "8", "6", "4", "12" ],
+  "correctAnswer" : "8",
+  "orderIndex" : 237
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "Complete the pattern: 5, 10, 15, 20, ___",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "25", "22", "24", "30" ],
+  "correctAnswer" : "25",
+  "orderIndex" : 238
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 3",
+  "subject" : "Math",
+  "questionText" : "0 multiplied by any number gives 0.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 239
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "Which is the national flower of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lotus", "Rose", "Sunflower", "Marigold" ],
+  "correctAnswer" : "Lotus",
+  "orderIndex" : 240
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "How many days are there in a year?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "365", "300", "400", "360" ],
+  "correctAnswer" : "365",
+  "orderIndex" : 241
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "Which animal is called the ship of the desert?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Camel", "Horse", "Donkey", "Elephant" ],
+  "correctAnswer" : "Camel",
+  "orderIndex" : 242
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "The Indian flag has three colours.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 243
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "Which is the largest animal on Earth?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Blue whale", "Elephant", "Giraffe", "Shark" ],
+  "correctAnswer" : "Blue whale",
+  "orderIndex" : 244
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "What do we call a place where we borrow books?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Library", "Hospital", "Market", "Airport" ],
+  "correctAnswer" : "Library",
+  "orderIndex" : 245
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "Which festival is the festival of colours?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Holi", "Diwali", "Eid", "Pongal" ],
+  "correctAnswer" : "Holi",
+  "orderIndex" : 246
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "Who delivers letters to our homes?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Postman", "Farmer", "Dentist", "Tailor" ],
+  "correctAnswer" : "Postman",
+  "orderIndex" : 247
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "The sun rises in which direction?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "East", "West", "North", "South" ],
+  "correctAnswer" : "East",
+  "orderIndex" : 248
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Hindi",
+  "questionText" : "A rainbow has seven colours.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 249
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Which part of the plant takes water from the soil?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Roots", "Leaves", "Flowers", "Fruits" ],
+  "correctAnswer" : "Roots",
+  "orderIndex" : 250
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Which animal lives both on land and in water?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Frog", "Cow", "Sparrow", "Fish" ],
+  "correctAnswer" : "Frog",
+  "orderIndex" : 251
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Which of these is a bird that cannot fly?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Penguin", "Crow", "Parrot", "Sparrow" ],
+  "correctAnswer" : "Penguin",
+  "orderIndex" : 252
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Plants need sunlight to grow.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 253
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "We get eggs from…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Hen", "Cow", "Goat", "Buffalo" ],
+  "correctAnswer" : "Hen",
+  "orderIndex" : 254
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Which sense organ helps us know a flower smells nice?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nose", "Ear", "Eye", "Hand" ],
+  "correctAnswer" : "Nose",
+  "orderIndex" : 255
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Where do fish live?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Water", "Trees", "Desert", "Mountains" ],
+  "correctAnswer" : "Water",
+  "orderIndex" : 256
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Which one keeps our house clean?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Broom", "Ball", "Toy", "Shoe" ],
+  "correctAnswer" : "Broom",
+  "orderIndex" : 257
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "We should wash our hands before eating.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 258
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "EVS",
+  "questionText" : "Which month has the fewest days?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "February", "January", "March", "April" ],
+  "correctAnswer" : "February",
+  "orderIndex" : 259
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "One child, two…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Children", "Childs", "Childes", "Child" ],
+  "correctAnswer" : "Children",
+  "orderIndex" : 260
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "What is the opposite of full?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Empty", "Heavy", "Big", "Tall" ],
+  "correctAnswer" : "Empty",
+  "orderIndex" : 261
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "Choose the right word: The bird ___ in the sky.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "flies", "fly", "flying", "flewed" ],
+  "correctAnswer" : "flies",
+  "orderIndex" : 262
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "We use a question mark (?) at the end of a question.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 263
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "Which word rhymes with 'book'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Look", "Back", "Bike", "Bake" ],
+  "correctAnswer" : "Look",
+  "orderIndex" : 264
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "'Elephant' begins with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "E", "A", "O", "L" ],
+  "correctAnswer" : "E",
+  "orderIndex" : 265
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "What is the opposite of night?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Day", "Dark", "Sleep", "Star" ],
+  "correctAnswer" : "Day",
+  "orderIndex" : 266
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "Pick the naming word (noun):",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dog", "Run", "Blue", "Slowly" ],
+  "correctAnswer" : "Dog",
+  "orderIndex" : 267
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "Fill in the blank: T__ (toy)",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "o", "a", "e", "i" ],
+  "correctAnswer" : "o",
+  "orderIndex" : 268
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "English",
+  "questionText" : "Names of people and places start with a capital letter.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 269
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "What is 25 + 10?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "35", "30", "45", "26" ],
+  "correctAnswer" : "35",
+  "orderIndex" : 270
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "What is 40 − 15?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "25", "35", "20", "55" ],
+  "correctAnswer" : "25",
+  "orderIndex" : 271
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "How much is 2 × 3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6", "5", "8", "9" ],
+  "correctAnswer" : "6",
+  "orderIndex" : 272
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "Which number is greater: 78 or 87?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "87", "78", "Both are equal", "Cannot say" ],
+  "correctAnswer" : "87",
+  "orderIndex" : 273
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "100 comes just after 99.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 274
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "How many tens make 50?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "50", "10", "15" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 275
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "What is 12 − 7?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "6", "7", "4" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 276
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "There are 4 groups of 5 mangoes. How many mangoes in all?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "20", "9", "25", "15" ],
+  "correctAnswer" : "20",
+  "orderIndex" : 277
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "Which coin value is the smallest?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "₹1", "₹2", "₹5", "₹10" ],
+  "correctAnswer" : "₹1",
+  "orderIndex" : 278
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 2",
+  "subject" : "Math",
+  "questionText" : "Complete the pattern: 2, 4, 6, 8, ___",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "10", "9", "12", "7" ],
+  "correctAnswer" : "10",
+  "orderIndex" : 279
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "What is the capital of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "New Delhi", "Mumbai", "Kolkata", "Chennai" ],
+  "correctAnswer" : "New Delhi",
+  "orderIndex" : 280
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which is the national animal of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Tiger", "Lion", "Elephant", "Leopard" ],
+  "correctAnswer" : "Tiger",
+  "orderIndex" : 281
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which is the national flower of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lotus", "Rose", "Sunflower", "Marigold" ],
+  "correctAnswer" : "Lotus",
+  "orderIndex" : 282
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which festival is called the festival of lights?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Diwali", "Holi", "Eid", "Christmas" ],
+  "correctAnswer" : "Diwali",
+  "orderIndex" : 283
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "How many colours are on the Indian flag?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 284
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "The peacock is the national bird of India.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 285
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Who is called the Father of the Nation in India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mahatma Gandhi", "Nehru", "Patel", "Bose" ],
+  "correctAnswer" : "Mahatma Gandhi",
+  "orderIndex" : 286
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which is the largest ocean on Earth?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Pacific Ocean", "Indian Ocean", "Arctic Ocean", "Atlantic Ocean" ],
+  "correctAnswer" : "Pacific Ocean",
+  "orderIndex" : 287
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "How many wheels does a bicycle have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "3", "4", "1" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 288
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which planet do we live on?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Earth", "Mars", "Moon", "Sun" ],
+  "correctAnswer" : "Earth",
+  "orderIndex" : 289
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which number do we dial to call the police in India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "100", "101", "102", "108" ],
+  "correctAnswer" : "100",
+  "orderIndex" : 290
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Which meal do we eat in the morning?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Breakfast", "Lunch", "Dinner", "Supper" ],
+  "correctAnswer" : "Breakfast",
+  "orderIndex" : 291
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Green light on traffic signals means…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Go", "Stop", "Wait", "Turn back" ],
+  "correctAnswer" : "Go",
+  "orderIndex" : 292
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "Who repairs our cars?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mechanic", "Doctor", "Teacher", "Farmer" ],
+  "correctAnswer" : "Mechanic",
+  "orderIndex" : 293
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Hindi",
+  "questionText" : "We should not go with strangers.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 294
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Which one is a living thing?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Plant", "Stone", "Chair", "Ball" ],
+  "correctAnswer" : "Plant",
+  "orderIndex" : 295
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "How many sense organs do we have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "2", "3", "10" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 296
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "We get wool from…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sheep", "Cow", "Hen", "Goat" ],
+  "correctAnswer" : "Sheep",
+  "orderIndex" : 297
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Which season is the coldest?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Winter", "Summer", "Spring", "Monsoon" ],
+  "correctAnswer" : "Winter",
+  "orderIndex" : 298
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Plants need ___ to grow.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Water", "Plastic", "Toys", "Stones" ],
+  "correctAnswer" : "Water",
+  "orderIndex" : 299
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "The sun gives us light.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 300
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Which one is NOT a fruit?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Potato", "Apple", "Banana", "Mango" ],
+  "correctAnswer" : "Potato",
+  "orderIndex" : 301
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "We breathe in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Air", "Water", "Milk", "Smoke" ],
+  "correctAnswer" : "Air",
+  "orderIndex" : 302
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "A cow usually lives in a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Shed", "Nest", "Burrow", "Web" ],
+  "correctAnswer" : "Shed",
+  "orderIndex" : 303
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Which sense organ tells us something is hot?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Skin", "Ear", "Eye", "Tongue" ],
+  "correctAnswer" : "Skin",
+  "orderIndex" : 304
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "A baby frog is called a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Tadpole", "Calf", "Puppy", "Chick" ],
+  "correctAnswer" : "Tadpole",
+  "orderIndex" : 305
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Green plants can make their own food.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 306
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Water kept in a freezer becomes…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ice", "Steam", "Milk", "Smoke" ],
+  "correctAnswer" : "Ice",
+  "orderIndex" : 307
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Which animal lays eggs?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Hen", "Cow", "Dog", "Cat" ],
+  "correctAnswer" : "Hen",
+  "orderIndex" : 308
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "EVS",
+  "questionText" : "Rain comes from…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Clouds", "The moon", "Stars", "Rivers" ],
+  "correctAnswer" : "Clouds",
+  "orderIndex" : 309
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "What is the opposite of day?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Night", "Noon", "Week", "Sun" ],
+  "correctAnswer" : "Night",
+  "orderIndex" : 310
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "One box, two…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Boxes", "Boxs", "Boxies", "Box" ],
+  "correctAnswer" : "Boxes",
+  "orderIndex" : 311
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "___ apple a day keeps the doctor away.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "An", "A", "Of", "On" ],
+  "correctAnswer" : "An",
+  "orderIndex" : 312
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "Which word rhymes with 'sun'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fun", "Fan", "Sonk", "Sand" ],
+  "correctAnswer" : "Fun",
+  "orderIndex" : 313
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "What is the opposite of open?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Close", "Big", "Wide", "Free" ],
+  "correctAnswer" : "Close",
+  "orderIndex" : 314
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "The letter E is a vowel.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 315
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "Which word names a thing (naming word)?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Table", "Run", "Blue", "Quickly" ],
+  "correctAnswer" : "Table",
+  "orderIndex" : 316
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "What is the opposite of fast?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Slow", "Quick", "Late", "Early" ],
+  "correctAnswer" : "Slow",
+  "orderIndex" : 317
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "A sentence begins with a ___ letter.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Capital", "Small", "Red", "Round" ],
+  "correctAnswer" : "Capital",
+  "orderIndex" : 318
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "Which word rhymes with 'cake'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lake", "Cook", "Corn", "Cup" ],
+  "correctAnswer" : "Lake",
+  "orderIndex" : 319
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "What is the opposite of first?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Last", "Next", "Start", "Best" ],
+  "correctAnswer" : "Last",
+  "orderIndex" : 320
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "Choose the right word: I ___ to school.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "go", "goes", "gone", "going" ],
+  "correctAnswer" : "go",
+  "orderIndex" : 321
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "We put a full stop at the end of a sentence.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 322
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "What is the opposite of happy?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sad", "Glad", "Smiling", "Kind" ],
+  "correctAnswer" : "Sad",
+  "orderIndex" : 323
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "English",
+  "questionText" : "'Kite' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "K", "C", "J", "L" ],
+  "correctAnswer" : "K",
+  "orderIndex" : 324
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "What is 10 + 5?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "15", "12", "20", "25" ],
+  "correctAnswer" : "15",
+  "orderIndex" : 325
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "What is 9 − 4?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "4", "6", "13" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 326
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "Which number is even?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "3", "5", "7" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 327
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "Which number comes between 4 and 6?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "3", "7", "8" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 328
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "What is 7 + 3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "10", "9", "11", "4" ],
+  "correctAnswer" : "10",
+  "orderIndex" : 329
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "12 comes just after 11.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 330
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "What is 20 − 10?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "10", "0", "15", "30" ],
+  "correctAnswer" : "10",
+  "orderIndex" : 331
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "Which is the smallest number?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "8", "15", "9" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 332
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "What is 6 + 6?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "12", "10", "13", "16" ],
+  "correctAnswer" : "12",
+  "orderIndex" : 333
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "Half of 10 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "2", "4", "10" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 334
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "Which coin has the biggest value?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "₹10", "₹1", "₹2", "₹5" ],
+  "correctAnswer" : "₹10",
+  "orderIndex" : 335
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "How many days are there in a week?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "5", "10", "12" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 336
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "Complete the pattern: 15, 16, 17, ___",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "18", "19", "14", "20" ],
+  "correctAnswer" : "18",
+  "orderIndex" : 337
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "What is 8 − 8?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "0", "1", "8", "16" ],
+  "correctAnswer" : "0",
+  "orderIndex" : 338
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 1",
+  "subject" : "Math",
+  "questionText" : "5 + 5 equals 11.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "False",
+  "orderIndex" : 339
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "The Preamble declares India a sovereign, socialist, secular and…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Democratic republic", "Monarchy", "Confederation", "Colony" ],
+  "correctAnswer" : "Democratic republic",
+  "orderIndex" : 340
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "Fundamental Duties were added to the Constitution by which amendment?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "42nd Amendment", "1st Amendment", "73rd Amendment", "101st Amendment" ],
+  "correctAnswer" : "42nd Amendment",
+  "orderIndex" : 341
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "GST was introduced in India in 2017.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 342
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "Who is the head of the Indian government?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Prime Minister", "President", "Chief Justice", "Speaker" ],
+  "correctAnswer" : "Prime Minister",
+  "orderIndex" : 343
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "The Paris Agreement deals with…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Climate change", "Trade tariffs", "Space exploration", "Internet laws" ],
+  "correctAnswer" : "Climate change",
+  "orderIndex" : 344
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "Which organisation publishes the Human Development Index?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "UNDP", "WHO", "IMF", "World Bank" ],
+  "correctAnswer" : "UNDP",
+  "orderIndex" : 345
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "The first Indian satellite was…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Aryabhata", "INSAT-1A", "Rohini", "Bhaskara" ],
+  "correctAnswer" : "Aryabhata",
+  "orderIndex" : 346
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "Right to Education covers children aged…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6 to 14 years", "5 to 15 years", "3 to 18 years", "8 to 16 years" ],
+  "correctAnswer" : "6 to 14 years",
+  "orderIndex" : 347
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "UPI is developed and operated by…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "NPCI", "SEBI", "TRAI", "IRDAI" ],
+  "correctAnswer" : "NPCI",
+  "orderIndex" : 348
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Hindi",
+  "questionText" : "Voting age in India is 18 years.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 349
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "The SI unit of electric current is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ampere", "Volt", "Ohm", "Watt" ],
+  "correctAnswer" : "Ampere",
+  "orderIndex" : 350
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "Ohm's law relates voltage, current and resistance.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 351
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "Which reaction absorbs heat?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Endothermic", "Exothermic", "Neutralisation", "Combustion" ],
+  "correctAnswer" : "Endothermic",
+  "orderIndex" : 352
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "Ethanol can be produced by fermentation of…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Sugar", "Salt", "Starch alone", "Fat" ],
+  "correctAnswer" : "Sugar",
+  "orderIndex" : 353
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "The male reproductive part of a flower is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Stamen", "Pistil", "Sepal", "Petal" ],
+  "correctAnswer" : "Stamen",
+  "orderIndex" : 354
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "Which lens is used to correct myopia?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Concave lens", "Convex lens", "Cylindrical lens", "Bifocal only" ],
+  "correctAnswer" : "Concave lens",
+  "orderIndex" : 355
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "Genetic material in humans is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "DNA", "RNA only", "Protein", "Lipid" ],
+  "correctAnswer" : "DNA",
+  "orderIndex" : 356
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "The power of a lens is measured in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Dioptres", "Watts", "Newtons", "Volts" ],
+  "correctAnswer" : "Dioptres",
+  "orderIndex" : 357
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "Decomposers include…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Bacteria and fungi", "Deer and goats", "Fish and snakes", "Eagles and hawks" ],
+  "correctAnswer" : "Bacteria and fungi",
+  "orderIndex" : 358
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "EVS",
+  "questionText" : "AC current changes direction periodically.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 359
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "Choose the correct usage: Neither the teacher nor the students ___ ready.",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "were", "was", "is", "has" ],
+  "correctAnswer" : "were",
+  "orderIndex" : 360
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "The figure of speech in 'death lays its icy hands on kings' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Personification", "Simile", "Metaphor", "Onomatopoeia" ],
+  "correctAnswer" : "Personification",
+  "orderIndex" : 361
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "'Whom' is used as the object of a verb or preposition.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 362
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "Antonym of 'benevolent':",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Malevolent", "Generous", "Kindly", "Gracious" ],
+  "correctAnswer" : "Malevolent",
+  "orderIndex" : 363
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "Find the error: 'One of my friend lives abroad.'",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "'friend' should be 'friends'", "no error", "'lives' should be 'live'", "'of' should be 'off'" ],
+  "correctAnswer" : "'friend' should be 'friends'",
+  "orderIndex" : 364
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "Synonym of 'ephemeral':",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Short-lived", "Eternal", "Powerful", "Hidden" ],
+  "correctAnswer" : "Short-lived",
+  "orderIndex" : 365
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "Which is a complex sentence?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Although it rained, we played.", "It rained and we played.", "We played; it rained.", "It rained. We played." ],
+  "correctAnswer" : "Although it rained, we played.",
+  "orderIndex" : 366
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "The tone of a formal complaint letter should be…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Polite and factual", "Rude and angry", "Joking", "Poetic" ],
+  "correctAnswer" : "Polite and factual",
+  "orderIndex" : 367
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "'To kill two birds with one stone' means…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Achieve two results with one action", "Be cruel to animals", "Miss twice", "Try hard" ],
+  "correctAnswer" : "Achieve two results with one action",
+  "orderIndex" : 368
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "English",
+  "questionText" : "Summary writing should avoid personal opinions.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 369
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "The discriminant of ax² + bx + c is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "b² − 4ac", "b² + 4ac", "4ac − b²", "2a + b" ],
+  "correctAnswer" : "b² − 4ac",
+  "orderIndex" : 370
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "sin 30° equals…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1/2", "1", "√3/2", "0" ],
+  "correctAnswer" : "1/2",
+  "orderIndex" : 371
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "If roots of x² − 5x + 6 = 0 are α and β, then αβ =",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6", "5", "−6", "−5" ],
+  "correctAnswer" : "6",
+  "orderIndex" : 372
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "tan 45° = 1.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 373
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "The 10th term of the AP 2, 5, 8, … is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "29", "26", "32", "27" ],
+  "correctAnswer" : "29",
+  "orderIndex" : 374
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "Distance between points (0,0) and (6,8) is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "10", "14", "2", "48" ],
+  "correctAnswer" : "10",
+  "orderIndex" : 375
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "A tangent to a circle touches it at…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Exactly one point", "Two points", "Three points", "No point" ],
+  "correctAnswer" : "Exactly one point",
+  "orderIndex" : 376
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "Curved surface area of a cone is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "πrl", "2πrh", "πr²h", "4πr²" ],
+  "correctAnswer" : "πrl",
+  "orderIndex" : 377
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "Probability of getting a head in one coin toss is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1/2", "1", "0", "1/4" ],
+  "correctAnswer" : "1/2",
+  "orderIndex" : 378
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 10",
+  "subject" : "Math",
+  "questionText" : "The zeros of x² − 4 are…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2 and −2", "4 and −4", "0 and 4", "2 and 4" ],
+  "correctAnswer" : "2 and −2",
+  "orderIndex" : 379
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "Red light on traffic signals means…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Stop", "Go", "Run", "Dance" ],
+  "correctAnswer" : "Stop",
+  "orderIndex" : 380
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "Who treats us when we are sick?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Doctor", "Teacher", "Farmer", "Driver" ],
+  "correctAnswer" : "Doctor",
+  "orderIndex" : 381
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "Which vehicle flies in the sky?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Aeroplane", "Bus", "Ship", "Car" ],
+  "correctAnswer" : "Aeroplane",
+  "orderIndex" : 382
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "What colour is grass?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Green", "Red", "Blue", "Black" ],
+  "correctAnswer" : "Green",
+  "orderIndex" : 383
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "Who teaches us in school?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Teacher", "Doctor", "Postman", "Cook" ],
+  "correctAnswer" : "Teacher",
+  "orderIndex" : 384
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "How many colours are in a rainbow?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "3", "5", "10" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 385
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "Which is the biggest land animal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Elephant", "Horse", "Dog", "Goat" ],
+  "correctAnswer" : "Elephant",
+  "orderIndex" : 386
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "A firefighter puts out…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fire", "Light", "Water", "Food" ],
+  "correctAnswer" : "Fire",
+  "orderIndex" : 387
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "What colour is a banana?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Yellow", "Blue", "Purple", "Black" ],
+  "correctAnswer" : "Yellow",
+  "orderIndex" : 388
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Hindi",
+  "questionText" : "Which animal lives in water?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fish", "Cow", "Hen", "Monkey" ],
+  "correctAnswer" : "Fish",
+  "orderIndex" : 389
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "We smell with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nose", "Eyes", "Ears", "Hands" ],
+  "correctAnswer" : "Nose",
+  "orderIndex" : 390
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "Which animal gives us milk?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cow", "Dog", "Cat", "Hen" ],
+  "correctAnswer" : "Cow",
+  "orderIndex" : 391
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "A baby dog is called a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Puppy", "Kitten", "Calf", "Chick" ],
+  "correctAnswer" : "Puppy",
+  "orderIndex" : 392
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "We see with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Eyes", "Nose", "Ears", "Feet" ],
+  "correctAnswer" : "Eyes",
+  "orderIndex" : 393
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "Which one is a fruit?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mango", "Carrot", "Potato", "Onion" ],
+  "correctAnswer" : "Mango",
+  "orderIndex" : 394
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "How many legs does a bird have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "4", "6", "8" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 395
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "We hear with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ears", "Eyes", "Nose", "Mouth" ],
+  "correctAnswer" : "Ears",
+  "orderIndex" : 396
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "Which animal says 'meow'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cat", "Dog", "Cow", "Lion" ],
+  "correctAnswer" : "Cat",
+  "orderIndex" : 397
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "Which body part helps us walk?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Legs", "Ears", "Eyes", "Nose" ],
+  "correctAnswer" : "Legs",
+  "orderIndex" : 398
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "EVS",
+  "questionText" : "We should drink water every day.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 399
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "Which letter comes after A?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "B", "C", "Z", "A" ],
+  "correctAnswer" : "B",
+  "orderIndex" : 400
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "'Apple' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "A", "B", "M", "S" ],
+  "correctAnswer" : "A",
+  "orderIndex" : 401
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "What is the opposite of big?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Small", "Tall", "Fat", "Long" ],
+  "correctAnswer" : "Small",
+  "orderIndex" : 402
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "Which one is a vowel?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "a", "b", "c", "d" ],
+  "correctAnswer" : "a",
+  "orderIndex" : 403
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "'Bat' rhymes with…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cat", "Cup", "Sun", "Dog" ],
+  "correctAnswer" : "Cat",
+  "orderIndex" : 404
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "'Elephant' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "E", "F", "A", "L" ],
+  "correctAnswer" : "E",
+  "orderIndex" : 405
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "What is the opposite of hot?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cold", "Warm", "Wet", "Fast" ],
+  "correctAnswer" : "Cold",
+  "orderIndex" : 406
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "'Ball' starts with the letter B.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 407
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "One cat, two…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cats", "Cat", "Cates", "Cati" ],
+  "correctAnswer" : "Cats",
+  "orderIndex" : 408
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "English",
+  "questionText" : "Which word names an animal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lion", "Red", "Jump", "Hot" ],
+  "correctAnswer" : "Lion",
+  "orderIndex" : 409
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "How many fingers are on one hand?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "4", "6", "10" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 410
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "What is 2 + 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 411
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "Which animal is the biggest?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Elephant", "Ant", "Cat", "Mouse" ],
+  "correctAnswer" : "Elephant",
+  "orderIndex" : 412
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "Which shape has three sides?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Triangle", "Circle", "Square", "Star" ],
+  "correctAnswer" : "Triangle",
+  "orderIndex" : 413
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "Count the stars: ★ ★ ★. How many?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 414
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "What is 3 + 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4", "3", "5", "6" ],
+  "correctAnswer" : "4",
+  "orderIndex" : 415
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "Which number comes after 5?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "6", "4", "7", "5" ],
+  "correctAnswer" : "6",
+  "orderIndex" : 416
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "A ball looks like which shape?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Circle", "Square", "Triangle", "Rectangle" ],
+  "correctAnswer" : "Circle",
+  "orderIndex" : 417
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "What is 4 − 2?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "1", "3", "4" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 418
+}, {
+  "boardCode" : "ALL",
+  "className" : "Junior KG",
+  "subject" : "Math",
+  "questionText" : "Which number do we start counting with?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1", "0", "2", "10" ],
+  "correctAnswer" : "1",
+  "orderIndex" : 419
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Red light on traffic signals means…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Stop", "Go", "Run", "Dance" ],
+  "correctAnswer" : "Stop",
+  "orderIndex" : 420
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Who treats us when we are sick?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Doctor", "Teacher", "Farmer", "Driver" ],
+  "correctAnswer" : "Doctor",
+  "orderIndex" : 421
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Which vehicle flies in the sky?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Aeroplane", "Bus", "Ship", "Car" ],
+  "correctAnswer" : "Aeroplane",
+  "orderIndex" : 422
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "What colour is grass?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Green", "Red", "Blue", "Black" ],
+  "correctAnswer" : "Green",
+  "orderIndex" : 423
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Who teaches us in school?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Teacher", "Doctor", "Postman", "Cook" ],
+  "correctAnswer" : "Teacher",
+  "orderIndex" : 424
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "How many colours are in a rainbow?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "3", "5", "10" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 425
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Which is the biggest land animal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Elephant", "Horse", "Dog", "Goat" ],
+  "correctAnswer" : "Elephant",
+  "orderIndex" : 426
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "A firefighter puts out…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fire", "Light", "Water", "Food" ],
+  "correctAnswer" : "Fire",
+  "orderIndex" : 427
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "What colour is a banana?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Yellow", "Blue", "Purple", "Black" ],
+  "correctAnswer" : "Yellow",
+  "orderIndex" : 428
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Which animal lives in water?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fish", "Cow", "Hen", "Monkey" ],
+  "correctAnswer" : "Fish",
+  "orderIndex" : 429
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "We wear shoes on our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Feet", "Hands", "Head", "Ears" ],
+  "correctAnswer" : "Feet",
+  "orderIndex" : 430
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Which is the national bird of India?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Peacock", "Crow", "Parrot", "Hen" ],
+  "correctAnswer" : "Peacock",
+  "orderIndex" : 431
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "We should brush our teeth every morning.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 432
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "Who brings us letters?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Postman", "Pilot", "Chef", "Tailor" ],
+  "correctAnswer" : "Postman",
+  "orderIndex" : 433
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Hindi",
+  "questionText" : "How many wheels does a car have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4", "2", "3", "6" ],
+  "correctAnswer" : "4",
+  "orderIndex" : 434
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "We smell with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nose", "Eyes", "Ears", "Hands" ],
+  "correctAnswer" : "Nose",
+  "orderIndex" : 435
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "Which animal gives us milk?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cow", "Dog", "Cat", "Hen" ],
+  "correctAnswer" : "Cow",
+  "orderIndex" : 436
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "A baby dog is called a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Puppy", "Kitten", "Calf", "Chick" ],
+  "correctAnswer" : "Puppy",
+  "orderIndex" : 437
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "We see with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Eyes", "Nose", "Ears", "Feet" ],
+  "correctAnswer" : "Eyes",
+  "orderIndex" : 438
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "Which one is a fruit?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mango", "Carrot", "Potato", "Onion" ],
+  "correctAnswer" : "Mango",
+  "orderIndex" : 439
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "How many legs does a bird have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "4", "6", "8" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 440
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "We hear with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ears", "Eyes", "Nose", "Mouth" ],
+  "correctAnswer" : "Ears",
+  "orderIndex" : 441
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "Which animal says 'meow'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cat", "Dog", "Cow", "Lion" ],
+  "correctAnswer" : "Cat",
+  "orderIndex" : 442
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "Which body part helps us walk?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Legs", "Ears", "Eyes", "Nose" ],
+  "correctAnswer" : "Legs",
+  "orderIndex" : 443
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "We should drink water every day.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 444
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "A baby cow is called a…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Calf", "Puppy", "Kitten", "Duckling" ],
+  "correctAnswer" : "Calf",
+  "orderIndex" : 445
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "Which one can fly?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Butterfly", "Dog", "Fish", "Cow" ],
+  "correctAnswer" : "Butterfly",
+  "orderIndex" : 446
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "We taste with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Tongue", "Nose", "Ears", "Hands" ],
+  "correctAnswer" : "Tongue",
+  "orderIndex" : 447
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "A fish lives in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Water", "A tree", "The sky", "A nest" ],
+  "correctAnswer" : "Water",
+  "orderIndex" : 448
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "EVS",
+  "questionText" : "The sun rises at night.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "False",
+  "orderIndex" : 449
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "Which letter comes after A?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "B", "C", "Z", "A" ],
+  "correctAnswer" : "B",
+  "orderIndex" : 450
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "'Apple' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "A", "B", "M", "S" ],
+  "correctAnswer" : "A",
+  "orderIndex" : 451
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "What is the opposite of big?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Small", "Tall", "Fat", "Long" ],
+  "correctAnswer" : "Small",
+  "orderIndex" : 452
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "Which one is a vowel?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "a", "b", "c", "d" ],
+  "correctAnswer" : "a",
+  "orderIndex" : 453
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "'Bat' rhymes with…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cat", "Cup", "Sun", "Dog" ],
+  "correctAnswer" : "Cat",
+  "orderIndex" : 454
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "'Elephant' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "E", "F", "A", "L" ],
+  "correctAnswer" : "E",
+  "orderIndex" : 455
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "What is the opposite of hot?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cold", "Warm", "Wet", "Fast" ],
+  "correctAnswer" : "Cold",
+  "orderIndex" : 456
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "'Ball' starts with the letter B.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 457
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "One cat, two…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cats", "Cat", "Cates", "Cati" ],
+  "correctAnswer" : "Cats",
+  "orderIndex" : 458
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "Which word names an animal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lion", "Red", "Jump", "Hot" ],
+  "correctAnswer" : "Lion",
+  "orderIndex" : 459
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "Fill the missing letter: C_T (cat)",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "a", "o", "u", "e" ],
+  "correctAnswer" : "a",
+  "orderIndex" : 460
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "What is the opposite of up?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Down", "Top", "Over", "High" ],
+  "correctAnswer" : "Down",
+  "orderIndex" : 461
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "'Sun' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "S", "F", "M", "B" ],
+  "correctAnswer" : "S",
+  "orderIndex" : 462
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "Which word is a colour?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Blue", "Run", "Table", "Jump" ],
+  "correctAnswer" : "Blue",
+  "orderIndex" : 463
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "English",
+  "questionText" : "We write from left to right.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 464
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "How many fingers are on one hand?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "4", "6", "10" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 465
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "What is 2 + 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 466
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "Which animal is the biggest?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Elephant", "Ant", "Cat", "Mouse" ],
+  "correctAnswer" : "Elephant",
+  "orderIndex" : 467
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "Which shape has three sides?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Triangle", "Circle", "Square", "Star" ],
+  "correctAnswer" : "Triangle",
+  "orderIndex" : 468
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "Count the stars: ★ ★ ★ ★. How many?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4", "3", "5", "6" ],
+  "correctAnswer" : "4",
+  "orderIndex" : 469
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "What is 5 − 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4", "3", "5", "2" ],
+  "correctAnswer" : "4",
+  "orderIndex" : 470
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "Which number comes after 7?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "8", "6", "9", "7" ],
+  "correctAnswer" : "8",
+  "orderIndex" : 471
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "A ball looks like which shape?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Circle", "Square", "Triangle", "Rectangle" ],
+  "correctAnswer" : "Circle",
+  "orderIndex" : 472
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "Which is the smallest number?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "5", "9", "7" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 473
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "What is 3 + 2?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "4", "6", "7" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 474
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "How many wheels does a bicycle have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "3", "4", "1" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 475
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "The sun looks like which shape?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Circle", "Square", "Triangle", "Star" ],
+  "correctAnswer" : "Circle",
+  "orderIndex" : 476
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "Which number do we start counting with?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1", "0", "2", "10" ],
+  "correctAnswer" : "1",
+  "orderIndex" : 477
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "What is 4 − 2?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "1", "3", "4" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 478
+}, {
+  "boardCode" : "ALL",
+  "className" : "Sr KG",
+  "subject" : "Math",
+  "questionText" : "3 is more than 5.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "False",
+  "orderIndex" : 479
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "Red light on traffic signals means…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Stop", "Go", "Run", "Dance" ],
+  "correctAnswer" : "Stop",
+  "orderIndex" : 480
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "Who teaches us in school?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Teacher", "Doctor", "Postman", "Cook" ],
+  "correctAnswer" : "Teacher",
+  "orderIndex" : 481
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "What colour is grass?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Green", "Red", "Blue", "Black" ],
+  "correctAnswer" : "Green",
+  "orderIndex" : 482
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "Which vehicle flies in the sky?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Aeroplane", "Bus", "Ship", "Car" ],
+  "correctAnswer" : "Aeroplane",
+  "orderIndex" : 483
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "How many colours are in a rainbow?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "3", "5", "10" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 484
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "What colour is a banana?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Yellow", "Blue", "Purple", "Black" ],
+  "correctAnswer" : "Yellow",
+  "orderIndex" : 485
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "Which animal lives in water?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Fish", "Cow", "Hen", "Monkey" ],
+  "correctAnswer" : "Fish",
+  "orderIndex" : 486
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "Who brings us letters?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Postman", "Pilot", "Chef", "Tailor" ],
+  "correctAnswer" : "Postman",
+  "orderIndex" : 487
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "We wear shoes on our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Feet", "Hands", "Head", "Ears" ],
+  "correctAnswer" : "Feet",
+  "orderIndex" : 488
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Hindi",
+  "questionText" : "We should brush our teeth every morning.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 489
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "We smell with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Nose", "Eyes", "Ears", "Hands" ],
+  "correctAnswer" : "Nose",
+  "orderIndex" : 490
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "Which animal says 'meow'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cat", "Dog", "Cow", "Lion" ],
+  "correctAnswer" : "Cat",
+  "orderIndex" : 491
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "We see with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Eyes", "Nose", "Ears", "Feet" ],
+  "correctAnswer" : "Eyes",
+  "orderIndex" : 492
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "Which one is a fruit?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Mango", "Carrot", "Potato", "Onion" ],
+  "correctAnswer" : "Mango",
+  "orderIndex" : 493
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "How many legs does a bird have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "4", "6", "8" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 494
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "We hear with our…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ears", "Eyes", "Nose", "Mouth" ],
+  "correctAnswer" : "Ears",
+  "orderIndex" : 495
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "Which body part helps us walk?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Legs", "Ears", "Eyes", "Nose" ],
+  "correctAnswer" : "Legs",
+  "orderIndex" : 496
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "We should drink water every day.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 497
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "A fish lives in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Water", "A tree", "The sky", "A nest" ],
+  "correctAnswer" : "Water",
+  "orderIndex" : 498
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "EVS",
+  "questionText" : "The sun rises in the morning.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 499
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "Which letter comes after A?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "B", "C", "Z", "A" ],
+  "correctAnswer" : "B",
+  "orderIndex" : 500
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "'Apple' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "A", "B", "M", "S" ],
+  "correctAnswer" : "A",
+  "orderIndex" : 501
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "What is the opposite of big?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Small", "Tall", "Fat", "Long" ],
+  "correctAnswer" : "Small",
+  "orderIndex" : 502
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "'Bat' rhymes with…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cat", "Cup", "Sun", "Dog" ],
+  "correctAnswer" : "Cat",
+  "orderIndex" : 503
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "'Elephant' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "E", "F", "A", "L" ],
+  "correctAnswer" : "E",
+  "orderIndex" : 504
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "What is the opposite of hot?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cold", "Warm", "Wet", "Fast" ],
+  "correctAnswer" : "Cold",
+  "orderIndex" : 505
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "'Ball' starts with the letter B.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 506
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "One cat, two…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cats", "Cat", "Cates", "Cati" ],
+  "correctAnswer" : "Cats",
+  "orderIndex" : 507
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "'Sun' starts with which letter?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "S", "F", "M", "B" ],
+  "correctAnswer" : "S",
+  "orderIndex" : 508
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "English",
+  "questionText" : "Which word names an animal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Lion", "Red", "Jump", "Hot" ],
+  "correctAnswer" : "Lion",
+  "orderIndex" : 509
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "How many fingers are on one hand?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "4", "6", "10" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 510
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "What is 1 + 2?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 511
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "Which shape has three sides?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Triangle", "Circle", "Square", "Star" ],
+  "correctAnswer" : "Triangle",
+  "orderIndex" : 512
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "Count the dots: • • •. How many?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 513
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "What is 2 + 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "4", "5" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 514
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "Which number comes after 3?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "4", "2", "5", "3" ],
+  "correctAnswer" : "4",
+  "orderIndex" : 515
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "A ball looks like which shape?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Circle", "Square", "Triangle", "Rectangle" ],
+  "correctAnswer" : "Circle",
+  "orderIndex" : 516
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "Which is the smallest number?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "1", "5", "9", "7" ],
+  "correctAnswer" : "1",
+  "orderIndex" : 517
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "What is 1 + 1?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "1", "3", "4" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 518
+}, {
+  "boardCode" : "ALL",
+  "className" : "Nursery",
+  "subject" : "Math",
+  "questionText" : "How many ears do we have?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "2", "1", "3", "4" ],
+  "correctAnswer" : "2",
+  "orderIndex" : 519
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Who discovered penicillin?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Alexander Fleming", "Louis Pasteur", "Edward Jenner", "Robert Koch" ],
+  "correctAnswer" : "Alexander Fleming",
+  "orderIndex" : 520
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "The Indian Parliament consists of Lok Sabha, Rajya Sabha and…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "The President", "The Supreme Court", "The Cabinet", "The Election Commission" ],
+  "correctAnswer" : "The President",
+  "orderIndex" : 521
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Chandrayaan-3 landed near the Moon's south pole in 2023.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 522
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Which Mughal emperor built the Taj Mahal?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Shah Jahan", "Akbar", "Aurangzeb", "Humayun" ],
+  "correctAnswer" : "Shah Jahan",
+  "orderIndex" : 523
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "The Richter scale measures…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Earthquakes", "Wind speed", "Temperature", "Ocean depth" ],
+  "correctAnswer" : "Earthquakes",
+  "orderIndex" : 524
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Who wrote 'Discovery of India'?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Jawaharlal Nehru", "Mahatma Gandhi", "Rabindranath Tagore", "Ambedkar" ],
+  "correctAnswer" : "Jawaharlal Nehru",
+  "orderIndex" : 525
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Which country gifted the Statue of Liberty to the USA?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "France", "Britain", "Spain", "Italy" ],
+  "correctAnswer" : "France",
+  "orderIndex" : 526
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "The Tropic of Cancer passes through how many Indian states?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "8", "6", "10", "5" ],
+  "correctAnswer" : "8",
+  "orderIndex" : 527
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Blockchain technology was first applied to…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Cryptocurrency", "Healthcare", "Education", "Farming" ],
+  "correctAnswer" : "Cryptocurrency",
+  "orderIndex" : 528
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Hindi",
+  "questionText" : "Democracy means government by the people.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 529
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Newton's second law states F = …",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "ma", "mv", "m/a", "m+v" ],
+  "correctAnswer" : "ma",
+  "orderIndex" : 530
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Acceleration due to gravity on Earth is about 9.8 m/s².",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 531
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "The basic unit of matter is the…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Atom", "Cell", "Tissue", "Organ" ],
+  "correctAnswer" : "Atom",
+  "orderIndex" : 532
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Which tissue transports water in plants?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Xylem", "Phloem", "Parenchyma", "Cambium" ],
+  "correctAnswer" : "Xylem",
+  "orderIndex" : 533
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "The chemical formula of water is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "H₂O", "CO₂", "O₂", "H₂O₂" ],
+  "correctAnswer" : "H₂O",
+  "orderIndex" : 534
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Distance covered per unit time is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Speed", "Acceleration", "Force", "Work" ],
+  "correctAnswer" : "Speed",
+  "orderIndex" : 535
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Which disease is caused by a virus?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Influenza", "Typhoid", "TB", "Cholera" ],
+  "correctAnswer" : "Influenza",
+  "orderIndex" : 536
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Energy stored in food is measured in…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Calories", "Metres", "Newtons", "Volts" ],
+  "correctAnswer" : "Calories",
+  "orderIndex" : 537
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Which gas shields Earth from UV radiation?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Ozone", "Oxygen", "Nitrogen", "Helium" ],
+  "correctAnswer" : "Ozone",
+  "orderIndex" : 538
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "EVS",
+  "questionText" : "Work done is zero when force and displacement are perpendicular.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 539
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "'Break a leg' is an example of…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Idiom", "Simile", "Metaphor", "Alliteration" ],
+  "correctAnswer" : "Idiom",
+  "orderIndex" : 540
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "Collective noun for bees:",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "swarm", "pride", "flock", "herd" ],
+  "correctAnswer" : "swarm",
+  "orderIndex" : 541
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "The literary device in 'the wind whispered' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Personification", "Hyperbole", "Simile", "Irony" ],
+  "correctAnswer" : "Personification",
+  "orderIndex" : 542
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "An autobiography is written by the person themselves.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 543
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "Synonym of 'diligent':",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Hardworking", "Lazy", "Careless", "Rude" ],
+  "correctAnswer" : "Hardworking",
+  "orderIndex" : 544
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "Identify the clause type: 'I know that he is honest.'",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Noun clause", "Adjective clause", "Adverb clause", "Main clause only" ],
+  "correctAnswer" : "Noun clause",
+  "orderIndex" : 545
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "The antonym of 'scarce' is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Plentiful", "Limited", "Rare", "Sparse" ],
+  "correctAnswer" : "Plentiful",
+  "orderIndex" : 546
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "Which sentence is grammatically correct?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Between you and me, this is fine.", "Between you and I, this is fine.", "Between I and you, this is fine.", "Between us and I, this is fine." ],
+  "correctAnswer" : "Between you and me, this is fine.",
+  "orderIndex" : 547
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "A traditional haiku has how many syllables in total (5-7-5)?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "17", "12", "14", "20" ],
+  "correctAnswer" : "17",
+  "orderIndex" : 548
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "English",
+  "questionText" : "Active voice makes writing more direct than passive voice.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 549
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Degree of the polynomial 4x³ − 2x + 7 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "3", "2", "1", "7" ],
+  "correctAnswer" : "3",
+  "orderIndex" : 550
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Expand (x + 2)(x + 3):",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "x² + 5x + 6", "x² + 6x + 5", "x² + 5", "x² + 6" ],
+  "correctAnswer" : "x² + 5x + 6",
+  "orderIndex" : 551
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "The distance of point (3, 4) from origin is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "7", "4", "3" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 552
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Two triangles are similar if their corresponding angles are equal.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 553
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Zero of the polynomial p(x) = x − 5 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "5", "−5", "0", "1" ],
+  "correctAnswer" : "5",
+  "orderIndex" : 554
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Volume of a cylinder with radius r and height h is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "πr²h", "2πrh", "πrh²", "4πr²" ],
+  "correctAnswer" : "πr²h",
+  "orderIndex" : 555
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "If two lines intersect, vertically opposite angles are…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "Equal", "Supplementary", "Complementary", "Unequal" ],
+  "correctAnswer" : "Equal",
+  "orderIndex" : 556
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Mean of 4, 6, 8, 10 is…",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "7", "6", "8", "28" ],
+  "correctAnswer" : "7",
+  "orderIndex" : 557
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Which of these is irrational?",
+  "questionType" : "SINGLE_CHOICE",
+  "options" : [ "π", "22/7", "0.5", "−7" ],
+  "correctAnswer" : "π",
+  "orderIndex" : 558
+}, {
+  "boardCode" : "ALL",
+  "className" : "Class 9",
+  "subject" : "Math",
+  "questionText" : "Every point on the number line represents a unique real number.",
+  "questionType" : "TRUE_FALSE",
+  "options" : [ "True", "False" ],
+  "correctAnswer" : "True",
+  "orderIndex" : 559
+} ]

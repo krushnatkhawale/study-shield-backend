@@ -7,11 +7,16 @@ import java.util.Map;
 /**
  * Curated seed question bank, age/class appropriate per band (issue #1).
  * <p>
- * Bands seeded today: Sr KG (age 4-5), Class 1 through Class 10, plus the Exp promo band.
- * Classes 2-10 carry four subjects each, 10 questions per subject, with a difficulty ramp:
- * early classes stay on readable SINGLE_CHOICE/TRUE_FALSE, upper classes cover board-level
- * topics (algebra, trigonometry, electricity, civics). Content follows the common CBSE/ICSE
- * core and is seeded against the board-agnostic ALL board.
+ * Bands seeded today: Nursery (age 3), Junior KG (age 4), Senior KG (age 5),
+ * Class 1 through Class 10. Each band carries four subjects: Math, English, EVS, Hindi.
+ * Difficulty ramps from simple picture-matching for juniors to board-level
+ * topics (algebra, trigonometry, electricity, civics) for upper classes.
+ * Content follows the common CBSE/ICSE core and is seeded against the
+ * board-agnostic ALL board.
+ * <p>
+ * The "Trial" class maps to the Nursery band; clients never seed Trial content
+ * separately.  "Hindi" questions under lower-age bands use English text with
+ * Hindi-appropriate topics (D3); actual Hindi-script content comes later.
  * <p>
  * To add questions later: append entries here or create questions via the admin
  * content APIs ({@code /api/v1/questions}). This class is a script path, not a runtime dependency.
@@ -29,8 +34,10 @@ public final class QuestionBankContent {
     public record SeedQuestion(String text, boolean trueFalse, List<String> options, String correct) {}
 
     public static final String BAND_SR_KG = "Sr KG";
+    public static final String BAND_LKG = "Junior KG";
+    public static final String BAND_NURSERY = "Nursery";
     public static final String BAND_CLASS_1 = "Class 1";
-    public static final String BAND_EXP = "Exp";
+    public static final String BAND_TRIAL = "Trial";
     public static final int MIN_CURATED_CLASS = 2;
     public static final int MAX_CURATED_CLASS = 10;
 
@@ -45,7 +52,9 @@ public final class QuestionBankContent {
         if (normalizedClassName == null) return null;
         String t = normalizedClassName.trim().toLowerCase(Locale.ROOT);
         if (t.contains("sr") || t.contains("senior") || t.contains("ukg")) return BAND_SR_KG;
-        if (t.equals("exp") || t.equals("experimental") || t.equals("promo")) return BAND_EXP;
+        if (t.contains("junior") || t.contains("lkg")) return BAND_LKG;
+        if (t.contains("nursery")) return BAND_NURSERY;
+        if (t.equals("trial") || t.equals("exp") || t.equals("experimental") || t.equals("promo")) return BAND_NURSERY;
         int n = classNumber(t);
         if (n == 1) return BAND_CLASS_1;
         if (n >= MIN_CURATED_CLASS && n <= MAX_CURATED_CLASS) return "Class " + n;
@@ -60,7 +69,8 @@ public final class QuestionBankContent {
 
     /** Maps a child's age to a reasonable class band so sessions can filter by age alone. */
     public static String classNameForAge(int age) {
-        if (age <= 3) return "Nursery";
+        if (age <= 3) return BAND_NURSERY;
+        if (age <= 4) return BAND_LKG;
         if (age <= 5) return BAND_SR_KG;
         if (age <= 7) return BAND_CLASS_1;
         return "Class " + Math.min(age - 5, 12);
@@ -129,7 +139,7 @@ public final class QuestionBankContent {
                             mcq("Which word is a colour?", "Blue", "Run", "Table", "Jump"),
                             tf("We write from left to right.", true)
                     ),
-                    "General Knowledge", List.of(
+                    "Hindi", List.of(
                             mcq("Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
                             mcq("Who treats us when we are sick?", "Doctor", "Teacher", "Farmer", "Driver"),
                             mcq("Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
@@ -199,7 +209,7 @@ public final class QuestionBankContent {
                             mcq("What is the opposite of happy?", "Sad", "Glad", "Smiling", "Kind"),
                             mcq("'Kite' starts with which letter?", "K", "C", "J", "L")
                     ),
-                    "General Knowledge", List.of(
+                    "Hindi", List.of(
                             mcq("What is the capital of India?", "New Delhi", "Mumbai", "Kolkata", "Chennai"),
                             mcq("Which is the national animal of India?", "Tiger", "Lion", "Elephant", "Leopard"),
                             mcq("Which is the national flower of India?", "Lotus", "Rose", "Sunflower", "Marigold"),
@@ -217,23 +227,104 @@ public final class QuestionBankContent {
                             tf("We should not go with strangers.", true)
                     )
             )),
-            Map.entry(BAND_EXP, Map.of(
-                    "Welcome", List.of(
-                            mcq("What does StudyShield turn your TV time into?", "Learning time", "Sleeping time", "Arguing time", "Advertising time"),
-                            mcq("Which profile setting unlocks tests for your own class?", "My kid profile (class and syllabus)", "The Wi-Fi password", "The TV remote batteries", "Screen brightness"),
-                            mcq("When do StudyShield quizzes appear on the TV?", "During TV ad breaks", "Only at midnight", "Never", "After bedtime"),
-                            mcq("Who can update a kid's class profile?", "A parent", "The TV", "The remote control", "Nobody"),
-                            mcq("What appears once your class profile is set?", "Tests for my real class appear", "Nothing changes", "The TV stops working", "The app deletes itself"),
-                            mcq("Which one of these is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
-                            mcq("Which number comes right after 4?", "5", "3", "6", "40"),
+            Map.entry(BAND_NURSERY, Map.of(
+                    "Math", List.of(
+                            mcq("How many fingers are on one hand?", "5", "4", "6", "10"),
+                            mcq("What is 1 + 2?", "3", "2", "4", "5"),
+                            mcq("Which shape has three sides?", "Triangle", "Circle", "Square", "Star"),
+                            mcq("Count the dots: • • •. How many?", "3", "2", "4", "5"),
+                            mcq("What is 2 + 1?", "3", "2", "4", "5"),
+                            mcq("Which number comes after 3?", "4", "2", "5", "3"),
+                            mcq("A ball looks like which shape?", "Circle", "Square", "Triangle", "Rectangle"),
+                            mcq("Which is the smallest number?", "1", "5", "9", "7"),
+                            mcq("What is 1 + 1?", "2", "1", "3", "4"),
+                            mcq("How many ears do we have?", "2", "1", "3", "4")
+                    ),
+                    "EVS", List.of(
+                            mcq("We smell with our…", "Nose", "Eyes", "Ears", "Hands"),
                             mcq("Which animal says 'meow'?", "Cat", "Dog", "Cow", "Lion"),
-                            mcq("What colour is the sky on a clear day?", "Blue", "Green", "Black", "Pink"),
-                            mcq("How many days are there in a week?", "7", "5", "10", "2"),
+                            mcq("We see with our…", "Eyes", "Nose", "Ears", "Feet"),
+                            mcq("Which one is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
+                            mcq("How many legs does a bird have?", "2", "4", "6", "8"),
+                            mcq("We hear with our…", "Ears", "Eyes", "Nose", "Mouth"),
                             mcq("Which body part helps us walk?", "Legs", "Ears", "Eyes", "Nose"),
-                            mcq("What is 2 + 2?", "4", "3", "5", "22"),
-                            mcq("Which one of these is a vehicle?", "Bus", "Mango", "Chair", "Cloud"),
-                            mcq("We read books to…", "Learn new things", "Forget everything", "Lose friends", "Break the TV"),
-                            mcq("StudyShield quizzes are…", "Fun learning breaks", "Punishments", "Commercials", "Homework for parents")
+                            tf("We should drink water every day.", true),
+                            mcq("A fish lives in…", "Water", "A tree", "The sky", "A nest"),
+                            tf("The sun rises in the morning.", true)
+                    ),
+                    "English", List.of(
+                            mcq("Which letter comes after A?", "B", "C", "Z", "A"),
+                            mcq("'Apple' starts with which letter?", "A", "B", "M", "S"),
+                            mcq("What is the opposite of big?", "Small", "Tall", "Fat", "Long"),
+                            mcq("'Bat' rhymes with…", "Cat", "Cup", "Sun", "Dog"),
+                            mcq("'Elephant' starts with which letter?", "E", "F", "A", "L"),
+                            mcq("What is the opposite of hot?", "Cold", "Warm", "Wet", "Fast"),
+                            tf("'Ball' starts with the letter B.", true),
+                            mcq("One cat, two…", "Cats", "Cat", "Cates", "Cati"),
+                            mcq("'Sun' starts with which letter?", "S", "F", "M", "B"),
+                            mcq("Which word names an animal?", "Lion", "Red", "Jump", "Hot")
+                    ),
+                    "Hindi", List.of(
+                            mcq("Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
+                            mcq("Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
+                            mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
+                            mcq("Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
+                            mcq("How many colours are in a rainbow?", "7", "3", "5", "10"),
+                            mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
+                            mcq("Which animal lives in water?", "Fish", "Cow", "Hen", "Monkey"),
+                            mcq("Who brings us letters?", "Postman", "Pilot", "Chef", "Tailor"),
+                            mcq("We wear shoes on our…", "Feet", "Hands", "Head", "Ears"),
+                            tf("We should brush our teeth every morning.", true)
+                    )
+            )),
+            Map.entry(BAND_LKG, Map.of(
+                    "Math", List.of(
+                            mcq("How many fingers are on one hand?", "5", "4", "6", "10"),
+                            mcq("What is 2 + 1?", "3", "2", "4", "5"),
+                            mcq("Which animal is the biggest?", "Elephant", "Ant", "Cat", "Mouse"),
+                            mcq("Which shape has three sides?", "Triangle", "Circle", "Square", "Star"),
+                            mcq("Count the stars: ★ ★ ★. How many?", "3", "2", "4", "5"),
+                            mcq("What is 3 + 1?", "4", "3", "5", "6"),
+                            mcq("Which number comes after 5?", "6", "4", "7", "5"),
+                            mcq("A ball looks like which shape?", "Circle", "Square", "Triangle", "Rectangle"),
+                            mcq("What is 4 − 2?", "2", "1", "3", "4"),
+                            mcq("Which number do we start counting with?", "1", "0", "2", "10")
+                    ),
+                    "EVS", List.of(
+                            mcq("We smell with our…", "Nose", "Eyes", "Ears", "Hands"),
+                            mcq("Which animal gives us milk?", "Cow", "Dog", "Cat", "Hen"),
+                            mcq("A baby dog is called a…", "Puppy", "Kitten", "Calf", "Chick"),
+                            mcq("We see with our…", "Eyes", "Nose", "Ears", "Feet"),
+                            mcq("Which one is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
+                            mcq("How many legs does a bird have?", "2", "4", "6", "8"),
+                            mcq("We hear with our…", "Ears", "Eyes", "Nose", "Mouth"),
+                            mcq("Which animal says 'meow'?", "Cat", "Dog", "Cow", "Lion"),
+                            mcq("Which body part helps us walk?", "Legs", "Ears", "Eyes", "Nose"),
+                            tf("We should drink water every day.", true)
+                    ),
+                    "English", List.of(
+                            mcq("Which letter comes after A?", "B", "C", "Z", "A"),
+                            mcq("'Apple' starts with which letter?", "A", "B", "M", "S"),
+                            mcq("What is the opposite of big?", "Small", "Tall", "Fat", "Long"),
+                            mcq("Which one is a vowel?", "a", "b", "c", "d"),
+                            mcq("'Bat' rhymes with…", "Cat", "Cup", "Sun", "Dog"),
+                            mcq("'Elephant' starts with which letter?", "E", "F", "A", "L"),
+                            mcq("What is the opposite of hot?", "Cold", "Warm", "Wet", "Fast"),
+                            tf("'Ball' starts with the letter B.", true),
+                            mcq("One cat, two…", "Cats", "Cat", "Cates", "Cati"),
+                            mcq("Which word names an animal?", "Lion", "Red", "Jump", "Hot")
+                    ),
+                    "Hindi", List.of(
+                            mcq("Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
+                            mcq("Who treats us when we are sick?", "Doctor", "Teacher", "Farmer", "Driver"),
+                            mcq("Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
+                            mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
+                            mcq("Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
+                            mcq("How many colours are in a rainbow?", "7", "3", "5", "10"),
+                            mcq("Which is the biggest land animal?", "Elephant", "Horse", "Dog", "Goat"),
+                            mcq("A firefighter puts out…", "Fire", "Light", "Water", "Food"),
+                            mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
+                            mcq("Which animal lives in water?", "Fish", "Cow", "Hen", "Monkey")
                     )
             )),
             Map.entry("Class 2", class2()),
@@ -285,7 +376,7 @@ public final class QuestionBankContent {
                         mcq("Fill in the blank: T__ (toy)", "o", "a", "e", "i"),
                         tf("Names of people and places start with a capital letter.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Which is the national flower of India?", "Lotus", "Rose", "Sunflower", "Marigold"),
                         mcq("How many days are there in a year?", "365", "300", "400", "360"),
                         mcq("Which animal is called the ship of the desert?", "Camel", "Horse", "Donkey", "Elephant"),
@@ -338,7 +429,7 @@ public final class QuestionBankContent {
                         tf("Every sentence must begin with a capital letter.", true),
                         mcq("Which sentence is correct?", "I am reading a book.", "I reading a book am.", "Reading I a book am.", "Am I reading book a.")
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Who was the first President of India?", "Dr. Rajendra Prasad", "Dr. S. Radhakrishnan", "Jawaharlal Nehru", "Dr. A.P.J. Abdul Kalam"),
                         mcq("How many continents are there on Earth?", "7", "5", "6", "8"),
                         mcq("Which planet is closest to the Sun?", "Mercury", "Earth", "Venus", "Mars"),
@@ -391,7 +482,7 @@ public final class QuestionBankContent {
                         mcq("Fill in: The ___ boy won the race.", "brave", "bravely", "braveness", "braving"),
                         tf("A paragraph usually starts on a new line.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Who wrote the national anthem of India?", "Rabindranath Tagore", "Bankim Chandra Chatterjee", "Sarojini Naidu", "Subhash Chandra Bose"),
                         mcq("Which is the highest mountain in the world?", "Mount Everest", "K2", "Kanchenjunga", "Nanda Devi"),
                         tf("The peacock is the national bird of India.", true),
@@ -445,7 +536,7 @@ public final class QuestionBankContent {
                         mcq("Fill in: If I ___ rich, I would help everyone.", "were", "am", "is", "be"),
                         tf("We use commas to separate items in a list.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Who invented the telephone?", "Alexander Graham Bell", "Thomas Edison", "Isaac Newton", "Guglielmo Marconi"),
                         mcq("Which is the longest river in the world?", "Nile", "Amazon", "Ganga", "Yangtze"),
                         tf("The currency of Japan is the Yen.", true),
@@ -498,7 +589,7 @@ public final class QuestionBankContent {
                         mcq("A group of lions is called a…", "pride", "pack", "herd", "school"),
                         tf("Direct speech quotes the exact words spoken.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Which city is the capital of India?", "New Delhi", "Mumbai", "Kolkata", "Chennai"),
                         mcq("The study of stars and planets is called…", "Astronomy", "Geology", "Biology", "Chemistry"),
                         tf("Mount Everest lies between Nepal and China.", true),
@@ -551,7 +642,7 @@ public final class QuestionBankContent {
                         mcq("One wolf, many…", "wolves", "wolfs", "wolfes", "wolf"),
                         tf("A biography is written about someone by another person.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Who painted the Mona Lisa?", "Leonardo da Vinci", "Picasso", "Van Gogh", "Michelangelo"),
                         mcq("Which is the deepest ocean trench?", "Mariana Trench", "Java Trench", "Puerto Rico Trench", "Tonga Trench"),
                         tf("The UN headquarters is in New York.", true),
@@ -604,7 +695,7 @@ public final class QuestionBankContent {
                         mcq("Which is an abstract noun?", "honesty", "table", "river", "dog"),
                         tf("Editing means checking for grammar, spelling and clarity.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("The original Indian Constitution contained approximately how many Articles?", "395", "448", "250", "500"),
                         mcq("The Revolt of 1857 started at…", "Meerut", "Delhi", "Kanpur", "Jhansi"),
                         tf("The World Wide Web was invented by Tim Berners-Lee.", true),
@@ -657,7 +748,7 @@ public final class QuestionBankContent {
                         mcq("A traditional haiku has how many syllables in total (5-7-5)?", "17", "12", "14", "20"),
                         tf("Active voice makes writing more direct than passive voice.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("Who discovered penicillin?", "Alexander Fleming", "Louis Pasteur", "Edward Jenner", "Robert Koch"),
                         mcq("The Indian Parliament consists of Lok Sabha, Rajya Sabha and…", "The President", "The Supreme Court", "The Cabinet", "The Election Commission"),
                         tf("Chandrayaan-3 landed near the Moon's south pole in 2023.", true),
@@ -710,7 +801,7 @@ public final class QuestionBankContent {
                         mcq("'To kill two birds with one stone' means…", "Achieve two results with one action", "Be cruel to animals", "Miss twice", "Try hard"),
                         tf("Summary writing should avoid personal opinions.", true)
                 ),
-                "General Knowledge", List.of(
+                "Hindi", List.of(
                         mcq("The Preamble declares India a sovereign, socialist, secular and…", "Democratic republic", "Monarchy", "Confederation", "Colony"),
                         mcq("Fundamental Duties were added to the Constitution by which amendment?", "42nd Amendment", "1st Amendment", "73rd Amendment", "101st Amendment"),
                         tf("GST was introduced in India in 2017.", true),

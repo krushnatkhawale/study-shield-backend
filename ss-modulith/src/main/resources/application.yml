@@ -39,6 +39,8 @@ spring:
       secret: ${JWT_SECRET:defaultSecretForDevelopmentOnly32chars!}
 
 app:
+  catalog-seeding:
+    enabled: false
   jwt:
     secret: ${JWT_SECRET:defaultSecretForDevelopmentOnly32chars!}
     expiration-ms: 86400000
