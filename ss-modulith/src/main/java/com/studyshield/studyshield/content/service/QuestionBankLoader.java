@@ -201,7 +201,8 @@ public class QuestionBankLoader {
     }
 
     private Question toQuestion(QuestionBankLoadItem item, Quiz quiz) {
-        boolean tf = item.questionType() == QuestionType.TRUE_FALSE;
+        QuestionType type = resolveType(item);
+        boolean tf = type == QuestionType.TRUE_FALSE;
         List<String> opts = item.options() != null ? item.options() : List.of("True", "False");
         List<String> texts = new ArrayList<>(opts);
 
@@ -219,7 +220,7 @@ public class QuestionBankLoader {
                 .resourceId("bankload_" + slug(item.className()) + "_" + slug(item.subject())
                         + "_q" + (item.orderIndex() != null ? item.orderIndex() : System.nanoTime()))
                 .questionText(item.questionText().trim())
-                .questionType(item.questionType())
+                .questionType(type)
                 .options(options)
                 .correctAnswers(List.of(correctId))
                 .correctOption(correctId.toUpperCase(Locale.ROOT))
@@ -239,6 +240,23 @@ public class QuestionBankLoader {
     }
 
     private static final List<String> OPTION_IDS = List.of("a", "b", "c", "d");
+
+    /**
+     * Resolves the question type for a load item. Callers that omit {@code questionType}
+     * (older mobile seeders) fall back to TRUE_FALSE when the options are exactly
+     * True/False, otherwise SINGLE_CHOICE.
+     */
+    private static QuestionType resolveType(QuestionBankLoadItem item) {
+        if (item.questionType() != null) {
+            return item.questionType();
+        }
+        List<String> opts = item.options() == null ? List.of() : item.options();
+        boolean hasTrue = opts.stream().anyMatch(o -> "true".equalsIgnoreCase(o));
+        boolean hasFalse = opts.stream().anyMatch(o -> "false".equalsIgnoreCase(o));
+        return (opts.size() == 2 && hasTrue && hasFalse)
+                ? QuestionType.TRUE_FALSE
+                : QuestionType.SINGLE_CHOICE;
+    }
 
     private static String normalizeClassName(String className) {
         if (className == null) return "";
