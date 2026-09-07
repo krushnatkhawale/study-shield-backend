@@ -162,17 +162,44 @@ public class QuestionBankLoader {
                 });
     }
 
+    /**
+     * Loaded questions must land in a pack the bundle can serve, so the pack is resolved to the
+     * freemium convention ({@code Freemium <Subject>}) shared with {@link QuizBundleSeeder}:
+     * reuse the existing freemium pack, convert a previously auto-created {@code Loaded <Subject>}
+     * pack in place (no orphan packs, no question re-writes), or create a fresh freemium pack.
+     */
     private ContentPack resolveOrCreateContentPack(Subject subject) {
-        return contentPackRepository.findBySubjectId(subject.getId()).stream()
+        List<ContentPack> active = contentPackRepository.findBySubjectId(subject.getId()).stream()
                 .filter(ContentPack::isActive)
+                .toList();
+
+        ContentPack freemium = active.stream()
+                .filter(p -> p.getName() != null
+                        && p.getName().toLowerCase(Locale.ROOT).contains("freemium"))
                 .findFirst()
-                .orElseGet(() -> contentPackRepository.save(ContentPack.builder()
-                        .name("Loaded " + subject.getName())
-                        .description("Auto-loaded content pack")
-                        .subject(subject)
-                        .version(1)
-                        .active(true)
-                        .build()));
+                .orElse(null);
+        if (freemium != null) {
+            return freemium;
+        }
+
+        ContentPack previouslyLoaded = active.stream()
+                .filter(p -> p.getName() != null
+                        && p.getName().toLowerCase(Locale.ROOT).startsWith("loaded "))
+                .findFirst()
+                .orElse(null);
+        if (previouslyLoaded != null) {
+            previouslyLoaded.setName("Freemium " + subject.getName());
+            previouslyLoaded.setDescription("Freemium catalog pack (converted from auto-loaded)");
+            return contentPackRepository.save(previouslyLoaded);
+        }
+
+        return contentPackRepository.save(ContentPack.builder()
+                .name("Freemium " + subject.getName())
+                .description("Freemium catalog pack")
+                .subject(subject)
+                .version(1)
+                .active(true)
+                .build());
     }
 
     private Quiz resolveOrCreateQuiz(ContentPack pack, String subjectName) {
