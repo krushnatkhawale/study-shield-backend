@@ -58,12 +58,14 @@ public class AuthController {
                         name,
                         null,
                         User.UserRole.PARENT.name(),
+                        null,
                         true));
 
         ParentProfileResponse defaultParent = parentProfileService.createDefault(saved.id(), saved.name());
         childProfileService.createDefault(saved.id());
 
-        String token = jwtProvider.generateToken(null, saved.id(), saved.email(), saved.role());
+        String token = jwtProvider.generateToken(null, saved.id(), saved.email(), saved.role(),
+                User.UserType.MOBILE.name());
 
         List<ParentSummary> parents = List.of(
                 new ParentSummary(defaultParent.id().toString(), defaultParent.name()));
@@ -88,7 +90,14 @@ public class AuthController {
                         AuthResponse.error("INVALID_CREDENTIALS", "Invalid login ID or password"));
             }
 
-            String token = jwtProvider.generateToken(null, user.getId(), user.getEmail(), user.getRole().name());
+            if (user.getUserType() == User.UserType.ADMIN) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                        AuthResponse.error("ACCOUNT_NOT_MOBILE",
+                                "This is an admin account; sign in through the admin app"));
+            }
+
+            String token = jwtProvider.generateToken(null, user.getId(), user.getEmail(),
+                    user.getRole().name(), user.getUserType().name());
 
             List<ParentProfileResponse> parentProfiles = parentProfileService.getByUserId(user.getId());
             List<ParentSummary> parents = parentProfiles.stream()
@@ -112,6 +121,37 @@ public class AuthController {
                     parentName,
                     requiresSelection,
                     parents));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                    AuthResponse.error("INVALID_CREDENTIALS", "Invalid login ID or password"));
+        }
+    }
+
+    @PostMapping("/admin-signin")
+    public ResponseEntity<AuthResponse> adminSignIn(@Valid @RequestBody SignInRequest request) {
+        try {
+            User user = userService.findByEmail(request.loginId());
+
+            if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                        AuthResponse.error("INVALID_CREDENTIALS", "Invalid login ID or password"));
+            }
+
+            if (user.getUserType() != User.UserType.ADMIN) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                        AuthResponse.error("ACCOUNT_NOT_ADMIN",
+                                "This is a mobile account; sign in through the mobile app"));
+            }
+
+            String token = jwtProvider.generateToken(null, user.getId(), user.getEmail(),
+                    user.getRole().name(), user.getUserType().name());
+
+            return ResponseEntity.ok(AuthResponse.success(
+                    user.getId().toString(),
+                    user.getEmail(),
+                    token,
+                    null,
+                    null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                     AuthResponse.error("INVALID_CREDENTIALS", "Invalid login ID or password"));

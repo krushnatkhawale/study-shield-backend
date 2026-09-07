@@ -37,7 +37,7 @@ class JwtAuthFilterTest {
 
     @Test
     void validTokenAuthenticatesAndChains() throws Exception {
-        String token = jwtProvider.generateToken(null, 42L, "parent@test.com", "PARENT");
+        String token = jwtProvider.generateToken(null, 42L, "parent@test.com", "PARENT", "MOBILE");
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("Authorization", "Bearer " + token);
 

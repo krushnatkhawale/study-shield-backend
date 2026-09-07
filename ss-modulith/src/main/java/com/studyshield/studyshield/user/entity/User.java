@@ -18,6 +18,11 @@ public class User {
         ADMIN
     }
 
+    public enum UserType {
+        MOBILE,
+        ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,6 +41,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role = UserRole.PARENT;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserType userType = UserType.MOBILE;
 
     @Column(nullable = false)
     private boolean active = true;
@@ -61,6 +70,8 @@ public class User {
     public void setPhone(String phone) { this.phone = phone; }
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
+    public UserType getUserType() { return userType; }
+    public void setUserType(UserType userType) { this.userType = userType; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
     public Long getVersion() { return version; }
@@ -76,6 +87,7 @@ public class User {
         private String name;
         private String phone;
         private UserRole role = UserRole.PARENT;
+        private UserType userType = UserType.MOBILE;
         private boolean active = true;
 
         public Builder email(String email) { this.email = email; return this; }
@@ -83,6 +95,7 @@ public class User {
         public Builder name(String name) { this.name = name; return this; }
         public Builder phone(String phone) { this.phone = phone; return this; }
         public Builder role(UserRole role) { this.role = role; return this; }
+        public Builder userType(UserType userType) { this.userType = userType; return this; }
         public Builder active(boolean active) { this.active = active; return this; }
 
         public User build() {
@@ -92,6 +105,7 @@ public class User {
             u.name = this.name;
             u.phone = this.phone;
             u.role = this.role;
+            u.userType = this.userType;
             u.active = this.active;
             return u;
         }

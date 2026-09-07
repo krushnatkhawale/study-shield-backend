@@ -25,10 +25,11 @@ public class JwtProvider {
         this.expirationMs = expirationMs;
     }
 
-    public String generateToken(UserDetails userDetails, Long userId, String email, String role) {
+    public String generateToken(UserDetails userDetails, Long userId, String email, String role, String userType) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
         claims.put("role", role);
+        claims.put("userType", userType);
         return Jwts.builder()
                 .claims(claims)
                 .subject(userId.toString())

@@ -8,6 +8,7 @@ import com.studyshield.studyshield.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -27,13 +28,34 @@ public class UserService {
         if (userRepository.existsByEmail(request.email())) {
             throw new IllegalArgumentException("Email already exists: " + request.email());
         }
+        User.UserRole role = request.role() != null
+                ? User.UserRole.valueOf(request.role()) : User.UserRole.PARENT;
+        User.UserType userType = resolveUserType(request.userType(), role);
         User user = User.builder()
                 .email(request.email())
-                .password(request.password() != null ? passwordEncoder.encode(request.password()) : null)
+                .password(encodeIfPresent(request.password()))
                 .name(request.name())
                 .phone(request.phone())
-                .role(request.role() != null ? User.UserRole.valueOf(request.role()) : User.UserRole.PARENT)
+                .role(role)
+                .userType(userType)
                 .active(request.active())
+                .build();
+        return mapToResponse(userRepository.save(user));
+    }
+
+    /** Create an administrator account. The type/role contract is fixed to ADMIN. */
+    public UserResponse createAdminUser(String email, String password, String name, String phone, boolean active) {
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("Email already exists: " + email);
+        }
+        User user = User.builder()
+                .email(email)
+                .password(encodeIfPresent(password))
+                .name(name != null ? name : email)
+                .phone(phone)
+                .role(User.UserRole.ADMIN)
+                .userType(User.UserType.ADMIN)
+                .active(active)
                 .build();
         return mapToResponse(userRepository.save(user));
     }
@@ -50,6 +72,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public List<UserResponse> getAllByType(User.UserType type) {
+        return userRepository.findAll().stream()
+                .filter(u -> u.getUserType() == type)
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<UserResponse> getAllByRole(User.UserRole role) {
         return userRepository.findAll().stream()
                 .filter(u -> u.getRole() == role)
@@ -60,10 +90,16 @@ public class UserService {
     public UserResponse update(Long id, UserRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", id));
+        User.UserRole role = request.role() != null
+                ? User.UserRole.valueOf(request.role()) : user.getRole();
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPhone(request.phone());
-        if (request.role() != null) user.setRole(User.UserRole.valueOf(request.role()));
+        user.setRole(role);
+        user.setUserType(resolveUserType(request.userType(), role));
+        if (StringUtils.hasText(request.password())) {
+            user.setPassword(passwordEncoder.encode(request.password()));
+        }
         user.setActive(request.active());
         return mapToResponse(userRepository.save(user));
     }
@@ -85,9 +121,35 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    @Transactional(readOnly = true)
+    public long countByType(User.UserType type) {
+        return userRepository.findAll().stream().filter(u -> u.getUserType() == type).count();
+    }
+
+    /**
+     * A user's type and role are a single contract: ADMIN users are role ADMIN,
+     * MOBILE users are role PARENT. This keeps the two app audiences strictly apart.
+     */
+    private User.UserType resolveUserType(String userType, User.UserRole role) {
+        User.UserType resolved = userType != null
+                ? User.UserType.valueOf(userType)
+                : (role == User.UserRole.ADMIN ? User.UserType.ADMIN : User.UserType.MOBILE);
+        boolean consistent = (resolved == User.UserType.ADMIN && role == User.UserRole.ADMIN)
+                || (resolved == User.UserType.MOBILE && role == User.UserRole.PARENT);
+        if (!consistent) {
+            throw new IllegalArgumentException(
+                    "User type ADMIN requires role ADMIN; user type MOBILE requires role PARENT");
+        }
+        return resolved;
+    }
+
+    private String encodeIfPresent(String raw) {
+        return raw != null ? passwordEncoder.encode(raw) : null;
+    }
+
     private UserResponse mapToResponse(User user) {
         return new UserResponse(user.getId(), user.getEmail(), user.getName(),
-                user.getPhone(), user.getRole().name(), user.isActive(),
-                user.getCreatedAt(), user.getUpdatedAt());
+                user.getPhone(), user.getRole().name(), user.getUserType().name(),
+                user.isActive(), user.getCreatedAt(), user.getUpdatedAt());
     }
 }
