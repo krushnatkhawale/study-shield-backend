@@ -44,6 +44,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                // Record why the token was rejected so the authentication entry point
+                // can tell clients "expired/invalid credentials" apart from "no credentials".
+                request.setAttribute(AUTH_ERROR_ATTR, AUTH_ERROR_REJECTED);
             }
         }
 
@@ -58,4 +62,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 || path.startsWith("/api-docs")
                 || path.startsWith("/actuator/");
     }
+
+    /** Request attribute key under which the filter records a rejected token reason. */
+    public static final String AUTH_ERROR_ATTR = "studyshield.auth_error";
+
+    /** Reason recorded when a Bearer token was present but did not validate. */
+    public static final String AUTH_ERROR_REJECTED = "Invalid or expired token";
 }
