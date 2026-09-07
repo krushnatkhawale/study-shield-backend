@@ -110,6 +110,12 @@ Single deployable Spring Boot application containing all business modules. Repla
 - `spring.security.jwt.secret=${JWT_SECRET}`
 - `app.jwt.expiration-ms=86400000` (24 hours)
 
+## Authentication & Errors
+- `JwtAuthFilter` (OncePerRequestFilter) validates the `Authorization: Bearer` token and builds the `SecurityContext` principal (`ROLE_<role>`).
+- A rejected token is recorded on the request (`studyshield.auth_error`) so the client can tell "no credentials" from "invalid/expired token".
+- `RestAuthenticationEntryPoint` returns a JSON **401 Unauthorized** for unauthenticated access to protected endpoints — previously Spring's default anonymous **403** was indistinguishable from a real authorization denial, and mobile clients could not detect an expired token to re-login.
+- The 401 body: `{"timestamp", "status": 401, "error": "UNAUTHORIZED", "message": "Authentication required" | "Invalid or expired token"}`.
+
 ## Deployment
 - **Dockerfile**: Multi-stage build (eclipse-temurin:21-jdk-jammy → eclipse-temurin:21-jre-jammy)
 - **Health Check**: `/actuator/health`
