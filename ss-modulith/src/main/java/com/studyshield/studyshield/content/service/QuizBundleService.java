@@ -96,12 +96,12 @@ public class QuizBundleService {
                 break;
             }
             subjectNames.add(subject.getName());
-            ContentPack pack = contentPackRepository.findBySubjectId(subject.getId()).stream()
-                    .filter(ContentPack::isActive)
-                    .filter(p -> p.getName() != null && p.getName().toLowerCase(Locale.ROOT).contains("freemium"))
-                    .findFirst()
-                    .orElseThrow(() -> new ResourceNotFoundException(
-                            "Freemium ContentPack for subject " + subject.getName()));
+            ContentPack pack = QuizBundleSeeder.pickActiveDeliveryPack(
+                    contentPackRepository.findBySubjectId(subject.getId()));
+            if (pack == null) {
+                throw new ResourceNotFoundException(
+                        "ContentPack for subject " + subject.getName());
+            }
 
             List<Quiz> quizzes = quizRepository
                     .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(

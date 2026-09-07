@@ -129,24 +129,24 @@ public class QuizBundleSeeder {
     }
 
     private void ensureQuizBundleForSubject(Subject subject, String band) {
-        ContentPack pack = contentPackRepository.findBySubjectId(subject.getId()).stream()
-                .filter(ContentPack::isActive)
-                .filter(p -> p.getName() != null && p.getName().toLowerCase().contains("freemium"))
-                .findFirst()
-                .orElseGet(() -> contentPackRepository.save(ContentPack.builder()
+        ContentPack existing = pickActiveDeliveryPack(
+                contentPackRepository.findBySubjectId(subject.getId()));
+        ContentPack pack = existing != null
+                ? existing
+                : contentPackRepository.save(ContentPack.builder()
                         .name("Freemium " + subject.getName())
                         .description("Freemium catalog pack")
                         .subject(subject)
                         .version(1)
                         .active(true)
-                        .build()));
+                        .build());
 
-        List<Quiz> existing = quizRepository
+        List<Quiz> quizzes = quizRepository
                 .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
                         pack.getId(), ContentTier.FREEMIUM);
 
         final int freemiumIndex = 1;
-        Quiz quiz = existing.stream()
+        Quiz quiz = quizzes.stream()
                 .filter(q -> freemiumIndex == (q.getFreemiumIndex() == null ? -1 : q.getFreemiumIndex()))
                 .findFirst()
                 .orElseGet(() -> createQuiz(pack, subject.getName(), freemiumIndex));
@@ -155,6 +155,31 @@ public class QuizBundleSeeder {
         if (activeCount < QUESTIONS_PER_QUIZ) {
             seedQuestions(quiz, band, subject.getName(), freemiumIndex, (int) activeCount);
         }
+    }
+
+    /**
+     * Selects the active delivery pack for a subject: the freemium-named pack when one exists
+     * (the convention {@link QuizBundleService} and the startup seeder share), otherwise any
+     * other active pack. Bank-loaded packs ({@code Loaded <Subject>}) are therefore served too,
+     * so freshly loaded content is never invisible to the bundle. Returns {@code null} when the
+     * subject has no active pack at all.
+     */
+    static ContentPack pickActiveDeliveryPack(List<ContentPack> packs) {
+        ContentPack freemium = null;
+        ContentPack anyActive = null;
+        for (ContentPack pack : packs) {
+            if (!pack.isActive()) {
+                continue;
+            }
+            if (anyActive == null) {
+                anyActive = pack;
+            }
+            if (freemium == null && pack.getName() != null
+                    && pack.getName().toLowerCase(Locale.ROOT).contains("freemium")) {
+                freemium = pack;
+            }
+        }
+        return freemium != null ? freemium : anyActive;
     }
 
     private Quiz createQuiz(ContentPack pack, String subjectName, int freemiumIndex) {

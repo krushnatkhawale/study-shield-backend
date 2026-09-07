@@ -123,6 +123,12 @@ Rules of the loader:
 - Creates any missing Board / ClassGrade / Subject / ContentPack / Quiz.
 - Skips a question whose exact text already exists in that quiz (idempotent re-runs).
 - When a quiz exceeds capacity, a new quiz is created for the overflow.
+- Packs are resolved to the **freemium naming convention** (`Freemium <Subject>`) shared with
+  `QuizBundleSeeder` / `QuizBundleService`, so loaded quizzes are always visible to the mobile
+  bundle:
+  - an existing `Freemium <Subject>` pack is reused;
+  - a pack previously auto-created as `Loaded <Subject>` is renamed in place (no orphan packs);
+  - otherwise a fresh `Freemium <Subject>` pack is created.
 
 ### 2. `question-bank.json` (ops bulk load)
 `question-bank.json` at the repo root is the full curated bank serialised into
