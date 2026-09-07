@@ -31,6 +31,9 @@ public class Subject {
     @Column(nullable = false)
     private boolean active = true;
 
+    @Column(nullable = false)
+    private int displayOrder = 0;
+
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ContentPack> contentPacks = new ArrayList<>();
 
@@ -55,6 +58,8 @@ public class Subject {
     public void setClassGrade(ClassGrade classGrade) { this.classGrade = classGrade; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public int getDisplayOrder() { return displayOrder; }
+    public void setDisplayOrder(int displayOrder) { this.displayOrder = displayOrder; }
     public List<ContentPack> getContentPacks() { return contentPacks; }
     public void setContentPacks(List<ContentPack> contentPacks) { this.contentPacks = contentPacks; }
     public LocalDateTime getCreatedAt() { return createdAt; }
@@ -68,12 +73,14 @@ public class Subject {
         private String description;
         private ClassGrade classGrade;
         private boolean active = true;
+        private int displayOrder = 0;
 
         public Builder name(String name) { this.name = name; return this; }
         public Builder code(String code) { this.code = code; return this; }
         public Builder description(String description) { this.description = description; return this; }
         public Builder classGrade(ClassGrade classGrade) { this.classGrade = classGrade; return this; }
         public Builder active(boolean active) { this.active = active; return this; }
+        public Builder displayOrder(int displayOrder) { this.displayOrder = displayOrder; return this; }
 
         public Subject build() {
             Subject s = new Subject();
@@ -82,6 +89,7 @@ public class Subject {
             s.description = this.description;
             s.classGrade = this.classGrade;
             s.active = this.active;
+            s.displayOrder = this.displayOrder;
             return s;
         }
     }

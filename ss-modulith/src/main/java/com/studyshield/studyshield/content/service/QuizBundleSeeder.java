@@ -110,13 +110,15 @@ public class QuizBundleSeeder {
             subjectNames = DEFAULT_SUBJECTS;
         }
         List<Subject> created = new ArrayList<>();
-        for (String subjectName : subjectNames) {
+        for (int idx = 0; idx < subjectNames.size(); idx++) {
+            String subjectName = subjectNames.get(idx);
             String code = subjectName.toUpperCase().replace(" ", "_");
             created.add(subjectRepository.save(Subject.builder()
                     .name(subjectName)
                     .code(code)
                     .classGrade(classGrade)
                     .active(true)
+                    .displayOrder(idx + 1)
                     .build()));
         }
         return created;

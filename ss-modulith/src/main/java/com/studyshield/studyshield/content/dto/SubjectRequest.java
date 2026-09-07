@@ -8,5 +8,6 @@ public record SubjectRequest(
     @NotBlank(message = "Subject code is required") String code,
     String description,
     @NotNull(message = "ClassGrade ID is required") Long classGradeId,
-    boolean active
+    boolean active,
+    int displayOrder
 ) {}

@@ -10,6 +10,7 @@ public record SubjectResponse(
     Long classGradeId,
     String classGradeName,
     boolean active,
+    int displayOrder,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {}

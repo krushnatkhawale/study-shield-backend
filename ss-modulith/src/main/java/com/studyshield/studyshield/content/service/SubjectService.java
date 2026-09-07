@@ -33,6 +33,7 @@ public class SubjectService {
                 .description(request.description())
                 .classGrade(classGrade)
                 .active(request.active())
+                .displayOrder(request.displayOrder())
                 .build();
         Subject saved = subjectRepository.save(subject);
         return mapToResponse(saved);
@@ -54,7 +55,7 @@ public class SubjectService {
 
     @Transactional(readOnly = true)
     public List<SubjectResponse> getByClassGradeId(Long classGradeId) {
-        return subjectRepository.findByClassGradeId(classGradeId).stream()
+        return subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(classGradeId).stream()
                 .map(this::mapToResponse)
                 .toList();
     }
@@ -69,6 +70,7 @@ public class SubjectService {
         subject.setDescription(request.description());
         subject.setClassGrade(classGrade);
         subject.setActive(request.active());
+        subject.setDisplayOrder(request.displayOrder());
         Subject saved = subjectRepository.save(subject);
         return mapToResponse(saved);
     }
@@ -88,6 +90,7 @@ public class SubjectService {
                 subject.getClassGrade().getId(),
                 subject.getClassGrade().getName(),
                 subject.isActive(),
+                subject.getDisplayOrder(),
                 subject.getCreatedAt(),
                 subject.getUpdatedAt()
         );

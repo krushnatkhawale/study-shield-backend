@@ -80,7 +80,7 @@ public class QuizBundleService {
             boolean allowPartial
     ) {
         ClassGrade classGrade = catalogSeeder.ensureCatalogForClass(className, boardCode);
-        List<Subject> subjects = subjectRepository.findByClassGradeId(classGrade.getId()).stream()
+        List<Subject> subjects = subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(classGrade.getId()).stream()
                 .filter(Subject::isActive)
                 .toList();
         if (subjects.isEmpty()) {

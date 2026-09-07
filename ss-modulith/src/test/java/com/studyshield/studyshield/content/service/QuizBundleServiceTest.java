@@ -68,7 +68,7 @@ class QuizBundleServiceTest {
 
     @Test
     void bankLoadedPackIsServedWhenNoFreemiumPackExistsForASubject() {
-        when(subjectRepository.findByClassGradeId(CLASS_GRADE.getId())).thenReturn(List.of(MATH));
+        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId())).thenReturn(List.of(MATH));
 
         ContentPack loadedPack = contentPack("Loaded Math", 100L);
         when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(List.of(loadedPack));
@@ -92,7 +92,7 @@ class QuizBundleServiceTest {
 
     @Test
     void multipleSubjectsWithOnlyBankLoadedPacksAllAppearInTheBundle() {
-        when(subjectRepository.findByClassGradeId(CLASS_GRADE.getId())).thenReturn(List.of(MATH, EVS));
+        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId())).thenReturn(List.of(MATH, EVS));
 
         ContentPack mathPack = contentPack("Loaded Math", 100L);
         ContentPack evsPack  = contentPack("Loaded EVS",  101L);
@@ -120,13 +120,48 @@ class QuizBundleServiceTest {
 
     @Test
     void anErrorIsThrownWhenASubjectHasNoActivePackAtAll() {
-        when(subjectRepository.findByClassGradeId(CLASS_GRADE.getId())).thenReturn(List.of(MATH));
+        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId())).thenReturn(List.of(MATH));
         when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(Collections.emptyList());
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() ->
                         service.issue(new QuizBundleRequest(
                                 "Class 7", null, null, null, null, "dev-1", null, false)))
                 .isInstanceOf(com.studyshield.studyshield.common.exception.ResourceNotFoundException.class);
+    }
+
+    @Test
+    void bundlePicksSubjectsInDisplayOrderNotInsertionOrder() {
+        // EVS appears first in the repository list but carries a later displayOrder,
+        // so the bundle must pick Math before EVS (first QUIZZES_PER_CLASS subjects win).
+        Subject math = subject(10L, "Math", CLASS_GRADE);
+        math.setDisplayOrder(1);
+        Subject evs = subject(11L, "EVS", CLASS_GRADE);
+        evs.setDisplayOrder(2);
+
+        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId()))
+                .thenReturn(List.of(math, evs));
+
+        ContentPack mathPack = contentPack("Loaded Math", 100L);
+        ContentPack evsPack  = contentPack("Loaded EVS",  101L);
+        when(contentPackRepository.findBySubjectId(math.getId())).thenReturn(List.of(mathPack));
+        when(contentPackRepository.findBySubjectId(evs.getId())).thenReturn(List.of(evsPack));
+
+        Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
+        Quiz evsQuiz  = quiz("EVS · Quiz 1",  201L, evsPack);
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                100L, ContentTier.FREEMIUM)).thenReturn(List.of(mathQuiz));
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                101L, ContentTier.FREEMIUM)).thenReturn(List.of(evsQuiz));
+
+        when(questionRepository.findByQuizIdAndBlacklistedFalse(any())).thenReturn(
+                List.of(question(), question(), question()));
+        when(quizRepository.findById(200L)).thenReturn(Optional.of(mathQuiz));
+        when(quizRepository.findById(201L)).thenReturn(Optional.of(evsQuiz));
+
+        QuizBundleResponse response = service.issue(new QuizBundleRequest(
+                "Class 7", null, null, null, null, "dev-1", null, false));
+
+        assertThat(response.subjects()).containsExactly("Math", "EVS");
     }
 
     private static Quiz quiz(String title, Long id, ContentPack pack) {
