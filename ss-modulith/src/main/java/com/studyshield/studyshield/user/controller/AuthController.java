@@ -4,6 +4,7 @@ import com.studyshield.studyshield.user.dto.ParentProfileResponse;
 import com.studyshield.studyshield.user.dto.ParentSummary;
 import com.studyshield.studyshield.user.dto.UserResponse;
 import com.studyshield.studyshield.user.dto.auth.AuthResponse;
+import com.studyshield.studyshield.user.dto.auth.AdminPasswordResetRequest;
 import com.studyshield.studyshield.user.dto.auth.SignInRequest;
 import com.studyshield.studyshield.user.dto.auth.SignUpRequest;
 import com.studyshield.studyshield.user.dto.auth.ValidationResponse;
@@ -155,6 +156,22 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                     AuthResponse.error("INVALID_CREDENTIALS", "Invalid login ID or password"));
+        }
+    }
+
+    @PostMapping("/admin-reset-password")
+    public ResponseEntity<AuthResponse> adminResetPassword(
+            @Valid @RequestBody AdminPasswordResetRequest request) {
+        try {
+            userService.resetAdminPassword(request.email(), request.newPassword());
+            return ResponseEntity.ok(AuthResponse.success(null, null, null, null, null,
+                    false, List.of()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(
+                    AuthResponse.error("RESET_FAILED", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    AuthResponse.error("RESET_FAILED", "Password reset failed"));
         }
     }
 

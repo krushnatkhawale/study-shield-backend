@@ -8,6 +8,8 @@ import com.studyshield.studyshield.tv.repository.TvUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class TvUserService {
@@ -30,6 +32,11 @@ public class TvUserService {
     public TvUserResponse getByExternalId(String externalId) {
         return mapToResponse(userRepository.findByExternalId(externalId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", externalId)));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TvUserResponse> getAll() {
+        return userRepository.findAll().stream().map(this::mapToResponse).toList();
     }
 
     @Transactional(readOnly = true)

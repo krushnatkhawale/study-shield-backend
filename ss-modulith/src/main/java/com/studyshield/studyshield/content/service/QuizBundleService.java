@@ -65,6 +65,11 @@ public class QuizBundleService {
     }
 
     @Transactional(readOnly = true)
+    public List<QuizBundleResponse> getAll() {
+        return quizBundleRepository.findAll().stream().map(this::toResponse).toList();
+    }
+
+    @Transactional(readOnly = true)
     public QuizBundleResponse getById(Long packId) {
         QuizBundle bundle = quizBundleRepository.findById(packId)
                 .orElseThrow(() -> new ResourceNotFoundException("QuizBundle", packId));

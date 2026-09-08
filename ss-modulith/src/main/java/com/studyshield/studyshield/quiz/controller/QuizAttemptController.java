@@ -20,6 +20,11 @@ public class QuizAttemptController {
         this.quizAttemptService = quizAttemptService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<QuizAttemptResponse>> getAll() {
+        return ResponseEntity.ok(quizAttemptService.getAll());
+    }
+
     @PostMapping
     public ResponseEntity<QuizAttemptResponse> create(@Valid @RequestBody QuizAttemptRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(quizAttemptService.create(request));

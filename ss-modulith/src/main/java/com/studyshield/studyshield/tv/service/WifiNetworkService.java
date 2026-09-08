@@ -42,6 +42,11 @@ public class WifiNetworkService {
     }
 
     @Transactional(readOnly = true)
+    public List<WifiNetworkResponse> getAll() {
+        return wifiNetworkRepository.findAll().stream().map(this::mapToResponse).toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<WifiNetworkResponse> getByUserId(Long userId) {
         return wifiNetworkRepository.findByUserId(userId).stream().map(this::mapToResponse).toList();
     }

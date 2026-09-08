@@ -46,6 +46,11 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.getById(id));
     }
 
+    @GetMapping("/{id}/revisions")
+    public ResponseEntity<List<QuestionResponse>> getRevisions(@PathVariable Long id) {
+        return ResponseEntity.ok(questionService.getRevisions(id));
+    }
+
     @GetMapping
     public ResponseEntity<List<QuestionResponse>> getAll() {
         return ResponseEntity.ok(questionService.getAll());

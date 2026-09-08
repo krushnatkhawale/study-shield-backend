@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -54,6 +55,8 @@ public class QuestionService {
                 .tags(request.tags() != null ? new ArrayList<>(request.tags()) : new ArrayList<>())
                 .quiz(quiz)
                 .blacklisted(request.blacklisted())
+                .versionGroupId(UUID.randomUUID().toString())
+                .versionNumber(1)
                 .orderIndex(request.orderIndex())
                 .build();
         return mapToResponse(questionRepository.save(question));
@@ -70,9 +73,15 @@ public class QuestionService {
         return questionRepository.findAll().stream().map(this::mapToResponse).toList();
     }
 
+    /**
+     * Latest version of each question in the quiz. Older revisions of a question are kept in the
+     * table but never served: the whole point of versioning is that a quiz always uses the newest.
+     */
     @Transactional(readOnly = true)
     public List<QuestionResponse> getByQuizId(Long quizId) {
-        return questionRepository.findByQuizId(quizId).stream().map(this::mapToResponse).toList();
+        return questionRepository.findByQuizIdAndSupersededByNull(quizId).stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     @Transactional(readOnly = true)
@@ -82,44 +91,132 @@ public class QuestionService {
                 .toList();
     }
 
-    public QuestionResponse update(Long id, QuestionRequest request) {
+    /**
+     * Full revision history of a question, oldest first. The head of the chain (last revision)
+     * is the latest version currently served for its quiz.
+     */
+    @Transactional(readOnly = true)
+    public List<QuestionResponse> getRevisions(Long id) {
         Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Question", id));
+        String groupId = question.getVersionGroupId();
+        if (groupId == null) {
+            return List.of(mapToResponse(question));
+        }
+        return questionRepository.findByVersionGroupIdOrderByVersionNumberAsc(groupId).stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    /**
+     * Editing an existing question creates a new version instead of mutating the row in place:
+     * the previous latest version is superseded by the new row, and both share a version group.
+     * Saving without any material change returns the current version untouched (no empty revision).
+     */
+    public QuestionResponse update(Long id, QuestionRequest request) {
+        Question current = questionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Question", id));
         Quiz quiz = quizRepository.findById(request.quizId())
                 .orElseThrow(() -> new ResourceNotFoundException("Quiz", request.quizId()));
         validateShape(request);
         List<QuestionOption> options = toOptions(request.options());
-        question.setResourceId(request.resourceId());
-        question.setQuestionText(request.questionText());
-        question.setQuestionImageUrl(request.questionImageUrl());
-        question.setQuestionType(request.questionType());
-        question.setCorrectOption(request.correctAnswers() != null && !request.correctAnswers().isEmpty()
-                ? request.correctAnswers().get(0) : "A");
-        question.setOptionA(getOptionText(options, 0));
-        question.setOptionB(getOptionText(options, 1));
-        question.setOptionC(getOptionText(options, 2));
-        question.setOptionD(getOptionText(options, 3));
-        question.setOptionAImage(getOptionImage(options, 0));
-        question.setOptionBImage(getOptionImage(options, 1));
-        question.setOptionCImage(getOptionImage(options, 2));
-        question.setOptionDImage(getOptionImage(options, 3));
-        question.setOptions(options);
-        question.setCorrectAnswers(new ArrayList<>(request.correctAnswers()));
-        question.setExplanation(request.explanation());
-        question.setPoints(request.points() != null && request.points() > 0 ? request.points() : 1);
-        question.setDifficulty(request.difficulty() != null ? request.difficulty() : Difficulty.EASY);
-        question.setLanguages(request.languages() != null ? new ArrayList<>(request.languages()) : List.of("English"));
-        question.setTags(request.tags() != null ? new ArrayList<>(request.tags()) : new ArrayList<>());
-        question.setQuiz(quiz);
-        question.setBlacklisted(request.blacklisted());
-        question.setOrderIndex(request.orderIndex());
-        return mapToResponse(questionRepository.save(question));
+        if (!hasMaterialChanges(current, request, options)) {
+            return mapToResponse(current);
+        }
+        Question next = Question.builder()
+                .resourceId(request.resourceId() != null ? request.resourceId() : current.getResourceId())
+                .questionText(request.questionText())
+                .questionImageUrl(request.questionImageUrl())
+                .questionType(request.questionType())
+                .correctOption(request.correctAnswers() != null && !request.correctAnswers().isEmpty()
+                        ? request.correctAnswers().get(0) : "A")
+                .optionA(getOptionText(options, 0))
+                .optionB(getOptionText(options, 1))
+                .optionC(getOptionText(options, 2))
+                .optionD(getOptionText(options, 3))
+                .optionAImage(getOptionImage(options, 0))
+                .optionBImage(getOptionImage(options, 1))
+                .optionCImage(getOptionImage(options, 2))
+                .optionDImage(getOptionImage(options, 3))
+                .options(options)
+                .correctAnswers(new ArrayList<>(request.correctAnswers()))
+                .explanation(request.explanation())
+                .points(request.points() != null && request.points() > 0 ? request.points() : 1)
+                .difficulty(request.difficulty() != null ? request.difficulty() : Difficulty.EASY)
+                .languages(request.languages() != null ? new ArrayList<>(request.languages()) : List.of("English"))
+                .tags(request.tags() != null ? new ArrayList<>(request.tags()) : new ArrayList<>())
+                .quiz(quiz)
+                .blacklisted(request.blacklisted())
+                .versionGroupId(current.getVersionGroupId() != null
+                        ? current.getVersionGroupId() : UUID.randomUUID().toString())
+                .versionNumber(current.getVersionNumber() + 1)
+                .orderIndex(request.orderIndex())
+                .build();
+        Question saved = questionRepository.save(next);
+        current.setSupersededBy(saved);
+        questionRepository.save(current);
+        return mapToResponse(saved);
     }
 
+    /** Deletes the whole version group so no superseded revision is left orphaned. */
     public void delete(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Question", id));
-        questionRepository.delete(question);
+        String groupId = question.getVersionGroupId();
+        if (groupId != null) {
+            for (Question version : questionRepository.findByVersionGroupId(groupId)) {
+                questionRepository.delete(version);
+            }
+        } else {
+            questionRepository.delete(question);
+        }
+    }
+
+    private boolean hasMaterialChanges(Question current, QuestionRequest request, List<QuestionOption> options) {
+        if (current.getQuiz().getId() != null && request.quizId() != null
+                && !current.getQuiz().getId().equals(request.quizId())) {
+            return true;
+        }
+        if (!current.getQuestionText().equals(request.questionText())) {
+            return true;
+        }
+        if (current.getQuestionType() != request.questionType()) {
+            return true;
+        }
+        if (current.isBlacklisted() != request.blacklisted()) {
+            return true;
+        }
+        if (current.getOrderIndex() != request.orderIndex()) {
+            return true;
+        }
+        if (current.getPoints() != (request.points() != null && request.points() > 0 ? request.points() : 1)) {
+            return true;
+        }
+        if (current.getDifficulty() != request.difficulty()) {
+            return true;
+        }
+        List<String> currentCorrect = current.getCorrectAnswers() != null
+                ? current.getCorrectAnswers() : new ArrayList<>();
+        List<String> requestedCorrect = request.correctAnswers() != null
+                ? request.correctAnswers() : new ArrayList<>();
+        if (!currentCorrect.equals(requestedCorrect)) {
+            return true;
+        }
+        List<QuestionOption> currentOptions = current.getOptions() != null
+                ? current.getOptions() : new ArrayList<>();
+        if (currentOptions.size() != options.size()) {
+            return true;
+        }
+        for (int i = 0; i < options.size(); i++) {
+            QuestionOption cur = currentOptions.get(i);
+            QuestionOption req = options.get(i);
+            if (!java.util.Objects.equals(cur.getId(), req.getId())
+                    || !java.util.Objects.equals(cur.getText(), req.getText())
+                    || !java.util.Objects.equals(cur.getImageUrl(), req.getImageUrl())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void validateShape(QuestionRequest request) {
@@ -171,6 +268,8 @@ public class QuestionService {
         return new QuestionResponse(
                 question.getId(),
                 question.getResourceId(),
+                question.getVersionGroupId(),
+                question.getVersionNumber(),
                 question.getQuestionText(),
                 question.getQuestionImageUrl(),
                 question.getQuestionType(),

@@ -68,6 +68,11 @@ public class ChildProfileService {
     }
 
     @Transactional(readOnly = true)
+    public List<ChildProfileResponse> getAll() {
+        return childProfileRepository.findAll().stream().map(this::mapToResponse).toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<ChildProfileResponse> getByUserId(Long userId) {
         return childProfileRepository.findByUserId(userId).stream().map(this::mapToResponse).toList();
     }

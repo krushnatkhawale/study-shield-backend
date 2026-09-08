@@ -20,6 +20,11 @@ public class ConnectedTVController {
         this.connectedTVService = connectedTVService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<ConnectedTVResponse>> getAll() {
+        return ResponseEntity.ok(connectedTVService.getAll());
+    }
+
     @PostMapping
     public ResponseEntity<ConnectedTVResponse> create(@Valid @RequestBody ConnectedTVRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(connectedTVService.create(request));

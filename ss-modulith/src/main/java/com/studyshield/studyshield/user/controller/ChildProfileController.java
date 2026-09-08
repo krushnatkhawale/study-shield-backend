@@ -20,6 +20,11 @@ public class ChildProfileController {
         this.childProfileService = childProfileService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<ChildProfileResponse>> getAll() {
+        return ResponseEntity.ok(childProfileService.getAll());
+    }
+
     @PostMapping
     public ResponseEntity<ChildProfileResponse> create(@Valid @RequestBody ChildProfileRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(childProfileService.create(request));

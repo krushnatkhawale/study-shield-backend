@@ -44,6 +44,11 @@ public class ConnectedTVService {
     }
 
     @Transactional(readOnly = true)
+    public List<ConnectedTVResponse> getAll() {
+        return connectedTVRepository.findAll().stream().map(this::mapToResponse).toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<ConnectedTVResponse> getByWifiNetworkId(Long wifiNetworkId) {
         return connectedTVRepository.findByWifiNetworkId(wifiNetworkId).stream().map(this::mapToResponse).toList();
     }

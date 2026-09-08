@@ -20,6 +20,11 @@ public class WifiNetworkController {
         this.wifiNetworkService = wifiNetworkService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<WifiNetworkResponse>> getAll() {
+        return ResponseEntity.ok(wifiNetworkService.getAll());
+    }
+
     @PostMapping
     public ResponseEntity<WifiNetworkResponse> create(@Valid @RequestBody WifiNetworkRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(wifiNetworkService.create(request));

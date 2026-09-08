@@ -37,6 +37,11 @@ public class QuizAttemptService {
     }
 
     @Transactional(readOnly = true)
+    public List<QuizAttemptResponse> getAll() {
+        return quizAttemptRepository.findAll().stream().map(this::mapToResponse).toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<QuizAttemptResponse> getByUserId(Long userId) {
         return quizAttemptRepository.findByUserId(userId).stream().map(this::mapToResponse).toList();
     }

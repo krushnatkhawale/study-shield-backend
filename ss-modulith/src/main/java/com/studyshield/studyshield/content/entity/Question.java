@@ -113,6 +113,17 @@ public class Question {
     @Column(nullable = false)
     private boolean blacklisted = false;
 
+    /**
+     * Stable key grouping every version of the same question. Versions share this id;
+     * the latest version for a quiz is the group row whose {@code supersededBy} is null.
+     */
+    @Column(name = "version_group_id", length = 64)
+    private String versionGroupId;
+
+    /** Version number within the group; the first version is 1. */
+    @Column(name = "version_number", nullable = false)
+    private int versionNumber = 1;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "superseded_by_id")
     private Question supersededBy;
@@ -178,6 +189,10 @@ public class Question {
     public void setQuiz(Quiz quiz) { this.quiz = quiz; }
     public boolean isBlacklisted() { return blacklisted; }
     public void setBlacklisted(boolean blacklisted) { this.blacklisted = blacklisted; }
+    public String getVersionGroupId() { return versionGroupId; }
+    public void setVersionGroupId(String versionGroupId) { this.versionGroupId = versionGroupId; }
+    public int getVersionNumber() { return versionNumber; }
+    public void setVersionNumber(int versionNumber) { this.versionNumber = versionNumber; }
     public Question getSupersededBy() { return supersededBy; }
     public void setSupersededBy(Question supersededBy) { this.supersededBy = supersededBy; }
     public int getOrderIndex() { return orderIndex; }
@@ -210,6 +225,8 @@ public class Question {
         private List<String> tags = new ArrayList<>();
         private Quiz quiz;
         private boolean blacklisted = false;
+        private String versionGroupId;
+        private int versionNumber = 1;
         private int orderIndex;
 
         public Builder resourceId(String resourceId) { this.resourceId = resourceId; return this; }
@@ -234,6 +251,8 @@ public class Question {
         public Builder tags(List<String> tags) { this.tags = tags; return this; }
         public Builder quiz(Quiz quiz) { this.quiz = quiz; return this; }
         public Builder blacklisted(boolean blacklisted) { this.blacklisted = blacklisted; return this; }
+        public Builder versionGroupId(String versionGroupId) { this.versionGroupId = versionGroupId; return this; }
+        public Builder versionNumber(int versionNumber) { this.versionNumber = versionNumber; return this; }
         public Builder orderIndex(int orderIndex) { this.orderIndex = orderIndex; return this; }
 
         public Question build() {
@@ -260,6 +279,8 @@ public class Question {
             q.tags = this.tags != null ? this.tags : new ArrayList<>();
             q.quiz = this.quiz;
             q.blacklisted = this.blacklisted;
+            q.versionGroupId = this.versionGroupId;
+            q.versionNumber = this.versionNumber;
             q.orderIndex = this.orderIndex;
             return q;
         }

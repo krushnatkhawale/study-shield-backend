@@ -143,6 +143,20 @@ public class UserService {
         return resolved;
     }
 
+    /**
+     * Resets the password for an ADMIN account. Throws if the account
+     * does not exist or is not an ADMIN type.
+     */
+    public void resetAdminPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("No account found with that email"));
+        if (user.getUserType() != User.UserType.ADMIN) {
+            throw new IllegalArgumentException("This is not an admin account");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
     private String encodeIfPresent(String raw) {
         return raw != null ? passwordEncoder.encode(raw) : null;
     }
