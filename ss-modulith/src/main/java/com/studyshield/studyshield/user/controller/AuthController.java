@@ -5,6 +5,7 @@ import com.studyshield.studyshield.user.dto.ParentSummary;
 import com.studyshield.studyshield.user.dto.UserResponse;
 import com.studyshield.studyshield.user.dto.auth.AuthResponse;
 import com.studyshield.studyshield.user.dto.auth.AdminPasswordResetRequest;
+import com.studyshield.studyshield.user.dto.auth.GuestAuthRequest;
 import com.studyshield.studyshield.user.dto.auth.SignInRequest;
 import com.studyshield.studyshield.user.dto.auth.SignUpRequest;
 import com.studyshield.studyshield.user.dto.auth.ValidationResponse;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -125,6 +127,39 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                     AuthResponse.error("INVALID_CREDENTIALS", "Invalid login ID or password"));
+        }
+    }
+
+    @PostMapping("/guest")
+    public ResponseEntity<AuthResponse> guestAuth(@Valid @RequestBody GuestAuthRequest request) {
+        try {
+            // Deterministic per-device account so a guest's quizzes and results
+            // are stable across app restarts on the same installation.
+            String guestEmail = "guest-" + request.deviceId() + "@guest.local";
+
+            User user;
+            if (userService.existsByEmail(guestEmail)) {
+                user = userService.findByEmail(guestEmail);
+            } else {
+                String randomPassword = UUID.randomUUID().toString() + System.nanoTime();
+                userService.create(new com.studyshield.studyshield.user.dto.UserRequest(
+                        guestEmail, randomPassword, "Guest", null,
+                        User.UserRole.PARENT.name(), null, true));
+                user = userService.findByEmail(guestEmail);
+            }
+
+            String token = jwtProvider.generateToken(null, user.getId(), user.getEmail(),
+                    user.getRole().name(), user.getUserType().name());
+
+            return ResponseEntity.ok(AuthResponse.success(
+                    user.getId().toString(),
+                    user.getEmail(),
+                    token,
+                    null,
+                    null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    AuthResponse.error("GUEST_AUTH_FAILED", "Could not create guest session"));
         }
     }
 
