@@ -1,5 +1,6 @@
 package com.studyshield.studyshield.content.controller;
 
+import com.studyshield.studyshield.content.dto.FreemiumRebuildResponse;
 import com.studyshield.studyshield.content.dto.QuizBundleRequest;
 import com.studyshield.studyshield.content.dto.QuizBundleResponse;
 import com.studyshield.studyshield.content.service.QuizBundleService;
@@ -34,5 +35,14 @@ public class QuizBundleController {
     @GetMapping("/{packId}")
     public ResponseEntity<QuizBundleResponse> getById(@PathVariable Long packId) {
         return ResponseEntity.ok(quizBundleService.getById(packId));
+    }
+
+    /**
+     * Admin: delete issued (cached) bundles and seed one freemium quiz per
+     * class/subject that has questions.
+     */
+    @PostMapping("/rebuild-catalog")
+    public ResponseEntity<FreemiumRebuildResponse> rebuildCatalog() {
+        return ResponseEntity.ok(quizBundleService.rebuildFreemiumCatalog());
     }
 }

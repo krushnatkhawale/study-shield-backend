@@ -18,10 +18,9 @@ import java.util.Map;
  * column existed (all created with the 0 default). This runs on startup and is idempotent:
  * subjects whose displayOrder is already non-zero are left untouched.
  * <p>
- * The order drives {@code QuizBundleService} subject selection (first {@code QUIZZES_PER_CLASS}
- * subjects win the freemium bundle), so this puts Math first, then EVS/English/Hindi, with
- * everything else (e.g. legacy "General Knowledge") behind them — making uploaded bank quizzes
- * surface instead of legacy GK+Math.
+ * The order drives {@code QuizBundleService} subject listing (Math, EVS, English, Hindi).
+ * Every subject that has questions is included in the freemium bundle; displayOrder only
+ * controls sequence, not a 2-quiz cap.
  */
 @Component
 public class SubjectDisplayOrderInitializer implements ApplicationRunner {

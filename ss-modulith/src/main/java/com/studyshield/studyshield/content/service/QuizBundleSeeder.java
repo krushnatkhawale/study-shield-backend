@@ -15,18 +15,21 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Ensures freemium catalog exists for a class: subjects with {@value #QUIZZES_PER_CLASS}
- * FREEMIUM quizzes total (10 questions each).
+ * Ensures a freemium catalog exists for a class: <strong>one FREEMIUM quiz per subject
+ * that has questions</strong> ({@value #QUESTIONS_PER_QUIZ} questions each).
  * <p>
- * Curated bands ({@code Sr KG}, {@code Class 1}) are seeded from {@link QuestionBankContent}
- * (real age-appropriate questions); any other class is topped up from a real fallback bank so a
- * session never starts empty.
+ * Curated bands are seeded from {@link QuestionBankContent}. Subjects with no bank
+ * questions are skipped unless they already have a loaded pack.
  */
 @Service
 public class QuizBundleSeeder {
 
     private static final Logger log = LoggerFactory.getLogger(QuizBundleSeeder.class);
-    public static final int QUIZZES_PER_CLASS = 2;
+    /**
+     * Historical name: used to cap the whole class at 2 quizzes (Math+EVS only).
+     * Bundles now issue <em>one quiz per subject that has questions</em>; this is no longer a cap.
+     */
+    public static final int QUIZZES_PER_CLASS = Integer.MAX_VALUE;
     public static final int QUESTIONS_PER_QUIZ = 10;
 
     private static final List<String> DEFAULT_SUBJECTS = List.of(
@@ -66,16 +69,16 @@ public class QuizBundleSeeder {
                 .or(() -> classGradeRepository.findFirstByNameIgnoreCase(className))
                 .orElseGet(() -> createClassGrade(board, className));
 
-        List<Subject> subjects = subjectRepository.findByClassGradeId(classGrade.getId());
+        List<Subject> subjects = subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(classGrade.getId());
         String band = QuestionBankContent.bandForClassName(classGrade.getName());
         if (subjects.isEmpty()) {
             subjects = createDefaultSubjects(classGrade, band);
         }
 
-        // Right-sized catalog: QUIZZES_PER_CLASS quizzes total per class (one per subject,
-        // first subjects win), 10 questions each — never the old 5-per-subject sprawl.
-        int seededSubjects = Math.min(QUIZZES_PER_CLASS, subjects.size());
-        for (Subject subject : subjects.subList(0, seededSubjects)) {
+        for (Subject subject : subjects) {
+            if (!shouldOfferSubject(subject, band)) {
+                continue;
+            }
             ensureQuizBundleForSubject(subject, band);
         }
         return classGrade;
@@ -105,7 +108,7 @@ public class QuizBundleSeeder {
     }
 
     private List<Subject> createDefaultSubjects(ClassGrade classGrade, String band) {
-        List<String> subjectNames = curatedSubjectNames(band);
+        List<String> subjectNames = orderSubjectNames(curatedSubjectNames(band));
         if (subjectNames.isEmpty()) {
             subjectNames = DEFAULT_SUBJECTS;
         }
@@ -128,6 +131,53 @@ public class QuizBundleSeeder {
     private List<String> curatedSubjectNames(String band) {
         if (band == null) return List.of();
         return List.copyOf(QuestionBankContent.BANK.getOrDefault(band, Map.of()).keySet());
+    }
+
+    /** Math, EVS, English, Hindi first — Map keySet order is not stable. */
+    private static List<String> orderSubjectNames(List<String> names) {
+        if (names.isEmpty()) {
+            return names;
+        }
+        List<String> ordered = new ArrayList<>();
+        for (String preferred : DEFAULT_SUBJECTS) {
+            if (names.contains(preferred)) {
+                ordered.add(preferred);
+            }
+        }
+        for (String name : names) {
+            if (!ordered.contains(name)) {
+                ordered.add(name);
+            }
+        }
+        return ordered;
+    }
+
+    /**
+     * Offer a subject when the curated bank has questions for it, or when a pack/quiz
+     * was already loaded (e.g. {@code POST /questions/load}).
+     */
+    private boolean shouldOfferSubject(Subject subject, String band) {
+        if (hasBankQuestions(band, subject.getName())) {
+            return true;
+        }
+        ContentPack pack = pickActiveDeliveryPack(contentPackRepository.findBySubjectId(subject.getId()));
+        if (pack == null) {
+            return false;
+        }
+        return !quizRepository
+                .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                        pack.getId(), ContentTier.FREEMIUM)
+                .isEmpty();
+    }
+
+    static boolean hasBankQuestions(String band, String subjectName) {
+        if (band == null || subjectName == null) {
+            return false;
+        }
+        List<SeedQuestion> list = QuestionBankContent.BANK
+                .getOrDefault(band, Map.of())
+                .get(subjectName);
+        return list != null && !list.isEmpty();
     }
 
     private void ensureQuizBundleForSubject(Subject subject, String band) {

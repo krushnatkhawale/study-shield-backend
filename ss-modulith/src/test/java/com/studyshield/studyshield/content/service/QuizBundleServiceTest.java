@@ -58,7 +58,9 @@ class QuizBundleServiceTest {
                 return CLASS_GRADE;
             }
         };
-        service = new QuizBundleService(quizBundleRepository, catalogSeeder, subjectRepository,
+        service = new QuizBundleService(quizBundleRepository, catalogSeeder,
+                mock(ClassGradeRepository.class),
+                subjectRepository,
                 contentPackRepository, quizRepository, questionRepository, questionService);
 
         // No existing bundle for this holder
@@ -126,13 +128,13 @@ class QuizBundleServiceTest {
         org.assertj.core.api.Assertions.assertThatThrownBy(() ->
                         service.issue(new QuizBundleRequest(
                                 "Class 7", null, null, null, null, "dev-1", null, false)))
-                .isInstanceOf(com.studyshield.studyshield.common.exception.ResourceNotFoundException.class);
+                .isInstanceOf(com.studyshield.studyshield.common.exception.InsufficientStockException.class);
     }
 
     @Test
     void bundlePicksSubjectsInDisplayOrderNotInsertionOrder() {
-        // EVS appears first in the repository list but carries a later displayOrder,
-        // so the bundle must pick Math before EVS (first QUIZZES_PER_CLASS subjects win).
+        // Repository already returns displayOrder order: Math then EVS. Both subjects
+        // with questions are included (no 2-quiz class cap).
         Subject math = subject(10L, "Math", CLASS_GRADE);
         math.setDisplayOrder(1);
         Subject evs = subject(11L, "EVS", CLASS_GRADE);
@@ -162,6 +164,49 @@ class QuizBundleServiceTest {
                 "Class 7", null, null, null, null, "dev-1", null, false));
 
         assertThat(response.subjects()).containsExactly("Math", "EVS");
+    }
+
+    @Test
+    void allFourSubjectsWithQuestionsAppearInTheBundle() {
+        Subject english = subject(12L, "English", CLASS_GRADE);
+        Subject hindi = subject(13L, "Hindi", CLASS_GRADE);
+        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId()))
+                .thenReturn(List.of(MATH, EVS, english, hindi));
+
+        ContentPack mathPack = contentPack("Freemium Math", 100L);
+        ContentPack evsPack = contentPack("Freemium EVS", 101L);
+        ContentPack engPack = contentPack("Freemium English", 102L);
+        ContentPack hinPack = contentPack("Freemium Hindi", 103L);
+        when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(List.of(mathPack));
+        when(contentPackRepository.findBySubjectId(EVS.getId())).thenReturn(List.of(evsPack));
+        when(contentPackRepository.findBySubjectId(english.getId())).thenReturn(List.of(engPack));
+        when(contentPackRepository.findBySubjectId(hindi.getId())).thenReturn(List.of(hinPack));
+
+        Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
+        Quiz evsQuiz = quiz("EVS · Quiz 1", 201L, evsPack);
+        Quiz engQuiz = quiz("English · Quiz 1", 202L, engPack);
+        Quiz hinQuiz = quiz("Hindi · Quiz 1", 203L, hinPack);
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                100L, ContentTier.FREEMIUM)).thenReturn(List.of(mathQuiz));
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                101L, ContentTier.FREEMIUM)).thenReturn(List.of(evsQuiz));
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                102L, ContentTier.FREEMIUM)).thenReturn(List.of(engQuiz));
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                103L, ContentTier.FREEMIUM)).thenReturn(List.of(hinQuiz));
+
+        when(questionRepository.findByQuizIdAndBlacklistedFalse(any())).thenReturn(
+                List.of(question(), question(), question()));
+        when(quizRepository.findById(200L)).thenReturn(Optional.of(mathQuiz));
+        when(quizRepository.findById(201L)).thenReturn(Optional.of(evsQuiz));
+        when(quizRepository.findById(202L)).thenReturn(Optional.of(engQuiz));
+        when(quizRepository.findById(203L)).thenReturn(Optional.of(hinQuiz));
+
+        QuizBundleResponse response = service.issue(new QuizBundleRequest(
+                "Class 3", null, null, null, null, "dev-1", null, false));
+
+        assertThat(response.quizCount()).isEqualTo(4);
+        assertThat(response.subjects()).containsExactly("Math", "EVS", "English", "Hindi");
     }
 
     private static Quiz quiz(String title, Long id, ContentPack pack) {

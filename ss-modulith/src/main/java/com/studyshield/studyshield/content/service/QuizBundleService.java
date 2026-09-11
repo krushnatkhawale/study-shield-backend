@@ -1,5 +1,6 @@
 package com.studyshield.studyshield.content.service;
 
+import com.studyshield.studyshield.content.dto.FreemiumRebuildResponse;
 import com.studyshield.studyshield.content.dto.QuizBundleRequest;
 import com.studyshield.studyshield.content.dto.QuizBundleResponse;
 import com.studyshield.studyshield.content.dto.QuestionResponse;
@@ -11,9 +12,11 @@ import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
 import com.studyshield.studyshield.content.repository.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,12 +24,14 @@ import java.util.Locale;
 @Transactional
 public class QuizBundleService {
 
-    public static final int QUIZZES_PER_CLASS = QuizBundleSeeder.QUIZZES_PER_CLASS;
+    /** One freemium quiz is issued per subject that has questions. */
+    public static final int QUIZZES_PER_SUBJECT = 1;
     /** Minimum real questions a freemium quiz must carry for a session to start. */
     public static final int MIN_ACTIVE_QUESTIONS_PER_QUIZ = 3;
 
     private final QuizBundleRepository quizBundleRepository;
     private final QuizBundleSeeder catalogSeeder;
+    private final ClassGradeRepository classGradeRepository;
     private final SubjectRepository subjectRepository;
     private final ContentPackRepository contentPackRepository;
     private final QuizRepository quizRepository;
@@ -36,6 +41,7 @@ public class QuizBundleService {
     public QuizBundleService(
             QuizBundleRepository quizBundleRepository,
             QuizBundleSeeder catalogSeeder,
+            ClassGradeRepository classGradeRepository,
             SubjectRepository subjectRepository,
             ContentPackRepository contentPackRepository,
             QuizRepository quizRepository,
@@ -44,6 +50,7 @@ public class QuizBundleService {
     ) {
         this.quizBundleRepository = quizBundleRepository;
         this.catalogSeeder = catalogSeeder;
+        this.classGradeRepository = classGradeRepository;
         this.subjectRepository = subjectRepository;
         this.contentPackRepository = contentPackRepository;
         this.quizRepository = quizRepository;
@@ -89,52 +96,40 @@ public class QuizBundleService {
                 .filter(Subject::isActive)
                 .toList();
         if (subjects.isEmpty()) {
-            throw new ResourceNotFoundException("Subject for class " + className);
+            throw new InsufficientStockException("No subjects for class " + className, 0, 1);
         }
 
         List<Long> quizIds = new ArrayList<>();
         List<String> subjectNames = new ArrayList<>();
-        int requiredQuizzes = Math.min(QUIZZES_PER_CLASS, subjects.size());
 
         for (Subject subject : subjects) {
-            if (quizIds.size() >= QUIZZES_PER_CLASS) {
-                break;
-            }
-            subjectNames.add(subject.getName());
             ContentPack pack = QuizBundleSeeder.pickActiveDeliveryPack(
                     contentPackRepository.findBySubjectId(subject.getId()));
             if (pack == null) {
-                throw new ResourceNotFoundException(
-                        "ContentPack for subject " + subject.getName());
+                continue;
             }
 
             List<Quiz> quizzes = quizRepository
                     .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
                             pack.getId(), ContentTier.FREEMIUM);
-            if (quizzes.isEmpty() && !allowPartial) {
-                throw new InsufficientStockException(
-                        "Insufficient freemium quizzes for subject " + subject.getName(),
-                        0,
-                        1
-                );
-            }
-            int take = Math.min(QUIZZES_PER_CLASS - quizIds.size(), quizzes.size());
-            for (int i = 0; i < take; i++) {
-                Quiz quiz = quizzes.get(i);
+            Quiz chosen = null;
+            for (Quiz quiz : quizzes) {
                 int activeQs = questionRepository.findByQuizIdAndBlacklistedFalse(quiz.getId()).size();
-                if (activeQs < MIN_ACTIVE_QUESTIONS_PER_QUIZ && !allowPartial) {
-                    throw new InsufficientStockException(
-                            "Insufficient questions for quiz " + quiz.getTitle(),
-                            activeQs,
-                            MIN_ACTIVE_QUESTIONS_PER_QUIZ
-                    );
+                if (activeQs >= MIN_ACTIVE_QUESTIONS_PER_QUIZ
+                        || (allowPartial && activeQs > 0)) {
+                    chosen = quiz;
+                    break;
                 }
-                quizIds.add(quiz.getId());
             }
+            if (chosen == null) {
+                continue;
+            }
+            subjectNames.add(subject.getName());
+            quizIds.add(chosen.getId());
         }
 
         if (quizIds.isEmpty()) {
-            throw new InsufficientStockException("No freemium quizzes available", 0, requiredQuizzes);
+            throw new InsufficientStockException("No freemium quizzes available", 0, 1);
         }
 
         QuizBundle issued = new QuizBundle();
@@ -168,7 +163,7 @@ public class QuizBundleService {
                 bundle.getLanguage(),
                 bundle.getBoardCode(),
                 bundle.getSubjects(),
-                QUIZZES_PER_CLASS,
+                QUIZZES_PER_SUBJECT,
                 bundle.getQuizCount(),
                 bundle.getDeviceId(),
                 bundle.getChildId(),
@@ -232,5 +227,30 @@ public class QuizBundleService {
 
     private static String blankToDefault(String value, String defaultValue) {
         return value == null || value.isBlank() ? defaultValue : value.trim();
+    }
+
+    /**
+     * Drop issued (idempotent) bundles so kids get a fresh pack list, then seed
+     * one freemium quiz for every class/subject that has bank or loaded questions.
+     * Not one giant transaction — each class seed runs in {@code ensureCatalogForClass}'s TX.
+     */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public FreemiumRebuildResponse rebuildFreemiumCatalog() {
+        long deletedBundles = quizBundleRepository.count();
+        quizBundleRepository.deleteAllInBatch();
+
+        LinkedHashSet<String> classes = new LinkedHashSet<>(QuestionBankContent.BANK.keySet());
+        for (ClassGrade grade : classGradeRepository.findAll()) {
+            if (grade.getName() != null && !grade.getName().isBlank()) {
+                classes.add(grade.getName());
+            }
+        }
+
+        List<String> seeded = new ArrayList<>();
+        for (String className : classes) {
+            catalogSeeder.ensureCatalogForClass(className, "ALL");
+            seeded.add(className);
+        }
+        return new FreemiumRebuildResponse(deletedBundles, seeded.size(), seeded);
     }
 }

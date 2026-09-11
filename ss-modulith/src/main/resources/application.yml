@@ -41,6 +41,7 @@ spring:
 app:
   catalog-seeding:
     enabled: false
+  freemium-rebuild-on-startup: ${FREEMIUM_REBUILD_ON_STARTUP:false}
   admin-bootstrap:
     enabled: ${ADMIN_BOOTSTRAP_ENABLED:true}
     email: ${ADMIN_BOOTSTRAP_EMAIL:}
