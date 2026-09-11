@@ -217,8 +217,10 @@ public class AuthController {
         if (authentication == null || !authentication.isAuthenticated()
                 || authentication.getPrincipal() == null
                 || "anonymousUser".equals(authentication.getPrincipal())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    ValidationResponse.error("INVALID_TOKEN", "Invalid or expired token"));
+            // Return OK with valid=false instead of 401, so the mobile app doesn't
+            // clear the local session immediately. This allows it to trust the
+            // cached state when offline/flaky, or try a re-login only when sure.
+            return ResponseEntity.ok(ValidationResponse.error("INVALID_TOKEN", "Invalid or expired token"));
         }
 
         String userId = (String) authentication.getPrincipal();

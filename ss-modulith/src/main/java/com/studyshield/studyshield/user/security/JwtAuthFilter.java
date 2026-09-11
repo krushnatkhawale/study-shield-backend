@@ -57,6 +57,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
+        // Allow /api/auth/ endpoints (like signin, signup, and validate) to
+        // bypass the filter so they can be handled by the AuthController.
         return path.startsWith("/api/auth/")
                 || path.startsWith("/swagger-ui")
                 || path.startsWith("/api-docs")
