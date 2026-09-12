@@ -217,7 +217,8 @@ public class QuizBundleSeeder {
      * subject has no active pack at all.
      */
     static ContentPack pickActiveDeliveryPack(List<ContentPack> packs) {
-        ContentPack freemium = null;
+        ContentPack namedFreemium = null;
+        ContentPack typedFreemium = null;
         ContentPack anyActive = null;
         for (ContentPack pack : packs) {
             if (!pack.isActive()) {
@@ -226,12 +227,22 @@ public class QuizBundleSeeder {
             if (anyActive == null) {
                 anyActive = pack;
             }
-            if (freemium == null && pack.getName() != null
-                    && pack.getName().toLowerCase(Locale.ROOT).contains("freemium")) {
-                freemium = pack;
+            boolean named = pack.getName() != null
+                    && pack.getName().toLowerCase(Locale.ROOT).contains("freemium");
+            if (named && namedFreemium == null) {
+                namedFreemium = pack;
+            }
+            if (pack.getPackType() == ContentTier.FREEMIUM && typedFreemium == null) {
+                typedFreemium = pack;
             }
         }
-        return freemium != null ? freemium : anyActive;
+        if (namedFreemium != null) {
+            return namedFreemium;
+        }
+        if (typedFreemium != null) {
+            return typedFreemium;
+        }
+        return anyActive;
     }
 
     private Quiz createQuiz(ContentPack pack, String subjectName, int freemiumIndex) {

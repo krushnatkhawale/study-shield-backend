@@ -146,7 +146,7 @@ class QuestionServiceTest {
                         new QuestionOptionDto("d", "D option", null)),
                 List.of(correctId),
                 null, 1, com.studyshield.studyshield.content.entity.Difficulty.EASY,
-                List.of("English"), List.of(), 1L, false, 0);
+                List.of("English"), List.of(), 1L, false, 0, null);
     }
 
     private static Question question(Long id, String text, List<String> correct) {

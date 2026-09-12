@@ -33,6 +33,9 @@ public class ContentPackService {
                 .subject(subject)
                 .version(request.version())
                 .active(request.active())
+                .packType(request.packType() != null ? request.packType() : com.studyshield.studyshield.content.entity.ContentTier.FREEMIUM)
+                .validFrom(request.validFrom())
+                .validTo(request.validTo())
                 .build();
         ContentPack saved = contentPackRepository.save(contentPack);
         return mapToResponse(saved);
@@ -69,6 +72,9 @@ public class ContentPackService {
         contentPack.setSubject(subject);
         contentPack.setVersion(request.version());
         contentPack.setActive(request.active());
+        contentPack.setPackType(request.packType() != null ? request.packType() : contentPack.getPackType());
+        contentPack.setValidFrom(request.validFrom());
+        contentPack.setValidTo(request.validTo());
         ContentPack saved = contentPackRepository.save(contentPack);
         return mapToResponse(saved);
     }
@@ -88,6 +94,9 @@ public class ContentPackService {
                 contentPack.getSubject().getName(),
                 contentPack.getVersion(),
                 contentPack.isActive(),
+                contentPack.getPackType(),
+                contentPack.getValidFrom(),
+                contentPack.getValidTo(),
                 contentPack.getCreatedAt(),
                 contentPack.getUpdatedAt()
         );

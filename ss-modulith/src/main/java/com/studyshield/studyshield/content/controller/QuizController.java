@@ -25,6 +25,11 @@ public class QuizController {
         return ResponseEntity.status(HttpStatus.CREATED).body(quizService.create(request));
     }
 
+    @PostMapping("/library/{subjectId}")
+    public ResponseEntity<QuizResponse> ensureLibraryQuiz(@PathVariable Long subjectId) {
+        return ResponseEntity.ok(quizService.ensureLibraryQuiz(subjectId));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<QuizResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(quizService.getById(id));

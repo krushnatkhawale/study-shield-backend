@@ -1,5 +1,6 @@
 package com.studyshield.studyshield.content.controller;
 
+import com.studyshield.studyshield.content.dto.AssignQuizRequest;
 import com.studyshield.studyshield.content.dto.QuestionBankLoadItem;
 import com.studyshield.studyshield.content.dto.QuestionBankLoadResponse;
 import com.studyshield.studyshield.content.dto.QuestionRequest;
@@ -59,6 +60,17 @@ public class QuestionController {
     @GetMapping("/quiz/{quizId}")
     public ResponseEntity<List<QuestionResponse>> getByQuizId(@PathVariable Long quizId) {
         return ResponseEntity.ok(questionService.getByQuizId(quizId));
+    }
+
+    @GetMapping("/subject/{subjectId}")
+    public ResponseEntity<List<QuestionResponse>> getBySubjectId(@PathVariable Long subjectId) {
+        return ResponseEntity.ok(questionService.getLatestBySubjectId(subjectId));
+    }
+
+    @PostMapping("/{id}/assign-quiz")
+    public ResponseEntity<QuestionResponse> assignQuiz(
+            @PathVariable Long id, @Valid @RequestBody AssignQuizRequest request) {
+        return ResponseEntity.ok(questionService.assignQuiz(id, request.quizId()));
     }
 
     @GetMapping("/quiz/{quizId}/active")

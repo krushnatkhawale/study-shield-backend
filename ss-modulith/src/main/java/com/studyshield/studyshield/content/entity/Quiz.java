@@ -51,7 +51,7 @@ public class Quiz {
 
     /** FREEMIUM pack slot vs PREMIUM on-demand / LIBRARY catalog. */
     @Enumerated(EnumType.STRING)
-    @Column(name = "content_tier", nullable = false, length = 16)
+    @Column(name = "content_tier", nullable = false, length = 32)
     private ContentTier contentTier = ContentTier.FREEMIUM;
 
     /**

@@ -8,9 +8,11 @@ import com.studyshield.studyshield.content.entity.ContentTier;
 import com.studyshield.studyshield.content.entity.Quiz;
 import com.studyshield.studyshield.content.entity.Quiz.QuizType;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
+import com.studyshield.studyshield.content.entity.Subject;
 import com.studyshield.studyshield.content.repository.ContentPackRepository;
 import com.studyshield.studyshield.content.repository.QuestionRepository;
 import com.studyshield.studyshield.content.repository.QuizRepository;
+import com.studyshield.studyshield.content.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +24,20 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
     private final ContentPackRepository contentPackRepository;
+    private final SubjectRepository subjectRepository;
     private final QuestionRepository questionRepository;
     private final QuestionService questionService;
 
     public QuizService(
             QuizRepository quizRepository,
             ContentPackRepository contentPackRepository,
+            SubjectRepository subjectRepository,
             QuestionRepository questionRepository,
             QuestionService questionService
     ) {
         this.quizRepository = quizRepository;
         this.contentPackRepository = contentPackRepository;
+        this.subjectRepository = subjectRepository;
         this.questionRepository = questionRepository;
         this.questionService = questionService;
     }
@@ -105,6 +110,38 @@ public class QuizService {
         quiz.setLanguage(request.language() != null ? request.language() : "English");
         quiz.setActive(request.active());
         return mapToResponse(quizRepository.save(quiz), false);
+    }
+
+    /** Bank quiz for a subject so questions can live off a delivery pack. */
+    public QuizResponse ensureLibraryQuiz(Long subjectId) {
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Subject", subjectId));
+        ContentPack pack = contentPackRepository.findBySubjectId(subjectId).stream()
+                .filter(ContentPack::isActive)
+                .filter(p -> p.getPackType() == ContentTier.LIBRARY)
+                .findFirst()
+                .orElseGet(() -> contentPackRepository.save(ContentPack.builder()
+                        .name("Library " + subject.getName())
+                        .description("Question bank for " + subject.getName())
+                        .subject(subject)
+                        .version(1)
+                        .active(true)
+                        .packType(ContentTier.LIBRARY)
+                        .build()));
+        return quizRepository.findByContentPackId(pack.getId()).stream()
+                .filter(Quiz::isActive)
+                .findFirst()
+                .map(q -> mapToResponse(q, false))
+                .orElseGet(() -> mapToResponse(quizRepository.save(Quiz.builder()
+                        .title(subject.getName() + " · Question bank")
+                        .description("Library quiz — not issued as a freemium pack")
+                        .contentPack(pack)
+                        .quizType(QuizType.STANDARD)
+                        .questionCount(50)
+                        .contentTier(ContentTier.LIBRARY)
+                        .language("English")
+                        .active(true)
+                        .build()), false));
     }
 
     public void delete(Long id) {

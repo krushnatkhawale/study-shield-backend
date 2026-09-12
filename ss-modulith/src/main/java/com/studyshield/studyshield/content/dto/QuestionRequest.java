@@ -26,5 +26,6 @@ public record QuestionRequest(
         List<String> tags,
         @NotNull(message = "Quiz ID is required") Long quizId,
         boolean blacklisted,
-        int orderIndex
+        int orderIndex,
+        List<Long> subjectIds
 ) {}

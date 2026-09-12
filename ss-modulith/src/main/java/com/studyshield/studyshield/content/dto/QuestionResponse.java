@@ -27,6 +27,7 @@ public record QuestionResponse(
         List<String> languages,
         List<String> tags,
         Long quizId,
+        List<Long> subjectIds,
         boolean blacklisted,
         int orderIndex,
         LocalDateTime createdAt,

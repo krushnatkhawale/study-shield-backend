@@ -109,6 +109,13 @@ public class Question {
     @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
+    /**
+     * Subjects this question is tagged with (may include more than the quiz pack's subject).
+     */
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "subject_ids", columnDefinition = "json")
+    private List<Long> subjectIds = new ArrayList<>();
+
     /** Soft-retire; active quiz fetch excludes blacklisted. */
     @Column(nullable = false)
     private boolean blacklisted = false;
@@ -187,6 +194,8 @@ public class Question {
     public void setTags(List<String> tags) { this.tags = tags != null ? tags : new ArrayList<>(); }
     public Quiz getQuiz() { return quiz; }
     public void setQuiz(Quiz quiz) { this.quiz = quiz; }
+    public List<Long> getSubjectIds() { return subjectIds != null ? subjectIds : new ArrayList<>(); }
+    public void setSubjectIds(List<Long> subjectIds) { this.subjectIds = subjectIds != null ? subjectIds : new ArrayList<>(); }
     public boolean isBlacklisted() { return blacklisted; }
     public void setBlacklisted(boolean blacklisted) { this.blacklisted = blacklisted; }
     public String getVersionGroupId() { return versionGroupId; }
@@ -224,6 +233,7 @@ public class Question {
         private List<String> languages = new ArrayList<>();
         private List<String> tags = new ArrayList<>();
         private Quiz quiz;
+        private List<Long> subjectIds = new ArrayList<>();
         private boolean blacklisted = false;
         private String versionGroupId;
         private int versionNumber = 1;
@@ -250,6 +260,7 @@ public class Question {
         public Builder languages(List<String> languages) { this.languages = languages; return this; }
         public Builder tags(List<String> tags) { this.tags = tags; return this; }
         public Builder quiz(Quiz quiz) { this.quiz = quiz; return this; }
+        public Builder subjectIds(List<Long> subjectIds) { this.subjectIds = subjectIds; return this; }
         public Builder blacklisted(boolean blacklisted) { this.blacklisted = blacklisted; return this; }
         public Builder versionGroupId(String versionGroupId) { this.versionGroupId = versionGroupId; return this; }
         public Builder versionNumber(int versionNumber) { this.versionNumber = versionNumber; return this; }
@@ -278,6 +289,7 @@ public class Question {
             q.languages = this.languages != null ? this.languages : new ArrayList<>();
             q.tags = this.tags != null ? this.tags : new ArrayList<>();
             q.quiz = this.quiz;
+            q.subjectIds = this.subjectIds != null ? this.subjectIds : new ArrayList<>();
             q.blacklisted = this.blacklisted;
             q.versionGroupId = this.versionGroupId;
             q.versionNumber = this.versionNumber;

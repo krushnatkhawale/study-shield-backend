@@ -54,6 +54,7 @@ public class QuestionService {
                 .languages(request.languages() != null ? new ArrayList<>(request.languages()) : List.of("English"))
                 .tags(request.tags() != null ? new ArrayList<>(request.tags()) : new ArrayList<>())
                 .quiz(quiz)
+                .subjectIds(resolveSubjectIds(request, quiz))
                 .blacklisted(request.blacklisted())
                 .versionGroupId(UUID.randomUUID().toString())
                 .versionNumber(1)
@@ -146,6 +147,7 @@ public class QuestionService {
                 .languages(request.languages() != null ? new ArrayList<>(request.languages()) : List.of("English"))
                 .tags(request.tags() != null ? new ArrayList<>(request.tags()) : new ArrayList<>())
                 .quiz(quiz)
+                .subjectIds(resolveSubjectIds(request, quiz))
                 .blacklisted(request.blacklisted())
                 .versionGroupId(current.getVersionGroupId() != null
                         ? current.getVersionGroupId() : UUID.randomUUID().toString())
@@ -156,6 +158,62 @@ public class QuestionService {
         current.setSupersededBy(saved);
         questionRepository.save(current);
         return mapToResponse(saved);
+    }
+
+    /** Moves the latest version of a question onto another quiz without deleting it. */
+    public QuestionResponse assignQuiz(Long questionId, Long quizId) {
+        Question current = questionRepository.findById(questionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Question", questionId));
+        if (current.getVersionGroupId() != null) {
+            current = questionRepository.findByVersionGroupIdOrderByVersionNumberAsc(current.getVersionGroupId())
+                    .stream()
+                    .filter(q -> q.getSupersededBy() == null)
+                    .reduce((a, b) -> b)
+                    .orElse(current);
+        }
+        Quiz quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new ResourceNotFoundException("Quiz", quizId));
+        current.setQuiz(quiz);
+        List<Long> subjects = new ArrayList<>(current.getSubjectIds());
+        Long packSubjectId = quiz.getContentPack() != null && quiz.getContentPack().getSubject() != null
+                ? quiz.getContentPack().getSubject().getId() : null;
+        if (packSubjectId != null && !subjects.contains(packSubjectId)) {
+            subjects.add(packSubjectId);
+            current.setSubjectIds(subjects);
+        }
+        return mapToResponse(questionRepository.save(current));
+    }
+
+    @Transactional(readOnly = true)
+    public List<QuestionResponse> getLatestBySubjectId(Long subjectId) {
+        return questionRepository.findBySupersededByIsNull().stream()
+                .filter(q -> belongsToSubject(q, subjectId))
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    private static boolean belongsToSubject(Question question, Long subjectId) {
+        if (subjectId == null) {
+            return true;
+        }
+        if (question.getSubjectIds() != null && question.getSubjectIds().contains(subjectId)) {
+            return true;
+        }
+        if (question.getQuiz() != null && question.getQuiz().getContentPack() != null
+                && question.getQuiz().getContentPack().getSubject() != null) {
+            return subjectId.equals(question.getQuiz().getContentPack().getSubject().getId());
+        }
+        return false;
+    }
+
+    private List<Long> resolveSubjectIds(QuestionRequest request, Quiz quiz) {
+        if (request.subjectIds() != null && !request.subjectIds().isEmpty()) {
+            return new ArrayList<>(request.subjectIds());
+        }
+        if (quiz.getContentPack() != null && quiz.getContentPack().getSubject() != null) {
+            return new ArrayList<>(List.of(quiz.getContentPack().getSubject().getId()));
+        }
+        return new ArrayList<>();
     }
 
     /** Deletes the whole version group so no superseded revision is left orphaned. */
@@ -281,6 +339,7 @@ public class QuestionService {
                 question.getLanguages() != null ? question.getLanguages() : List.of(),
                 question.getTags() != null ? question.getTags() : List.of(),
                 question.getQuiz().getId(),
+                question.getSubjectIds(),
                 question.isBlacklisted(),
                 question.getOrderIndex(),
                 question.getCreatedAt(),

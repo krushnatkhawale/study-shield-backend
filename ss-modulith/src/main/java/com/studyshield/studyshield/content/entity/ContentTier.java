@@ -1,10 +1,13 @@
 package com.studyshield.studyshield.content.entity;
 
 /**
- * Delivery tier for a quiz (freemium pack vs premium on-demand / library).
+ * Delivery tier for a quiz or content pack.
  */
 public enum ContentTier {
     FREEMIUM,
     PREMIUM,
-    LIBRARY
+    LIBRARY,
+    PROMOTIONAL,
+    SEASONAL,
+    COMPLEMENTARY
 }

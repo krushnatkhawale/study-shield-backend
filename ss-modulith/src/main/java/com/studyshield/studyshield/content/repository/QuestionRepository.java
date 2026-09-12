@@ -28,4 +28,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByVersionGroupIdOrderByVersionNumberAsc(String versionGroupId);
 
     List<Question> findByVersionGroupId(String versionGroupId);
+
+    List<Question> findBySupersededByIsNull();
 }
