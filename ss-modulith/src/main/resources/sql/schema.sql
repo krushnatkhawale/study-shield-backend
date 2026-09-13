@@ -23,10 +23,22 @@ ALTER TABLE IF EXISTS "ss-prod".subjects ADD COLUMN IF NOT EXISTS display_order 
 -- Idempotent: adds the column once; backfills existing ADMIN-role rows so they stay
 -- admins even though the column default is MOBILE. Hibernate then picks up the column
 -- via ddl-auto update.
-ALTER TABLE IF EXISTS "ss-dev".users  ADD COLUMN IF NOT EXISTS user_type varchar(16) NOT NULL DEFAULT 'MOBILE';
-ALTER TABLE IF EXISTS "ss-prod".users ADD COLUMN IF NOT EXISTS user_type varchar(16) NOT NULL DEFAULT 'MOBILE';
-UPDATE "ss-dev".users  SET user_type = 'ADMIN' WHERE role = 'ADMIN' AND user_type <> 'ADMIN';
-UPDATE "ss-prod".users SET user_type = 'ADMIN' WHERE role = 'ADMIN' AND user_type <> 'ADMIN';
+-- The whole block is guarded by table existence: this script runs BEFORE Hibernate's
+-- ddl-auto (spring.sql.init default ordering), so on a fresh database the tables do not
+-- exist yet and there is nothing to backfill. ALTER ... IF EXISTS is safe by itself,
+-- but the UPDATEs would fail on a missing table, so they only run when the table is there.
+-- Written as DO '<text>' (not DO $$...$$) because Spring's ScriptUtils parser does not
+-- understand dollar quoting.
+DO 'BEGIN
+    IF to_regclass(''"ss-dev".users'') IS NOT NULL THEN
+        ALTER TABLE "ss-dev".users ADD COLUMN IF NOT EXISTS user_type varchar(16) NOT NULL DEFAULT ''MOBILE'';
+        UPDATE "ss-dev".users SET user_type = ''ADMIN'' WHERE role = ''ADMIN'' AND user_type <> ''ADMIN'';
+    END IF;
+    IF to_regclass(''"ss-prod".users'') IS NOT NULL THEN
+        ALTER TABLE "ss-prod".users ADD COLUMN IF NOT EXISTS user_type varchar(16) NOT NULL DEFAULT ''MOBILE'';
+        UPDATE "ss-prod".users SET user_type = ''ADMIN'' WHERE role = ''ADMIN'' AND user_type <> ''ADMIN'';
+    END IF;
+END';
 
 -- Question versioning: every version of a question shares a version_group_id and carries an
 -- ascending version_number. A row whose superseded_by_id is NULL is the latest version for its
