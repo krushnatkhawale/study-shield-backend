@@ -6,8 +6,8 @@ Single deployable Spring Boot application containing all business modules. Repla
 ## Architecture
 - **Pattern**: Spring Modulith (modular monolith)
 - **Port**: 8080 (single JVM)
-- **Database**: Single PostgreSQL with schemas per module
-- **Schema Management**: Flyway migrations (V1-V5)
+- **Database**: Single PostgreSQL, schemas per environment
+- **Schema Management**: boot-time `sql/schema.sql` (idempotent) + Hibernate `ddl-auto: update`
 
 ## Modules
 
@@ -60,39 +60,40 @@ Single deployable Spring Boot application containing all business modules. Repla
 
 ## Database Schema
 
-### content schema
+All tables live in **per-environment schemas** in one Postgres database:
+
+| Schema | Environment | Active via |
+|--------|-------------|------------|
+| `"ss-dev"` | development | default profile |
+| `"ss-prod"` | production | `prod` profile (`SPRING_PROFILES_ACTIVE=prod`) |
+
+- `hibernate.default_schema` pins the schema (`'"ss-dev"'` by default, `'"ss-prod"'` under the `prod` profile); every Hibernate table resolves there, so no entity pins a table schema.
+- `sql/schema.sql` runs on every startup (`spring.sql.init.mode: always`) before `ddl-auto: update`. It is profile-independent: it creates **both** schemas and idempotently backfills shared columns in both, keeping dev and prod in lock-step no matter which profile starts first.
+- When prod moves to its own database later, just point `DATABASE_URL` at it from the `prod` profile; nothing else changes.
+
+### Tables (identical in `"ss-dev"` and `"ss-prod"`)
 - `boards` - Board definitions
 - `class_grades` - Grade levels per board (name is source of truth, no grade_number)
-- `subjects` - Subjects per grade
+- `subjects` - Subjects per grade (`display_order` backfilled by schema.sql)
 - `content_packs` - Content packages per subject
 - `quizzes` - Quiz definitions
-- `questions` - Quiz questions with JSON options, superseded_by_id for versioning
+- `questions` - Quiz questions with JSON options, `superseded_by_id` for versioning, `version_group_id`/`version_number` backfilled by schema.sql
 - `quiz_bundles` - Idempotent quiz bundle downloads (renamed from freemium_packs)
-
-### user_ schema
-- `users` - User accounts (email, password, role, version for optimistic locking)
+- `question_feedback` - one row per (account_id, question_id); vote, down_category, reported, comment, timestamps
+- `users` - User accounts (email, password, role, version for optimistic locking, `user_type` backfilled by schema.sql)
 - `parent_profiles` - Parent profile details
 - `child_profiles` - Child/student profiles
-
-### quiz schema
 - `quiz_attempts` - Quiz session tracking (version for optimistic locking)
 - `attempt_answers` - Individual answer records
-
-### question_feedback (feedback module)
-- `question_feedback` - one row per (account_id, question_id); vote, down_category, reported, comment, timestamps. Managed by Hibernate `ddl-auto` (not yet in Flyway).
-
-
-### tv schema
+- `quiz_results` - Quiz result records
 - `tv_users` - TV device users (external reference)
 - `wifi_networks` - WiFi network records
 - `connected_tvs` - Connected TV devices
 
-## Flyway Migrations
-- `V1__content_schema.sql` - Content module tables
-- `V2__user_schema.sql` - User module tables
-- `V3__quiz_schema.sql` - Quiz attempts tables
-- `V4__tv_schema.sql` - TV device tables
-- `V5__schema_changes.sql` - Drop grade_number, rename freemium_packs→quiz_bundles, add superseded_by_id, add version columns
+## Schema Management
+Flyway was removed (commit `30c6fed`). Schema is managed by:
+1. `sql/schema.sql` — creates both schemas + idempotently backfills `subjects.display_order`, `users.user_type`, `questions.version_group_id`/`version_number` (runs before Hibernate so regular `ADD COLUMN` via `ddl-auto` never hits populated tables).
+2. Hibernate `ddl-auto: update` — applies entity changes to the active profile's schema.
 
 ## Question Bank
 - **Full process & rules**: see [`QUESTION_BANK_GUIDE.md`](QUESTION_BANK_GUIDE.md) — structure, authorship rules, difficulty ramp, and how to author/load content for new subjects or grades.
@@ -106,8 +107,10 @@ Single deployable Spring Boot application containing all business modules. Repla
 - Adding questions later: append to `QuestionBankContent`, use the content admin APIs (`/api/v1/questions`), or POST via the on-demand loader.
 
 ## Configuration
-- `spring.jpa.hibernate.ddl-auto=validate` (Flyway manages schema)
-- `spring.flyway.schemas=public,content,user_,quiz,tv`
+- `spring.jpa.hibernate.ddl-auto=update` (Hibernate manages schema; no Flyway)
+- `spring.jpa.properties.hibernate.default_schema` = `"ss-dev"` (default profile) or `"ss-prod"` (`prod` profile)
+- `spring.sql.init.mode=always` runs `sql/schema.sql` (creates both schemas + backfills)
+- Environment selection: default (dev, schema `"ss-dev"`) — run with `SPRING_PROFILES_ACTIVE=prod --server.port=8082` to launch the prod instance (schema `"ss-prod"`)
 - `spring.datasource.hikari.maximum-pool-size=2`
 - `spring.security.jwt.secret=${JWT_SECRET}`
 - `app.jwt.expiration-ms=86400000` (24 hours)

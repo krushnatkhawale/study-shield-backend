@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        # Production schema. Activate with SPRING_PROFILES_ACTIVE=prod
+        # (or --spring.profiles.active=prod). Without the 'prod' profile the
+        # default profile targets the development schema "ss-dev".
+        # Both schemas currently live in the same Postgres database; when prod
+        # moves to its own database, point DATABASE_URL at it in this profile.
+        default_schema: '"ss-prod"'
