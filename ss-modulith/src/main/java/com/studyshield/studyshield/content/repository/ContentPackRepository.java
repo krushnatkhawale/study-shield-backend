@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ContentPackRepository extends JpaRepository<ContentPack, Long> {
-    List<ContentPack> findBySubjectId(Long subjectId);
+    List<ContentPack> findByOfferingId(Long offeringId);
     List<ContentPack> findByActiveTrue();
 }

@@ -36,6 +36,7 @@ public class ContentApi {
         return client.delete("/api/v1/boards/" + id);
     }
 
+    /** Legacy class-grade endpoints (deprecated). */
     public Response createClassGrade(String json) {
         return client.post("/api/v1/class-grades", json);
     }
@@ -58,6 +59,42 @@ public class ContentApi {
 
     public Response getContentPacksBySubject(Long subjectId) {
         return client.get("/api/v1/content-packs/subject/" + subjectId);
+    }
+
+    public Response deleteClassGrade(Long id) {
+        return client.delete("/api/v1/class-grades/" + id);
+    }
+
+    public Response getClassLevelsByOrdinal(int ordinal) {
+        return client.get("/api/v1/class-levels/ordinal/" + ordinal);
+    }
+
+    public Response getBoardClassesByBoard(Long boardId) {
+        return client.get("/api/v1/board-classes/board/" + boardId);
+    }
+
+    /**
+     * Academic catalog is offering-based (board + class ordinal + global subject).
+     * Class-grade endpoints are gone; subjects are global; packs hang off offerings.
+     */
+    public Response createOffering(String json) {
+        return client.post("/api/v1/offerings", json);
+    }
+
+    public Response getOfferingsByBoardClass(Long boardClassId) {
+        return client.get("/api/v1/offerings/" + boardClassId);
+    }
+
+    public Response getSubjects() {
+        return client.get("/api/v1/subjects");
+    }
+
+    public Response getContentPacksByOffering(Long offeringId) {
+        return client.get("/api/v1/content-packs/offering/" + offeringId);
+    }
+
+    public Response getClassLevels() {
+        return client.get("/api/v1/class-levels");
     }
 
     public Response createQuiz(String json) {
@@ -106,9 +143,5 @@ public class ContentApi {
 
     public Response deleteSubject(Long id) {
         return client.delete("/api/v1/subjects/" + id);
-    }
-
-    public Response deleteClassGrade(Long id) {
-        return client.delete("/api/v1/class-grades/" + id);
     }
 }

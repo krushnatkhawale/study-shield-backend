@@ -13,5 +13,8 @@ public record BoardRequest(
     String code,
 
     String description,
+    Long countryId,
+    int minOrdinal,
+    int maxOrdinal,
     boolean active
 ) {}

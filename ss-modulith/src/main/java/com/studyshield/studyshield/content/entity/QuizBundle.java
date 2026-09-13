@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Idempotent quiz bundle download for a device/child + class.
+ * Idempotent quiz bundle download for a device/child + offering.
  */
 @Entity
 @Table(name = "quiz_bundles", indexes = {
@@ -23,11 +23,20 @@ public class QuizBundle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Unique key: className|language|boardCode|holder (childId or deviceId). */
+    /** Unique key: offeringId|language|holder (childId or deviceId). Never a display name. */
     @Column(name = "idempotency_key", nullable = false, unique = true, length = 255)
     private String idempotencyKey;
 
-    @Column(name = "class_name", nullable = false, length = 64)
+    /** The offering (board + class level + subject) this bundle is for. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offering_id", nullable = false)
+    private BoardClassSubject offering;
+
+    /**
+     * Display labels kept for response compatibility only: the board-local label for the
+     * level and the board code. They are NOT part of identity.
+     */
+    @Column(name = "class_name", length = 64)
     private String className;
 
     @Column(nullable = false, length = 64)
@@ -44,6 +53,10 @@ public class QuizBundle {
 
     @Column(name = "user_id")
     private Long userId;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "offering_ids", nullable = false, columnDefinition = "json")
+    private List<Long> offeringIds = new ArrayList<>();
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "quiz_ids", nullable = false, columnDefinition = "json")
@@ -70,6 +83,8 @@ public class QuizBundle {
     public void setId(Long id) { this.id = id; }
     public String getIdempotencyKey() { return idempotencyKey; }
     public void setIdempotencyKey(String idempotencyKey) { this.idempotencyKey = idempotencyKey; }
+    public BoardClassSubject getOffering() { return offering; }
+    public void setOffering(BoardClassSubject offering) { this.offering = offering; }
     public String getClassName() { return className; }
     public void setClassName(String className) { this.className = className; }
     public String getLanguage() { return language; }
@@ -82,6 +97,8 @@ public class QuizBundle {
     public void setChildId(Long childId) { this.childId = childId; }
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
+    public List<Long> getOfferingIds() { return offeringIds; }
+    public void setOfferingIds(List<Long> offeringIds) { this.offeringIds = offeringIds != null ? offeringIds : new ArrayList<>(); }
     public List<Long> getQuizIds() { return quizIds; }
     public void setQuizIds(List<Long> quizIds) { this.quizIds = quizIds != null ? quizIds : new ArrayList<>(); }
     public List<String> getSubjects() { return subjects; }

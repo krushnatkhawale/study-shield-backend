@@ -18,13 +18,19 @@ import static org.mockito.Mockito.*;
 
 /**
  * Verifies that bank-loaded packs are included in the bundle for a class — the
- * top-level business rule: every class whose subjects carry active content must
- * return quizzes to the mobile app.
+ * top-level business rule: every class whose offerings carry active content must
+ * return quizzes to the mobile app. Content is anchored to offerings
+ * (board + class ordinal + global subject), never to display names.
  */
 class QuizBundleServiceTest {
 
     private QuizBundleRepository quizBundleRepository;
     private QuizBundleSeeder catalogSeeder;
+    private AcademicCatalogResolver catalogResolver;
+    private BoardRepository boardRepository;
+    private ClassLevelRepository classLevelRepository;
+    private BoardClassRepository boardClassRepository;
+    private BoardClassSubjectRepository boardClassSubjectRepository;
     private SubjectRepository subjectRepository;
     private ContentPackRepository contentPackRepository;
     private QuizRepository quizRepository;
@@ -32,48 +38,55 @@ class QuizBundleServiceTest {
     private QuestionService questionService;
     private QuizBundleService service;
 
-    private static final com.studyshield.studyshield.content.entity.ClassGrade CLASS_GRADE = classGrade(1L);
-    private static final Subject MATH = subject(10L, "Math", CLASS_GRADE);
-    private static final Subject EVS  = subject(11L, "EVS",  CLASS_GRADE);
+    private static final BoardClass BOARD_CLASS = boardClass(5L, 7);
+    private static final BoardClassSubject MATH_OFFERING = offering(900L, "Math");
+    private static final BoardClassSubject EVS_OFFERING = offering(901L, "EVS");
 
     @BeforeEach
     void setUp() {
         quizBundleRepository = mock(QuizBundleRepository.class);
-        subjectRepository = mock(SubjectRepository.class);
         contentPackRepository = mock(ContentPackRepository.class);
         quizRepository = mock(QuizRepository.class);
         questionRepository = mock(QuestionRepository.class);
-        // Map-to-response run on a real service (Mockito cannot instrument the concrete @Service
-        // class on the JDK default); its repos are never touched during bundle mapping.
+        // Map-to-response runs on a real service (Mockito cannot instrument concrete
+        // @Service classes on JDK 26); its repos are never touched during bundle mapping.
         questionService = new QuestionService(questionRepository, quizRepository);
         // Real subclass (Mockito's inline mock maker cannot instrument the concrete @Service
-        // class on the JDK default — see QuestionFeedbackControllerTest). ensureCatalogForClass
-        // resolves only to the pre-built class grade, so the request path isolates bundle logic.
+        // class on the JDK default). ensureCatalogForClass resolves only to the pre-built
+        // board class, so the request path isolates bundle logic.
+        boardRepository = mock(BoardRepository.class);
+        classLevelRepository = mock(ClassLevelRepository.class);
+        boardClassRepository = mock(BoardClassRepository.class);
+        boardClassSubjectRepository = mock(BoardClassSubjectRepository.class);
+        subjectRepository = mock(SubjectRepository.class);
+        catalogResolver = new AcademicCatalogResolver(
+                boardRepository, classLevelRepository, boardClassRepository,
+                boardClassSubjectRepository, subjectRepository);
         catalogSeeder = new QuizBundleSeeder(
-                mock(BoardRepository.class), mock(ClassGradeRepository.class),
-                subjectRepository, contentPackRepository, quizRepository, questionRepository) {
+                catalogResolver, contentPackRepository, quizRepository, questionRepository) {
             @Override
-            public com.studyshield.studyshield.content.entity.ClassGrade ensureCatalogForClass(
-                    String className, String boardCode) {
-                return CLASS_GRADE;
+            public BoardClass ensureCatalogForClass(String className, String boardCode) {
+                return BOARD_CLASS;
             }
         };
-        service = new QuizBundleService(quizBundleRepository, catalogSeeder,
-                mock(ClassGradeRepository.class),
-                subjectRepository,
-                contentPackRepository, quizRepository, questionRepository, questionService);
+        service = new QuizBundleService(quizBundleRepository, catalogSeeder, catalogResolver,
+                classLevelRepository, contentPackRepository, quizRepository, questionRepository,
+                questionService);
 
-        // No existing bundle for this holder
+        // No existing bundle for this holder; offerings resolve to the two preset ones.
         when(quizBundleRepository.findByIdempotencyKey(any())).thenReturn(Optional.empty());
         when(quizBundleRepository.saveAndFlush(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
+                .thenReturn(List.of(MATH_OFFERING, EVS_OFFERING));
     }
 
     @Test
-    void bankLoadedPackIsServedWhenNoFreemiumPackExistsForASubject() {
-        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId())).thenReturn(List.of(MATH));
+    void bankLoadedPackIsServedWhenNoFreemiumPackExistsForAnOffering() {
+        when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
+                .thenReturn(List.of(MATH_OFFERING));
 
         ContentPack loadedPack = contentPack("Loaded Math", 100L);
-        when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(List.of(loadedPack));
+        when(contentPackRepository.findByOfferingId(MATH_OFFERING.getId())).thenReturn(List.of(loadedPack));
 
         Quiz mathQuiz = quiz("Math · Quiz 1", 200L, loadedPack);
         when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
@@ -93,13 +106,11 @@ class QuizBundleServiceTest {
     }
 
     @Test
-    void multipleSubjectsWithOnlyBankLoadedPacksAllAppearInTheBundle() {
-        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId())).thenReturn(List.of(MATH, EVS));
-
+    void multipleOfferingsWithOnlyBankLoadedPacksAllAppearInTheBundle() {
         ContentPack mathPack = contentPack("Loaded Math", 100L);
         ContentPack evsPack  = contentPack("Loaded EVS",  101L);
-        when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(List.of(mathPack));
-        when(contentPackRepository.findBySubjectId(EVS.getId())).thenReturn(List.of(evsPack));
+        when(contentPackRepository.findByOfferingId(MATH_OFFERING.getId())).thenReturn(List.of(mathPack));
+        when(contentPackRepository.findByOfferingId(EVS_OFFERING.getId())).thenReturn(List.of(evsPack));
 
         Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
         Quiz evsQuiz  = quiz("EVS · Quiz 1",  201L, evsPack);
@@ -121,9 +132,10 @@ class QuizBundleServiceTest {
     }
 
     @Test
-    void anErrorIsThrownWhenASubjectHasNoActivePackAtAll() {
-        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId())).thenReturn(List.of(MATH));
-        when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(Collections.emptyList());
+    void anErrorIsThrownWhenAnOfferingHasNoActivePackAtAll() {
+        when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
+                .thenReturn(List.of(MATH_OFFERING));
+        when(contentPackRepository.findByOfferingId(MATH_OFFERING.getId())).thenReturn(Collections.emptyList());
 
         org.assertj.core.api.Assertions.assertThatThrownBy(() ->
                         service.issue(new QuizBundleRequest(
@@ -132,21 +144,20 @@ class QuizBundleServiceTest {
     }
 
     @Test
-    void bundlePicksSubjectsInDisplayOrderNotInsertionOrder() {
-        // Repository already returns displayOrder order: Math then EVS. Both subjects
-        // with questions are included (no 2-quiz class cap).
-        Subject math = subject(10L, "Math", CLASS_GRADE);
+    void bundlePicksOfferingsInSubjectDisplayOrderNotInsertionOrder() {
+        Subject math = subject(10L, "Math");
         math.setDisplayOrder(1);
-        Subject evs = subject(11L, "EVS", CLASS_GRADE);
+        Subject evs = subject(11L, "EVS");
         evs.setDisplayOrder(2);
-
-        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId()))
-                .thenReturn(List.of(math, evs));
+        BoardClassSubject mathOffering = offering(900L, math);
+        BoardClassSubject evsOffering = offering(901L, evs);
+        when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
+                .thenReturn(List.of(mathOffering, evsOffering));
 
         ContentPack mathPack = contentPack("Loaded Math", 100L);
         ContentPack evsPack  = contentPack("Loaded EVS",  101L);
-        when(contentPackRepository.findBySubjectId(math.getId())).thenReturn(List.of(mathPack));
-        when(contentPackRepository.findBySubjectId(evs.getId())).thenReturn(List.of(evsPack));
+        when(contentPackRepository.findByOfferingId(900L)).thenReturn(List.of(mathPack));
+        when(contentPackRepository.findByOfferingId(901L)).thenReturn(List.of(evsPack));
 
         Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
         Quiz evsQuiz  = quiz("EVS · Quiz 1",  201L, evsPack);
@@ -167,20 +178,20 @@ class QuizBundleServiceTest {
     }
 
     @Test
-    void allFourSubjectsWithQuestionsAppearInTheBundle() {
-        Subject english = subject(12L, "English", CLASS_GRADE);
-        Subject hindi = subject(13L, "Hindi", CLASS_GRADE);
-        when(subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(CLASS_GRADE.getId()))
-                .thenReturn(List.of(MATH, EVS, english, hindi));
+    void allFourOfferingsWithQuestionsAppearInTheBundle() {
+        BoardClassSubject engOffering = offering(902L, "English");
+        BoardClassSubject hinOffering = offering(903L, "Hindi");
+        when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
+                .thenReturn(List.of(MATH_OFFERING, EVS_OFFERING, engOffering, hinOffering));
 
         ContentPack mathPack = contentPack("Freemium Math", 100L);
         ContentPack evsPack = contentPack("Freemium EVS", 101L);
         ContentPack engPack = contentPack("Freemium English", 102L);
         ContentPack hinPack = contentPack("Freemium Hindi", 103L);
-        when(contentPackRepository.findBySubjectId(MATH.getId())).thenReturn(List.of(mathPack));
-        when(contentPackRepository.findBySubjectId(EVS.getId())).thenReturn(List.of(evsPack));
-        when(contentPackRepository.findBySubjectId(english.getId())).thenReturn(List.of(engPack));
-        when(contentPackRepository.findBySubjectId(hindi.getId())).thenReturn(List.of(hinPack));
+        when(contentPackRepository.findByOfferingId(900L)).thenReturn(List.of(mathPack));
+        when(contentPackRepository.findByOfferingId(901L)).thenReturn(List.of(evsPack));
+        when(contentPackRepository.findByOfferingId(902L)).thenReturn(List.of(engPack));
+        when(contentPackRepository.findByOfferingId(903L)).thenReturn(List.of(hinPack));
 
         Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
         Quiz evsQuiz = quiz("EVS · Quiz 1", 201L, evsPack);
@@ -207,6 +218,33 @@ class QuizBundleServiceTest {
 
         assertThat(response.quizCount()).isEqualTo(4);
         assertThat(response.subjects()).containsExactly("Math", "EVS", "English", "Hindi");
+    }
+
+    @Test
+    void idempotentBundleKeyIsBuiltFromOfferingIdsNotClassNames() {
+        ContentPack mathPack = contentPack("Freemium Math", 100L);
+        when(contentPackRepository.findByOfferingId(MATH_OFFERING.getId())).thenReturn(List.of(mathPack));
+        Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                100L, ContentTier.FREEMIUM)).thenReturn(List.of(mathQuiz));
+        when(questionRepository.findByQuizIdAndBlacklistedFalse(any())).thenReturn(
+                List.of(question(), question(), question()));
+        when(quizRepository.findById(200L)).thenReturn(Optional.of(mathQuiz));
+
+        service.issue(new QuizBundleRequest(
+                "Class 7", null, null, null, null, "dev-1", null, false));
+
+        var captor = org.mockito.ArgumentCaptor.forClass(QuizBundle.class);
+        verify(quizBundleRepository).saveAndFlush(captor.capture());
+        QuizBundle saved = captor.getValue();
+        assertThat(saved.getIdempotencyKey())
+                .startsWith("offering:")
+                .contains("900")
+                .contains("901")
+                .doesNotContain("Class 7")
+                .doesNotContain("class");
+        assertThat(saved.getOffering()).isEqualTo(MATH_OFFERING);
+        assertThat(saved.getOfferingIds()).containsExactly(900L, 901L);
     }
 
     private static Quiz quiz(String title, Long id, ContentPack pack) {
@@ -239,20 +277,39 @@ class QuizBundleServiceTest {
         return q;
     }
 
-    private static com.studyshield.studyshield.content.entity.ClassGrade classGrade(Long id) {
-        com.studyshield.studyshield.content.entity.ClassGrade cg = new com.studyshield.studyshield.content.entity.ClassGrade();
-        cg.setId(id);
-        cg.setName("Class 7");
-        return cg;
+    private static BoardClass boardClass(Long id, int ordinal) {
+        BoardClass bc = new BoardClass();
+        bc.setId(id);
+        Board board = new Board();
+        board.setId(1L);
+        board.setCode("ALL");
+        bc.setBoard(board);
+        ClassLevel level = new ClassLevel();
+        level.setId((long) ordinal);
+        level.setOrdinal(ordinal);
+        level.setCanonicalName("Class " + (ordinal - 4));
+        bc.setClassLevel(level);
+        bc.setDisplayName("Class " + (ordinal - 4));
+        return bc;
     }
 
-    private static Subject subject(Long id, String name,
-                                   com.studyshield.studyshield.content.entity.ClassGrade cg) {
+    private static BoardClassSubject offering(Long id, String subjectName) {
+        return offering(id, subject(10L, subjectName));
+    }
+
+    private static BoardClassSubject offering(Long id, Subject subject) {
+        BoardClassSubject o = new BoardClassSubject();
+        o.setId(id);
+        o.setBoardClass(BOARD_CLASS);
+        o.setSubject(subject);
+        return o;
+    }
+
+    private static Subject subject(Long id, String name) {
         Subject s = new Subject();
         s.setId(id);
         s.setName(name);
         s.setActive(true);
-        s.setClassGrade(cg);
         return s;
     }
 }

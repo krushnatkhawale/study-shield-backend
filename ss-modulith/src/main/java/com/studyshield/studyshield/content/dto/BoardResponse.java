@@ -7,6 +7,10 @@ public record BoardResponse(
     String name,
     String code,
     String description,
+    Long countryId,
+    String countryName,
+    int minOrdinal,
+    int maxOrdinal,
     boolean active,
     LocalDateTime createdAt,
     LocalDateTime updatedAt

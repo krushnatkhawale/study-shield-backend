@@ -101,7 +101,8 @@ The DB starts empty. Content reaches it one of three ways:
 ### 1. On-demand batch loader — `POST /api/v1/questions/load`
 Accepts a list of `QuestionBankLoadItem`s. Each item carries enough metadata for the
 loader (`content/service/QuestionBankLoader.java`) to auto-create the whole chain
-**Board → ClassGrade → Subject → ContentPack → Quiz → Question**:
+**Board → BoardClass → offering → ContentPack → Quiz → Question**
+(`className` is resolved to a class ordinal, never stored as identity):
 
 ```jsonc
 [
@@ -120,7 +121,7 @@ loader (`content/service/QuestionBankLoader.java`) to auto-create the whole chai
 
 Rules of the loader:
 - Groups items by `(boardCode, className, subject)`.
-- Creates any missing Board / ClassGrade / Subject / ContentPack / Quiz.
+- Creates any missing Board / BoardClass / offering / Subject / ContentPack / Quiz.
 - Skips a question whose exact text already exists in that quiz (idempotent re-runs).
 - When a quiz exceeds capacity, a new quiz is created for the overflow.
 - Packs are resolved to the **freemium naming convention** (`Freemium <Subject>`) shared with
@@ -156,10 +157,12 @@ To extend the bank to a brand-new subject (e.g. `Science`, `Art`), the wiring is
 
 1. **Author the questions** in `QuestionBankContent.java` — add a `"<Subject>"` key to the
    map for each band you want to cover, satisfying the authorship rules above.
-2. **Update `QuizBundleSeeder.DEFAULT_SUBJECTS`** so freemium quiz creation covers the new
-   subject (currently `Math`, `EVS`, `English`, `Hindi`).
-3. **Tell the loader** nothing special is needed — `QuestionBankLoader` creates subjects
-   by name automatically from the item payload.
+2. **Add the subject to the matrix offerings** you want covered (offerings are seeded per
+   board+ordinal in `AcademicStructureSeeder`; an offering already auto-creates when requests
+   hit it via `AcademicCatalogResolver`).
+3. **Tell the loader** nothing special is needed — `QuestionBankLoader` creates global
+   subjects by name automatically from the item payload, and adds an offering for the
+   board+class that needs it.
 4. **Update `QuestionBankContentTest`** if you add subjects that should be asserted present.
 5. **Regenerate** `question-bank.json` so the new subject ships in the bulk load file.
 6. Build + test: `./gradlew :ss-modulith:test`.
@@ -170,7 +173,9 @@ To extend the bank to a brand-new subject (e.g. `Science`, `Art`), the wiring is
    subjects and `>= 10` questions each.
 2. Extend `bandForClassName` and `classNameForAge` if the new grade should be reachable
    by name or age.
-3. Bump `MAX_CURATED_CLASS` if it is in the numbered class range used by tests.
+3. Ensure the matrix carries an offering at that ordinal for the boards you target — extend
+   the per-board ordinal ranges in `AcademicStructureSeeder` (or add `board_class` rows for
+   it), since a bundle only serves offers that exist.
 4. Regenerate `question-bank.json`.
 
 ## Config flag

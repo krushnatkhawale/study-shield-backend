@@ -5,7 +5,8 @@ package com.studyshield.studyshield.content.dto;
  */
 public record QuestionBankLoadResponse(
         int boardsCreated,
-        int classGradesCreated,
+        int boardClassesCreated,
+        int offeringsCreated,
         int subjectsCreated,
         int contentPacksCreated,
         int quizzesCreated,

@@ -18,6 +18,8 @@ spring:
       mode: never
 
 app:
+  academic-structure-seeding:
+    enabled: false
   jwt:
     secret: testSecretForTestingOnlyMustBe32BytesLong!
     expiration-ms: 86400000

@@ -2,48 +2,46 @@ package com.studyshield.studyshield.content.service;
 
 import com.studyshield.studyshield.content.dto.SubjectRequest;
 import com.studyshield.studyshield.content.dto.SubjectResponse;
-import com.studyshield.studyshield.content.entity.ClassGrade;
 import com.studyshield.studyshield.content.entity.Subject;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
-import com.studyshield.studyshield.content.repository.ClassGradeRepository;
 import com.studyshield.studyshield.content.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Global reference subjects only (one row per subject across all boards); a board/class
+ * actually offering a subject is a {@code board_class_subject} row, not a subject row.
+ */
 @Service
 @Transactional
 public class SubjectService {
 
     private final SubjectRepository subjectRepository;
-    private final ClassGradeRepository classGradeRepository;
 
-    public SubjectService(SubjectRepository subjectRepository, ClassGradeRepository classGradeRepository) {
+    public SubjectService(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
-        this.classGradeRepository = classGradeRepository;
     }
 
     public SubjectResponse create(SubjectRequest request) {
-        ClassGrade classGrade = classGradeRepository.findById(request.classGradeId())
-                .orElseThrow(() -> new ResourceNotFoundException("ClassGrade", request.classGradeId()));
+        if (subjectRepository.findByCodeIgnoreCase(request.code()).isPresent()) {
+            throw new IllegalArgumentException("Subject code already exists: " + request.code());
+        }
         Subject subject = Subject.builder()
                 .name(request.name())
                 .code(request.code())
                 .description(request.description())
-                .classGrade(classGrade)
                 .active(request.active())
                 .displayOrder(request.displayOrder())
                 .build();
-        Subject saved = subjectRepository.save(subject);
-        return mapToResponse(saved);
+        return mapToResponse(subjectRepository.save(subject));
     }
 
     @Transactional(readOnly = true)
     public SubjectResponse getById(Long id) {
-        Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Subject", id));
-        return mapToResponse(subject);
+        return mapToResponse(subjectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Subject", id)));
     }
 
     @Transactional(readOnly = true)
@@ -53,26 +51,20 @@ public class SubjectService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public List<SubjectResponse> getByClassGradeId(Long classGradeId) {
-        return subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(classGradeId).stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
-
     public SubjectResponse update(Long id, SubjectRequest request) {
         Subject subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject", id));
-        ClassGrade classGrade = classGradeRepository.findById(request.classGradeId())
-                .orElseThrow(() -> new ResourceNotFoundException("ClassGrade", request.classGradeId()));
+        subjectRepository.findByCodeIgnoreCase(request.code())
+                .filter(other -> !other.getId().equals(id))
+                .ifPresent(other -> {
+                    throw new IllegalArgumentException("Subject code already exists: " + request.code());
+                });
         subject.setName(request.name());
         subject.setCode(request.code());
         subject.setDescription(request.description());
-        subject.setClassGrade(classGrade);
         subject.setActive(request.active());
         subject.setDisplayOrder(request.displayOrder());
-        Subject saved = subjectRepository.save(subject);
-        return mapToResponse(saved);
+        return mapToResponse(subjectRepository.save(subject));
     }
 
     public void delete(Long id) {
@@ -87,8 +79,6 @@ public class SubjectService {
                 subject.getName(),
                 subject.getCode(),
                 subject.getDescription(),
-                subject.getClassGrade().getId(),
-                subject.getClassGrade().getName(),
                 subject.isActive(),
                 subject.getDisplayOrder(),
                 subject.getCreatedAt(),

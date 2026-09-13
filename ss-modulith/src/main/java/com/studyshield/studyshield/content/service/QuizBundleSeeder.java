@@ -15,11 +15,12 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Ensures a freemium catalog exists for a class: <strong>one FREEMIUM quiz per subject
- * that has questions</strong> ({@value #QUESTIONS_PER_QUIZ} questions each).
+ * Ensures a freemium catalog exists for a board+class offering: <strong>one FREEMIUM
+ * quiz per offering that has questions</strong> ({@value #QUESTIONS_PER_QUIZ} questions each).
  * <p>
- * Curated bands are seeded from {@link QuestionBankContent}. Subjects with no bank
- * questions are skipped unless they already have a loaded pack.
+ * The class is resolved to its global ordinal via {@link AcademicCatalogResolver}; content
+ * is anchored to {@link BoardClassSubject} offerings — never to display names. Offerings
+ * that carry no curated or loaded questions are skipped.
  */
 @Service
 public class QuizBundleSeeder {
@@ -27,140 +28,61 @@ public class QuizBundleSeeder {
     private static final Logger log = LoggerFactory.getLogger(QuizBundleSeeder.class);
     /**
      * Historical name: used to cap the whole class at 2 quizzes (Math+EVS only).
-     * Bundles now issue <em>one quiz per subject that has questions</em>; this is no longer a cap.
+     * Bundles now issue <em>one quiz per offering that has questions</em>; this is no longer a cap.
      */
     public static final int QUIZZES_PER_CLASS = Integer.MAX_VALUE;
     public static final int QUESTIONS_PER_QUIZ = 10;
 
-    private static final List<String> DEFAULT_SUBJECTS = List.of(
-            "Math", "EVS", "English", "Hindi"
-    );
-
-    private final BoardRepository boardRepository;
-    private final ClassGradeRepository classGradeRepository;
-    private final SubjectRepository subjectRepository;
+    private final AcademicCatalogResolver catalogResolver;
     private final ContentPackRepository contentPackRepository;
     private final QuizRepository quizRepository;
     private final QuestionRepository questionRepository;
 
     public QuizBundleSeeder(
-            BoardRepository boardRepository,
-            ClassGradeRepository classGradeRepository,
-            SubjectRepository subjectRepository,
+            AcademicCatalogResolver catalogResolver,
             ContentPackRepository contentPackRepository,
             QuizRepository quizRepository,
             QuestionRepository questionRepository
     ) {
-        this.boardRepository = boardRepository;
-        this.classGradeRepository = classGradeRepository;
-        this.subjectRepository = subjectRepository;
+        this.catalogResolver = catalogResolver;
         this.contentPackRepository = contentPackRepository;
         this.quizRepository = quizRepository;
         this.questionRepository = questionRepository;
     }
 
     /**
-     * Ensure class grade + freemium catalog exist; return the class grade.
+     * Ensure the board class + its freemium catalog exist; return the board class.
+     * One offering per global subject gets a quiz when it has bank or loaded questions.
      */
     @Transactional
-    public ClassGrade ensureCatalogForClass(String className, String boardCode) {
-        Board board = resolveOrCreateBoard(boardCode);
-        ClassGrade classGrade = classGradeRepository.findFirstByNameIgnoreCase(normalizeClassName(className))
-                .or(() -> classGradeRepository.findFirstByNameIgnoreCase(className))
-                .orElseGet(() -> createClassGrade(board, className));
-
-        List<Subject> subjects = subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(classGrade.getId());
-        String band = QuestionBankContent.bandForClassName(classGrade.getName());
-        if (subjects.isEmpty()) {
-            subjects = createDefaultSubjects(classGrade, band);
+    public BoardClass ensureCatalogForClass(String className, String boardCode) {
+        BoardClass boardClass = catalogResolver.resolveBoardClass(boardCode, className);
+        String band = QuestionBankContent.bandForClassName(boardClass.getDisplayName());
+        if (band == null) {
+            band = QuestionBankContent.bandForClassName(className);
         }
 
-        for (Subject subject : subjects) {
-            if (!shouldOfferSubject(subject, band)) {
+        List<BoardClassSubject> offerings = catalogResolver.resolveOfferings(boardCode,
+                boardClass.getClassLevel().getOrdinal());
+        for (BoardClassSubject offering : offerings) {
+            if (!shouldOffer(offering, band)) {
                 continue;
             }
-            ensureQuizBundleForSubject(subject, band);
+            ensureQuizBundleForOffering(offering, band);
         }
-        return classGrade;
-    }
-
-    private Board resolveOrCreateBoard(String boardCode) {
-        String code = (boardCode == null || boardCode.isBlank() || "all".equalsIgnoreCase(boardCode))
-                ? "ALL"
-                : boardCode.trim().toUpperCase();
-        return boardRepository.findByCode(code).orElseGet(() ->
-                boardRepository.save(Board.builder()
-                        .name(code.equals("ALL") ? "All Boards" : code)
-                        .code(code)
-                        .description("Freemium catalog board")
-                        .active(true)
-                        .build()));
-    }
-
-    private ClassGrade createClassGrade(Board board, String className) {
-        String name = normalizeClassName(className);
-        log.info("[FreemiumSeed] Creating class grade name={}", name);
-        return classGradeRepository.save(ClassGrade.builder()
-                .name(name)
-                .board(board)
-                .description("Auto-seeded for freemium")
-                .build());
-    }
-
-    private List<Subject> createDefaultSubjects(ClassGrade classGrade, String band) {
-        List<String> subjectNames = orderSubjectNames(curatedSubjectNames(band));
-        if (subjectNames.isEmpty()) {
-            subjectNames = DEFAULT_SUBJECTS;
-        }
-        List<Subject> created = new ArrayList<>();
-        for (int idx = 0; idx < subjectNames.size(); idx++) {
-            String subjectName = subjectNames.get(idx);
-            String code = subjectName.toUpperCase().replace(" ", "_");
-            created.add(subjectRepository.save(Subject.builder()
-                    .name(subjectName)
-                    .code(code)
-                    .classGrade(classGrade)
-                    .active(true)
-                    .displayOrder(idx + 1)
-                    .build()));
-        }
-        return created;
-    }
-
-    /** Subject names from a curated band's bank, so e.g. Exp gets only its Welcome subject. */
-    private List<String> curatedSubjectNames(String band) {
-        if (band == null) return List.of();
-        return List.copyOf(QuestionBankContent.BANK.getOrDefault(band, Map.of()).keySet());
-    }
-
-    /** Math, EVS, English, Hindi first — Map keySet order is not stable. */
-    private static List<String> orderSubjectNames(List<String> names) {
-        if (names.isEmpty()) {
-            return names;
-        }
-        List<String> ordered = new ArrayList<>();
-        for (String preferred : DEFAULT_SUBJECTS) {
-            if (names.contains(preferred)) {
-                ordered.add(preferred);
-            }
-        }
-        for (String name : names) {
-            if (!ordered.contains(name)) {
-                ordered.add(name);
-            }
-        }
-        return ordered;
+        return boardClass;
     }
 
     /**
-     * Offer a subject when the curated bank has questions for it, or when a pack/quiz
+     * Offer an offering when the curated bank has questions for its subject, or when a pack/quiz
      * was already loaded (e.g. {@code POST /questions/load}).
      */
-    private boolean shouldOfferSubject(Subject subject, String band) {
-        if (hasBankQuestions(band, subject.getName())) {
+    private boolean shouldOffer(BoardClassSubject offering, String band) {
+        if (hasBankQuestions(band, offering.getSubject().getName())) {
             return true;
         }
-        ContentPack pack = pickActiveDeliveryPack(contentPackRepository.findBySubjectId(subject.getId()));
+        ContentPack pack = pickActiveDeliveryPack(
+                contentPackRepository.findByOfferingId(offering.getId()));
         if (pack == null) {
             return false;
         }
@@ -180,15 +102,16 @@ public class QuizBundleSeeder {
         return list != null && !list.isEmpty();
     }
 
-    private void ensureQuizBundleForSubject(Subject subject, String band) {
+    private void ensureQuizBundleForOffering(BoardClassSubject offering, String band) {
+        Subject subject = offering.getSubject();
         ContentPack existing = pickActiveDeliveryPack(
-                contentPackRepository.findBySubjectId(subject.getId()));
+                contentPackRepository.findByOfferingId(offering.getId()));
         ContentPack pack = existing != null
                 ? existing
                 : contentPackRepository.save(ContentPack.builder()
                         .name("Freemium " + subject.getName())
                         .description("Freemium catalog pack")
-                        .subject(subject)
+                        .offering(offering)
                         .version(1)
                         .active(true)
                         .build());
@@ -210,11 +133,11 @@ public class QuizBundleSeeder {
     }
 
     /**
-     * Selects the active delivery pack for a subject: the freemium-named pack when one exists
+     * Selects the active delivery pack for an offering: the freemium-named pack when one exists
      * (the convention {@link QuizBundleService} and the startup seeder share), otherwise any
      * other active pack. Bank-loaded packs ({@code Loaded <Subject>}) are therefore served too,
      * so freshly loaded content is never invisible to the bundle. Returns {@code null} when the
-     * subject has no active pack at all.
+     * offering has no active pack at all.
      */
     static ContentPack pickActiveDeliveryPack(List<ContentPack> packs) {
         ContentPack namedFreemium = null;

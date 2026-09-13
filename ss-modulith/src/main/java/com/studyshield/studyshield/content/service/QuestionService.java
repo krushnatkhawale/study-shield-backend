@@ -175,8 +175,10 @@ public class QuestionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Quiz", quizId));
         current.setQuiz(quiz);
         List<Long> subjects = new ArrayList<>(current.getSubjectIds());
-        Long packSubjectId = quiz.getContentPack() != null && quiz.getContentPack().getSubject() != null
-                ? quiz.getContentPack().getSubject().getId() : null;
+        Long packSubjectId = quiz.getContentPack() != null
+                && quiz.getContentPack().getOffering() != null
+                && quiz.getContentPack().getOffering().getSubject() != null
+                ? quiz.getContentPack().getOffering().getSubject().getId() : null;
         if (packSubjectId != null && !subjects.contains(packSubjectId)) {
             subjects.add(packSubjectId);
             current.setSubjectIds(subjects);
@@ -200,8 +202,9 @@ public class QuestionService {
             return true;
         }
         if (question.getQuiz() != null && question.getQuiz().getContentPack() != null
-                && question.getQuiz().getContentPack().getSubject() != null) {
-            return subjectId.equals(question.getQuiz().getContentPack().getSubject().getId());
+                && question.getQuiz().getContentPack().getOffering() != null
+                && question.getQuiz().getContentPack().getOffering().getSubject() != null) {
+            return subjectId.equals(question.getQuiz().getContentPack().getOffering().getSubject().getId());
         }
         return false;
     }
@@ -210,8 +213,9 @@ public class QuestionService {
         if (request.subjectIds() != null && !request.subjectIds().isEmpty()) {
             return new ArrayList<>(request.subjectIds());
         }
-        if (quiz.getContentPack() != null && quiz.getContentPack().getSubject() != null) {
-            return new ArrayList<>(List.of(quiz.getContentPack().getSubject().getId()));
+        if (quiz.getContentPack() != null && quiz.getContentPack().getOffering() != null
+            && quiz.getContentPack().getOffering().getSubject() != null) {
+            return new ArrayList<>(List.of(quiz.getContentPack().getOffering().getSubject().getId()));
         }
         return new ArrayList<>();
     }

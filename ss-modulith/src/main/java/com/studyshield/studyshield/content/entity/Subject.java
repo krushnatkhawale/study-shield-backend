@@ -5,9 +5,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Global reference subject (code MAT = Math, SCI, EVS, ENG, HI, SST, OTHER — one row
+ * per subject across all boards). A board/class actually offering the subject is
+ * recorded in {@link BoardClassSubject}.
+ */
 @Entity
 @Table(name = "subjects")
 public class Subject {
@@ -19,23 +22,16 @@ public class Subject {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String code;
 
     private String description;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_grade_id", nullable = false)
-    private ClassGrade classGrade;
 
     @Column(nullable = false)
     private boolean active = true;
 
     @Column(nullable = false)
     private int displayOrder = 0;
-
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ContentPack> contentPacks = new ArrayList<>();
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -54,14 +50,10 @@ public class Subject {
     public void setCode(String code) { this.code = code; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public ClassGrade getClassGrade() { return classGrade; }
-    public void setClassGrade(ClassGrade classGrade) { this.classGrade = classGrade; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
     public int getDisplayOrder() { return displayOrder; }
     public void setDisplayOrder(int displayOrder) { this.displayOrder = displayOrder; }
-    public List<ContentPack> getContentPacks() { return contentPacks; }
-    public void setContentPacks(List<ContentPack> contentPacks) { this.contentPacks = contentPacks; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 
@@ -71,14 +63,12 @@ public class Subject {
         private String name;
         private String code;
         private String description;
-        private ClassGrade classGrade;
         private boolean active = true;
         private int displayOrder = 0;
 
         public Builder name(String name) { this.name = name; return this; }
         public Builder code(String code) { this.code = code; return this; }
         public Builder description(String description) { this.description = description; return this; }
-        public Builder classGrade(ClassGrade classGrade) { this.classGrade = classGrade; return this; }
         public Builder active(boolean active) { this.active = active; return this; }
         public Builder displayOrder(int displayOrder) { this.displayOrder = displayOrder; return this; }
 
@@ -87,7 +77,6 @@ public class Subject {
             s.name = this.name;
             s.code = this.code;
             s.description = this.description;
-            s.classGrade = this.classGrade;
             s.active = this.active;
             s.displayOrder = this.displayOrder;
             return s;

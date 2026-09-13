@@ -24,15 +24,15 @@ import java.util.Locale;
 @Transactional
 public class QuizBundleService {
 
-    /** One freemium quiz is issued per subject that has questions. */
+    /** One freemium quiz is issued per offering that has questions. */
     public static final int QUIZZES_PER_SUBJECT = 1;
     /** Minimum real questions a freemium quiz must carry for a session to start. */
     public static final int MIN_ACTIVE_QUESTIONS_PER_QUIZ = 3;
 
     private final QuizBundleRepository quizBundleRepository;
     private final QuizBundleSeeder catalogSeeder;
-    private final ClassGradeRepository classGradeRepository;
-    private final SubjectRepository subjectRepository;
+    private final AcademicCatalogResolver catalogResolver;
+    private final ClassLevelRepository classLevelRepository;
     private final ContentPackRepository contentPackRepository;
     private final QuizRepository quizRepository;
     private final QuestionRepository questionRepository;
@@ -41,8 +41,8 @@ public class QuizBundleService {
     public QuizBundleService(
             QuizBundleRepository quizBundleRepository,
             QuizBundleSeeder catalogSeeder,
-            ClassGradeRepository classGradeRepository,
-            SubjectRepository subjectRepository,
+            AcademicCatalogResolver catalogResolver,
+            ClassLevelRepository classLevelRepository,
             ContentPackRepository contentPackRepository,
             QuizRepository quizRepository,
             QuestionRepository questionRepository,
@@ -50,8 +50,8 @@ public class QuizBundleService {
     ) {
         this.quizBundleRepository = quizBundleRepository;
         this.catalogSeeder = catalogSeeder;
-        this.classGradeRepository = classGradeRepository;
-        this.subjectRepository = subjectRepository;
+        this.catalogResolver = catalogResolver;
+        this.classLevelRepository = classLevelRepository;
         this.contentPackRepository = contentPackRepository;
         this.quizRepository = quizRepository;
         this.questionRepository = questionRepository;
@@ -65,10 +65,23 @@ public class QuizBundleService {
         String boardCode = blankToDefault(request.boardCode(), "all");
         boolean allowPartial = Boolean.TRUE.equals(request.allowPartial());
 
-        String idempotencyKey = buildKey(className, language, boardCode, request.childId(), request.deviceId());
+        BoardClass boardClass = catalogSeeder.ensureCatalogForClass(className, boardCode);
+        List<BoardClassSubject> offerings = catalogResolver.resolveOfferings(
+                boardCode, boardClass.getClassLevel().getOrdinal());
+        if (offerings.isEmpty()) {
+            throw new InsufficientStockException("No offerings for class " + className, 0, 1);
+        }
+
+        List<Long> offeringIds = offerings.stream()
+                .map(BoardClassSubject::getId)
+                .sorted()
+                .toList();
+        String idempotencyKey = buildKey(offeringIds, language, request.childId(), request.deviceId());
         return quizBundleRepository.findByIdempotencyKey(idempotencyKey)
                 .map(this::toResponse)
-                .orElseGet(() -> createBundle(request, className, language, boardCode, idempotencyKey, allowPartial));
+                .orElseGet(() -> createBundle(
+                        request, boardClass, offerings, offeringIds,
+                        language, boardCode, idempotencyKey, allowPartial));
     }
 
     @Transactional(readOnly = true)
@@ -85,26 +98,20 @@ public class QuizBundleService {
 
     private QuizBundleResponse createBundle(
             QuizBundleRequest request,
-            String className,
+            BoardClass boardClass,
+            List<BoardClassSubject> offerings,
+            List<Long> offeringIds,
             String language,
             String boardCode,
             String idempotencyKey,
             boolean allowPartial
     ) {
-        ClassGrade classGrade = catalogSeeder.ensureCatalogForClass(className, boardCode);
-        List<Subject> subjects = subjectRepository.findByClassGradeIdOrderByDisplayOrderAscIdAsc(classGrade.getId()).stream()
-                .filter(Subject::isActive)
-                .toList();
-        if (subjects.isEmpty()) {
-            throw new InsufficientStockException("No subjects for class " + className, 0, 1);
-        }
-
         List<Long> quizIds = new ArrayList<>();
         List<String> subjectNames = new ArrayList<>();
 
-        for (Subject subject : subjects) {
+        for (BoardClassSubject offering : offerings) {
             ContentPack pack = QuizBundleSeeder.pickActiveDeliveryPack(
-                    contentPackRepository.findBySubjectId(subject.getId()));
+                    contentPackRepository.findByOfferingId(offering.getId()));
             if (pack == null) {
                 continue;
             }
@@ -124,7 +131,7 @@ public class QuizBundleService {
             if (chosen == null) {
                 continue;
             }
-            subjectNames.add(subject.getName());
+            subjectNames.add(offering.getSubject().getName());
             quizIds.add(chosen.getId());
         }
 
@@ -134,9 +141,11 @@ public class QuizBundleService {
 
         QuizBundle issued = new QuizBundle();
         issued.setIdempotencyKey(idempotencyKey);
-        issued.setClassName(className);
+        issued.setOffering(offerings.getFirst());
+        issued.setOfferingIds(offeringIds);
+        issued.setClassName(boardClass.getDisplayName());
         issued.setLanguage(language);
-        issued.setBoardCode(boardCode);
+        issued.setBoardCode(boardClass.getBoard().getCode());
         issued.setDeviceId(request.deviceId());
         issued.setChildId(request.childId());
         issued.setUserId(request.userId());
@@ -217,11 +226,13 @@ public class QuizBundleService {
         return QuestionBankContent.classNameForAge(request.age());
     }
 
-    private static String buildKey(String className, String language, String boardCode, Long childId, String deviceId) {
+    private static String buildKey(List<Long> offeringIds, String language, Long childId, String deviceId) {
         String holder = childId != null ? "child:" + childId : "device:" + deviceId.trim();
-        return className.trim().toLowerCase(Locale.ROOT) + "|"
+        return "offering:" + offeringIds.stream()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(","))
+                + "|"
                 + language.trim().toLowerCase(Locale.ROOT) + "|"
-                + boardCode.trim().toLowerCase(Locale.ROOT) + "|"
                 + holder;
     }
 
@@ -240,10 +251,8 @@ public class QuizBundleService {
         quizBundleRepository.deleteAllInBatch();
 
         LinkedHashSet<String> classes = new LinkedHashSet<>(QuestionBankContent.BANK.keySet());
-        for (ClassGrade grade : classGradeRepository.findAll()) {
-            if (grade.getName() != null && !grade.getName().isBlank()) {
-                classes.add(grade.getName());
-            }
+        for (ClassLevel level : classLevelRepository.findAll()) {
+            classes.add(level.getCanonicalName());
         }
 
         List<String> seeded = new ArrayList<>();
