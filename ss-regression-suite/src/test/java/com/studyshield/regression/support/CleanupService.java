@@ -33,7 +33,6 @@ public class CleanupService {
         deleteInOrder("quiz", "/api/v1/quizzes/");
         deleteInOrder("content-pack", "/api/v1/content-packs/");
         deleteInOrder("subject", "/api/v1/subjects/");
-        deleteInOrder("class-grade", "/api/v1/class-grades/");
         deleteInOrder("board", "/api/v1/boards/");
         deleteInOrder("connected-tv", "/api/v1/connected-tvs/");
         deleteInOrder("wifi-network", "/api/v1/wifi-networks/");

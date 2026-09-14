@@ -10,10 +10,10 @@ Feature: Board CRUD Operations
 
     Examples:
       | name          | code    |
-      | CBSE Board    | CBSE    |
-      | ICSE Board    | ICSE    |
-      | State Board   | STATE   |
-      | IB Board      | IB      |
+      | Alpha Board   | RX      |
+      | Beta Board    | RY      |
+      | Gamma Board   | RZ      |
+      | Delta Board   | RW      |
 
   Scenario: Retrieve all boards
     Given a board named "Test Board" exists

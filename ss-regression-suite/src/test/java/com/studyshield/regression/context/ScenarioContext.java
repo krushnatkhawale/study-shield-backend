@@ -21,7 +21,9 @@ public class ScenarioContext {
     private Long currentUserId;
     private Long currentChildId;
     private Long currentBoardId;
-    private Long currentClassGradeId;
+    private String currentBoardCode;
+    private Long currentBoardClassId;
+    private Long currentOfferingId;
     private Long currentSubjectId;
     private Long currentContentPackId;
     private Long currentQuizId;
@@ -65,8 +67,12 @@ public class ScenarioContext {
     public void setCurrentChildId(Long currentChildId) { this.currentChildId = currentChildId; }
     public Long getCurrentBoardId() { return currentBoardId; }
     public void setCurrentBoardId(Long id) { this.currentBoardId = id; }
-    public Long getCurrentClassGradeId() { return currentClassGradeId; }
-    public void setCurrentClassGradeId(Long id) { this.currentClassGradeId = id; }
+    public String getCurrentBoardCode() { return currentBoardCode; }
+    public void setCurrentBoardCode(String currentBoardCode) { this.currentBoardCode = currentBoardCode; }
+    public Long getCurrentBoardClassId() { return currentBoardClassId; }
+    public void setCurrentBoardClassId(Long id) { this.currentBoardClassId = id; }
+    public Long getCurrentOfferingId() { return currentOfferingId; }
+    public void setCurrentOfferingId(Long id) { this.currentOfferingId = id; }
     public Long getCurrentSubjectId() { return currentSubjectId; }
     public void setCurrentSubjectId(Long id) { this.currentSubjectId = id; }
     public Long getCurrentContentPackId() { return currentContentPackId; }
@@ -89,7 +95,7 @@ public class ScenarioContext {
     public String getGatewayUrl() {
         return System.getenv("GATEWAY_BASE_URL") != null
                 ? System.getenv("GATEWAY_BASE_URL")
-                : "http://localhost:8080";
+                : "http://localhost:" + System.getenv().getOrDefault("SUITE_BACKEND_PORT", "8080");
     }
 
     public void reset() {
@@ -105,7 +111,9 @@ public class ScenarioContext {
         currentUserId = null;
         currentChildId = null;
         currentBoardId = null;
-        currentClassGradeId = null;
+        currentBoardCode = null;
+        currentBoardClassId = null;
+        currentOfferingId = null;
         currentSubjectId = null;
         currentContentPackId = null;
         currentQuizId = null;

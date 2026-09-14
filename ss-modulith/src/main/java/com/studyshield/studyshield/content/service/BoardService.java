@@ -28,12 +28,13 @@ public class BoardService {
     }
 
     public BoardResponse create(BoardRequest request) {
-        if (boardRepository.existsByCode(request.code())) {
+        String code = AcademicCatalogResolver.normalizeBoardCode(request.code());
+        if (boardRepository.existsByCode(code)) {
             throw new IllegalArgumentException("Board code already exists: " + request.code());
         }
         Board board = Board.builder()
                 .name(request.name())
-                .code(request.code())
+                .code(code)
                 .description(request.description())
                 .country(resolveCountry(request.countryId()))
                 .minOrdinal(request.minOrdinal() > 0 ? request.minOrdinal() : DEFAULT_MIN_ORDINAL)
@@ -60,13 +61,14 @@ public class BoardService {
     public BoardResponse update(Long id, BoardRequest request) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Board", id));
-        boardRepository.findByCode(request.code())
+        String code = AcademicCatalogResolver.normalizeBoardCode(request.code());
+        boardRepository.findByCode(code)
                 .filter(other -> !other.getId().equals(id))
                 .ifPresent(other -> {
                     throw new IllegalArgumentException("Board code already exists: " + request.code());
                 });
         board.setName(request.name());
-        board.setCode(request.code());
+        board.setCode(code);
         board.setDescription(request.description());
         board.setCountry(resolveCountry(request.countryId()));
         if (request.minOrdinal() > 0) {

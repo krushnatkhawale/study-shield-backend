@@ -18,6 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserSteps {
 
     private static final String TEST_PASSWORD = "Test1234!";
+    private static final String ADMIN_EMAIL = "admin@tests.local";
+    private static final String ADMIN_PASSWORD = "AdminPassw0rd!";
 
     private final UserApi userApi;
     private final AuthApi authApi;
@@ -39,8 +41,22 @@ public class UserSteps {
         if (authContext.hasToken()) {
             return;
         }
-        String email = context.uniqueName("auth_parent@test.com");
-        Response signupResponse = authApi.signUp(email, TEST_PASSWORD, context.uniqueName("Auth Parent"));
+        signUpParent("Auth Parent");
+    }
+
+    @Given("a parent user exists")
+    public void aParentUserExists() throws Exception {
+        iAmAuthenticatedAsAParentUser();
+    }
+
+    @When("I create a parent user with name {string}")
+    public void iCreateParentUserWithName(String name) throws Exception {
+        signUpParent(name);
+    }
+
+    private Response signUpParent(String name) {
+        String email = context.uniqueName(name.toLowerCase().replace(" ", "_") + "@test.com");
+        Response signupResponse = authApi.signUp(email, TEST_PASSWORD, context.uniqueName(name));
         assertThat(signupResponse.getStatusCode())
                 .as("Signup failed: %s", signupResponse.getBody().asString())
                 .isEqualTo(200);
@@ -51,53 +67,25 @@ public class UserSteps {
 
         Long accountId = signupResponse.jsonPath().getLong("accountId");
         context.setCurrentUserId(accountId);
-        registry.register("auth_user", accountId);
+        registry.register("user", accountId);
 
         context.setLastResponse(signupResponse);
         context.setLastStatusCode(signupResponse.getStatusCode());
         context.setLastResponseBody(signupResponse.getBody().asString());
+        return signupResponse;
     }
 
-    @Given("a parent user exists")
-    public void aParentUserExists() throws Exception {
-        iAmAuthenticatedAsAParentUser();
-        String email = context.uniqueName("parent@test.com");
-        String json = mapper.writeValueAsString(Map.of(
-                "email", email,
-                "name", context.uniqueName("Test Parent"),
-                "phone", "9876543210",
-                "role", "PARENT",
-                "active", true,
-                "password", TEST_PASSWORD
-        ));
-        Response response = userApi.createUser(json);
-        assertThat(response.getStatusCode()).isEqualTo(201);
-        context.setLastResponse(response);
-        context.setLastStatusCode(response.getStatusCode());
-        Long id = response.jsonPath().getLong("id");
-        context.setCurrentUserId(id);
-        registry.register("user", id);
-    }
-
-    @When("I create a parent user with name {string}")
-    public void iCreateParentUserWithName(String name) throws Exception {
-        iAmAuthenticatedAsAParentUser();
-        String email = context.uniqueName(name.toLowerCase().replace(" ", "_") + "@test.com");
-        String json = mapper.writeValueAsString(Map.of(
-                "email", email,
-                "name", context.uniqueName(name),
-                "phone", "9876543210",
-                "role", "PARENT",
-                "active", true,
-                "password", TEST_PASSWORD
-        ));
-        Response response = userApi.createUser(json);
-        updateContext(response);
-        if (response.getStatusCode() == 201) {
-            Long id = response.jsonPath().getLong("id");
-            context.setCurrentUserId(id);
-            registry.register("user", id);
-        }
+    @When("I am authenticated as an admin user")
+    public void iAmAuthenticatedAsAdminUser() {
+        Response signInResponse = authApi.adminSignIn(ADMIN_EMAIL, ADMIN_PASSWORD);
+        assertThat(signInResponse.getStatusCode())
+                .as("Admin sign-in failed: %s", signInResponse.getBody().asString())
+                .isEqualTo(200);
+        String token = signInResponse.jsonPath().getString("sessionId");
+        assertThat(token).as("Admin JWT token must not be null").isNotNull();
+        authContext.setJwtToken(token);
+        context.setLastResponse(signInResponse);
+        context.setLastStatusCode(signInResponse.getStatusCode());
     }
 
     @When("I get user by id")

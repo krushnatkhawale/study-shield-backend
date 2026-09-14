@@ -6,12 +6,15 @@ Feature: User API Smoke Tests
 
   Scenario: Create and retrieve a parent user
     When I create a parent user with name "Smoke User"
-    Then the response status should be 201
+    Then the response status should be 200
+    And the response JSON path "accountId" should be present
+    When I am authenticated as an admin user
     When I get user by id
     Then the response status should be 200
     And the response body should contain "Smoke User"
 
   Scenario: List users
+    When I am authenticated as an admin user
     When I get all users
     Then the response status should be 200
     And the response body should be a JSON array

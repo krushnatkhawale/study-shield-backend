@@ -5,9 +5,9 @@ Feature: Question CRUD Operations
 
   Scenario: Create and retrieve questions for a quiz
     Given a board named "Question Board" exists
-    And a class grade "10" exists under current board
-    And a subject "Physics" exists under current class grade
-    And a content pack "Mechanics" exists under current subject
+    And a board class "Class 10" exists at ordinal 14 under current board
+    And an offering for subject "Physics" exists under current board class
+    And a content pack "Mechanics" exists under current offering
     And a STANDARD quiz exists in current pack
     When I create a question with text "What is Newton's first law?"
     Then the response status should be 201

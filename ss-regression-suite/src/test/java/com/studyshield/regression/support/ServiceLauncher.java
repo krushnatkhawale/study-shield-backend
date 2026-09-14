@@ -28,7 +28,9 @@ public class ServiceLauncher {
 
     private static volatile boolean started = false;
     private final List<Process> processes = new ArrayList<>();
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    // Daemon threads so the forked test JVM can exit once the suite finishes;
+    // non-daemon streams (reader + pool) keep Gradle's test JVM alive forever otherwise.
+    private ExecutorService executor = Executors.newCachedThreadPool(ServiceLauncher::daemonThread);
 
     private static String findProjectRoot() {
         String userDir = System.getProperty("user.dir");
@@ -51,9 +53,11 @@ public class ServiceLauncher {
         log.info("[ServiceLauncher] Starting modulith from {}", PROJECT_ROOT);
         log.info("[ServiceLauncher] JAVA_HOME={}", JAVA_HOME);
 
+        int port = Integer.parseInt(System.getenv().getOrDefault("SUITE_BACKEND_PORT", "8080"));
+
         try {
-            startService("ss-modulith", 8080);
-            waitForService("Study Shield Modulith", 8080);
+            startService("ss-modulith", port);
+            waitForService("Study Shield Modulith", port);
 
             started = true;
             log.info("[ServiceLauncher] Modulith started successfully");
@@ -77,7 +81,7 @@ public class ServiceLauncher {
         env.put("SERVER_PORT", String.valueOf(port));
 
         if (System.getenv("SPRING_PROFILES_ACTIVE") == null) {
-            env.put("SPRING_PROFILES_ACTIVE", "test");
+            env.put("SPRING_PROFILES_ACTIVE", "regression");
         }
 
         String databaseUrl = System.getenv("DATABASE_URL");
@@ -177,5 +181,11 @@ public class ServiceLauncher {
 
     public boolean isStarted() {
         return started;
+    }
+
+    private static Thread daemonThread(Runnable runnable) {
+        Thread thread = new Thread(runnable, "service-launcher");
+        thread.setDaemon(true);
+        return thread;
     }
 }
