@@ -11,6 +11,7 @@ public record ContentPackResponse(
     String description,
     Long subjectId,
     String subjectName,
+    Long offeringId,
     int version,
     boolean active,
     ContentTier packType,

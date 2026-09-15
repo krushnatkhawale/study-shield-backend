@@ -26,6 +26,10 @@ public class ContentPack {
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offering_id", nullable = true)
+    private Offering offering;
+
     @Column(nullable = false)
     private int version = 1;
 
@@ -62,6 +66,8 @@ public class ContentPack {
     public void setDescription(String description) { this.description = description; }
     public Subject getSubject() { return subject; }
     public void setSubject(Subject subject) { this.subject = subject; }
+    public Offering getOffering() { return offering; }
+    public void setOffering(Offering offering) { this.offering = offering; }
     public int getVersion() { return version; }
     public void setVersion(int version) { this.version = version; }
     public boolean isActive() { return active; }
@@ -83,6 +89,7 @@ public class ContentPack {
         private String name;
         private String description;
         private Subject subject;
+        private Offering offering;
         private int version = 1;
         private boolean active = true;
         private ContentTier packType = ContentTier.FREEMIUM;
@@ -92,6 +99,7 @@ public class ContentPack {
         public Builder name(String name) { this.name = name; return this; }
         public Builder description(String description) { this.description = description; return this; }
         public Builder subject(Subject subject) { this.subject = subject; return this; }
+        public Builder offering(Offering offering) { this.offering = offering; return this; }
         public Builder version(int version) { this.version = version; return this; }
         public Builder active(boolean active) { this.active = active; return this; }
         public Builder packType(ContentTier packType) { this.packType = packType; return this; }
@@ -103,6 +111,7 @@ public class ContentPack {
             cp.name = this.name;
             cp.description = this.description;
             cp.subject = this.subject;
+            cp.offering = this.offering;
             cp.version = this.version;
             cp.active = this.active;
             cp.packType = this.packType;

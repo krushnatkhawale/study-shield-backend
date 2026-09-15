@@ -5,11 +5,13 @@ import com.studyshield.studyshield.content.dto.QuizRequest;
 import com.studyshield.studyshield.content.dto.QuizResponse;
 import com.studyshield.studyshield.content.entity.ContentPack;
 import com.studyshield.studyshield.content.entity.ContentTier;
+import com.studyshield.studyshield.content.entity.Offering;
 import com.studyshield.studyshield.content.entity.Quiz;
 import com.studyshield.studyshield.content.entity.Quiz.QuizType;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
 import com.studyshield.studyshield.content.entity.Subject;
 import com.studyshield.studyshield.content.repository.ContentPackRepository;
+import com.studyshield.studyshield.content.repository.OfferingRepository;
 import com.studyshield.studyshield.content.repository.QuestionRepository;
 import com.studyshield.studyshield.content.repository.QuizRepository;
 import com.studyshield.studyshield.content.repository.SubjectRepository;
@@ -24,6 +26,7 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
     private final ContentPackRepository contentPackRepository;
+    private final OfferingRepository offeringRepository;
     private final SubjectRepository subjectRepository;
     private final QuestionRepository questionRepository;
     private final QuestionService questionService;
@@ -31,12 +34,14 @@ public class QuizService {
     public QuizService(
             QuizRepository quizRepository,
             ContentPackRepository contentPackRepository,
+            OfferingRepository offeringRepository,
             SubjectRepository subjectRepository,
             QuestionRepository questionRepository,
             QuestionService questionService
     ) {
         this.quizRepository = quizRepository;
         this.contentPackRepository = contentPackRepository;
+        this.offeringRepository = offeringRepository;
         this.subjectRepository = subjectRepository;
         this.questionRepository = questionRepository;
         this.questionService = questionService;
@@ -51,6 +56,7 @@ public class QuizService {
                 .title(request.title())
                 .description(request.description())
                 .contentPack(contentPack)
+                .offering(resolveOffering(request.offeringId()))
                 .quizType(type)
                 .questionCount(count)
                 .contentTier(request.contentTier() != null ? request.contentTier() : ContentTier.FREEMIUM)
@@ -82,6 +88,13 @@ public class QuizService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<QuizResponse> getByOfferingId(Long offeringId) {
+        return quizRepository.findByOfferingId(offeringId).stream()
+                .map(q -> mapToResponse(q, false))
+                .toList();
+    }
+
     /**
      * Full freemium/premium download for a pack: each quiz includes active questions
      * (same shape the mobile app needs to cache and send over TCP).
@@ -103,6 +116,7 @@ public class QuizService {
         quiz.setTitle(request.title());
         quiz.setDescription(request.description());
         quiz.setContentPack(contentPack);
+        quiz.setOffering(resolveOffering(request.offeringId()));
         quiz.setQuizType(type);
         quiz.setQuestionCount(resolveQuestionCount(request.questionCount(), type));
         quiz.setContentTier(request.contentTier() != null ? request.contentTier() : ContentTier.FREEMIUM);
@@ -160,6 +174,14 @@ public class QuizService {
         return 10;
     }
 
+    private Offering resolveOffering(Long offeringId) {
+        if (offeringId == null) {
+            return null;
+        }
+        return offeringRepository.findById(offeringId)
+                .orElseThrow(() -> new ResourceNotFoundException("Offering", offeringId));
+    }
+
     private QuizResponse mapToResponse(Quiz quiz, boolean includeQuestions) {
         List<QuestionResponse> questions = null;
         if (includeQuestions) {
@@ -173,6 +195,7 @@ public class QuizService {
                 quiz.getDescription(),
                 quiz.getContentPack().getId(),
                 quiz.getContentPack().getName(),
+                quiz.getOffering() != null ? quiz.getOffering().getId() : null,
                 quiz.getQuizType(),
                 quiz.getQuestionCount(),
                 quiz.getContentTier(),

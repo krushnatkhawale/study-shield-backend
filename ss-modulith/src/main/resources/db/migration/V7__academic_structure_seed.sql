@@ -1,0 +1,19 @@
+-- ============================================================================
+-- DOCUMENTATION ONLY — NOT EXECUTED. There is no Flyway dependency in this
+-- module, so nothing under db/migration/ ever runs. Live seeding is done in
+-- Java by content/seed/AcademicStructureSeeder.java (idempotent,
+-- check-exists-then-insert). This file is kept for history; the value tables
+-- below document the owner spec the seeder implements.
+-- ============================================================================
+-- Seed reference (see AcademicStructureSeeder for the executable version):
+-- * 17 class_levels: ordinals 1-17 — Playgroup, Nursery, Junior KG, Senior KG,
+--   Class 1..12 (ordinals 5-16), ordinal 17 = Level 17 (board-specific).
+-- * boards: ALL, CBSE, MH, ICSE, ENG, US (IB was comment-only, never in spec).
+-- * board_class display names: India boards (CBSE/MH/ICSE) + ALL fallback use
+--   Playgroup/Nursery/Junior KG/Senior KG/Class N; ENG uses Nursery/Reception/
+--   Year N; US uses Preschool/Kindergarten/Grade N.
+-- * subjects (MATH/ENG/EVS/SCI/SST/HI/OTHER) and CBSE+ALL offerings are
+--   DELIBERATELY NOT SEEDED: Subject.classGrade is NOT NULL, so subjects can
+--   only exist under a ClassGrade owned by the quiz-bundle catalog flow
+--   (QuizBundleSeeder). See the seeder javadoc.
+-- ============================================================================

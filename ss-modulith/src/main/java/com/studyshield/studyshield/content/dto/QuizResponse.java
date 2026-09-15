@@ -15,6 +15,7 @@ public record QuizResponse(
         String description,
         Long contentPackId,
         String contentPackName,
+        Long offeringId,
         QuizType quizType,
         int questionCount,
         ContentTier contentTier,

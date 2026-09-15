@@ -25,7 +25,7 @@ public class Subject {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_grade_id", nullable = false)
+    @JoinColumn(name = "class_grade_id", nullable = true)
     private ClassGrade classGrade;
 
     @Column(nullable = false)

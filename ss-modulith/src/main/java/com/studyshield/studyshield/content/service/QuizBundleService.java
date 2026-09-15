@@ -184,6 +184,7 @@ public class QuizBundleService {
                 quiz.getDescription(),
                 quiz.getContentPack().getId(),
                 quiz.getContentPack().getName(),
+                quiz.getOffering() != null ? quiz.getOffering().getId() : null,
                 quiz.getQuizType(),
                 quiz.getQuestionCount(),
                 quiz.getContentTier(),

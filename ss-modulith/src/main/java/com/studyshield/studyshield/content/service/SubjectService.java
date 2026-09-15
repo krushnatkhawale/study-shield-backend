@@ -25,7 +25,8 @@ public class SubjectService {
     }
 
     public SubjectResponse create(SubjectRequest request) {
-        ClassGrade classGrade = classGradeRepository.findById(request.classGradeId())
+        ClassGrade classGrade = request.classGradeId() == null ? null
+                : classGradeRepository.findById(request.classGradeId())
                 .orElseThrow(() -> new ResourceNotFoundException("ClassGrade", request.classGradeId()));
         Subject subject = Subject.builder()
                 .name(request.name())
@@ -63,7 +64,8 @@ public class SubjectService {
     public SubjectResponse update(Long id, SubjectRequest request) {
         Subject subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Subject", id));
-        ClassGrade classGrade = classGradeRepository.findById(request.classGradeId())
+        ClassGrade classGrade = request.classGradeId() == null ? null
+                : classGradeRepository.findById(request.classGradeId())
                 .orElseThrow(() -> new ResourceNotFoundException("ClassGrade", request.classGradeId()));
         subject.setName(request.name());
         subject.setCode(request.code());
@@ -87,8 +89,8 @@ public class SubjectService {
                 subject.getName(),
                 subject.getCode(),
                 subject.getDescription(),
-                subject.getClassGrade().getId(),
-                subject.getClassGrade().getName(),
+                subject.getClassGrade() == null ? null : subject.getClassGrade().getId(),
+                subject.getClassGrade() == null ? null : subject.getClassGrade().getName(),
                 subject.isActive(),
                 subject.getDisplayOrder(),
                 subject.getCreatedAt(),

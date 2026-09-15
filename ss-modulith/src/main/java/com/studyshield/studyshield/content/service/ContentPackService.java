@@ -3,9 +3,11 @@ package com.studyshield.studyshield.content.service;
 import com.studyshield.studyshield.content.dto.ContentPackRequest;
 import com.studyshield.studyshield.content.dto.ContentPackResponse;
 import com.studyshield.studyshield.content.entity.ContentPack;
+import com.studyshield.studyshield.content.entity.Offering;
 import com.studyshield.studyshield.content.entity.Subject;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
 import com.studyshield.studyshield.content.repository.ContentPackRepository;
+import com.studyshield.studyshield.content.repository.OfferingRepository;
 import com.studyshield.studyshield.content.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,19 +20,24 @@ public class ContentPackService {
 
     private final ContentPackRepository contentPackRepository;
     private final SubjectRepository subjectRepository;
+    private final OfferingRepository offeringRepository;
 
-    public ContentPackService(ContentPackRepository contentPackRepository, SubjectRepository subjectRepository) {
+    public ContentPackService(ContentPackRepository contentPackRepository, SubjectRepository subjectRepository,
+                             OfferingRepository offeringRepository) {
         this.contentPackRepository = contentPackRepository;
         this.subjectRepository = subjectRepository;
+        this.offeringRepository = offeringRepository;
     }
 
     public ContentPackResponse create(ContentPackRequest request) {
         Subject subject = subjectRepository.findById(request.subjectId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subject", request.subjectId()));
+        Offering offering = resolveOffering(request.offeringId());
         ContentPack contentPack = ContentPack.builder()
                 .name(request.name())
                 .description(request.description())
                 .subject(subject)
+                .offering(offering)
                 .version(request.version())
                 .active(request.active())
                 .packType(request.packType() != null ? request.packType() : com.studyshield.studyshield.content.entity.ContentTier.FREEMIUM)
@@ -62,6 +69,13 @@ public class ContentPackService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<ContentPackResponse> getByOfferingId(Long offeringId) {
+        return contentPackRepository.findByOfferingId(offeringId).stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
     public ContentPackResponse update(Long id, ContentPackRequest request) {
         ContentPack contentPack = contentPackRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("ContentPack", id));
@@ -70,6 +84,7 @@ public class ContentPackService {
         contentPack.setName(request.name());
         contentPack.setDescription(request.description());
         contentPack.setSubject(subject);
+        contentPack.setOffering(resolveOffering(request.offeringId()));
         contentPack.setVersion(request.version());
         contentPack.setActive(request.active());
         contentPack.setPackType(request.packType() != null ? request.packType() : contentPack.getPackType());
@@ -85,6 +100,14 @@ public class ContentPackService {
         contentPackRepository.delete(contentPack);
     }
 
+    private Offering resolveOffering(Long offeringId) {
+        if (offeringId == null) {
+            return null;
+        }
+        return offeringRepository.findById(offeringId)
+                .orElseThrow(() -> new ResourceNotFoundException("Offering", offeringId));
+    }
+
     private ContentPackResponse mapToResponse(ContentPack contentPack) {
         return new ContentPackResponse(
                 contentPack.getId(),
@@ -92,6 +115,7 @@ public class ContentPackService {
                 contentPack.getDescription(),
                 contentPack.getSubject().getId(),
                 contentPack.getSubject().getName(),
+                contentPack.getOffering() != null ? contentPack.getOffering().getId() : null,
                 contentPack.getVersion(),
                 contentPack.isActive(),
                 contentPack.getPackType(),

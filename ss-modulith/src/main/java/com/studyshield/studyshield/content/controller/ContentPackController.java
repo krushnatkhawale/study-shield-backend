@@ -40,6 +40,11 @@ public class ContentPackController {
         return ResponseEntity.ok(contentPackService.getBySubjectId(subjectId));
     }
 
+    @GetMapping("/offering/{offeringId}")
+    public ResponseEntity<List<ContentPackResponse>> getByOfferingId(@PathVariable Long offeringId) {
+        return ResponseEntity.ok(contentPackService.getByOfferingId(offeringId));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ContentPackResponse> update(@PathVariable Long id, @Valid @RequestBody ContentPackRequest request) {
         return ResponseEntity.ok(contentPackService.update(id, request));

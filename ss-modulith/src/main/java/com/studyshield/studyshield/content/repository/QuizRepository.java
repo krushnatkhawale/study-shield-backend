@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByContentPackId(Long contentPackId);
+    List<Quiz> findByOfferingId(Long offeringId);
     List<Quiz> findByActiveTrue();
 
     List<Quiz> findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(

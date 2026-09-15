@@ -9,6 +9,7 @@ public record QuizRequest(
         @NotBlank(message = "Quiz title is required") String title,
         String description,
         @NotNull(message = "Content pack ID is required") Long contentPackId,
+        Long offeringId,
         QuizType quizType,
         Integer questionCount,
         ContentTier contentTier,

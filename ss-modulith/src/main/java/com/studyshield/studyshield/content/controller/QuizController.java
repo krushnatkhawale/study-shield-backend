@@ -45,6 +45,11 @@ public class QuizController {
         return ResponseEntity.ok(quizService.getByContentPackId(contentPackId));
     }
 
+    @GetMapping("/offering/{offeringId}")
+    public ResponseEntity<List<QuizResponse>> getByOfferingId(@PathVariable Long offeringId) {
+        return ResponseEntity.ok(quizService.getByOfferingId(offeringId));
+    }
+
     /**
      * Download payload for mobile freemium/premium cache: quizzes with active questions
      * (options + correctAnswers) — matches app play model.
