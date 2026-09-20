@@ -32,7 +32,7 @@ public class BoardClassService {
     public BoardClassResponse create(BoardClassRequest request) {
         BoardClass entity = new BoardClass();
         entity.setBoard(board(request.boardId()));
-        entity.setClassLevel(classLevel(request.classLevelId()));
+        entity.setClassLevel(resolveLevel(request));
         entity.setDisplayName(request.displayName());
         return map(repository.save(entity));
     }
@@ -55,7 +55,7 @@ public class BoardClassService {
     public BoardClassResponse update(Long id, BoardClassRequest request) {
         BoardClass entity = find(id);
         entity.setBoard(board(request.boardId()));
-        entity.setClassLevel(classLevel(request.classLevelId()));
+        entity.setClassLevel(resolveLevel(request));
         entity.setDisplayName(request.displayName());
         return map(repository.save(entity));
     }
@@ -74,6 +74,17 @@ public class BoardClassService {
                 .orElseThrow(() -> new ResourceNotFoundException("Board", id));
     }
 
+    private ClassLevel resolveLevel(BoardClassRequest request) {
+        if (request.classLevelId() != null) {
+            return classLevel(request.classLevelId());
+        }
+        if (request.ordinal() != null) {
+            return classLevelRepository.findByOrdinal(request.ordinal())
+                    .orElseThrow(() -> new ResourceNotFoundException("ClassLevel", String.valueOf(request.ordinal())));
+        }
+        throw new IllegalArgumentException("classLevelId or ordinal is required");
+    }
+
     private ClassLevel classLevel(Long id) {
         return classLevelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("ClassLevel", id));
@@ -84,6 +95,9 @@ public class BoardClassService {
                 entity.getId(),
                 entity.getBoard().getId(),
                 entity.getClassLevel().getId(),
-                entity.getDisplayName());
+                entity.getDisplayName(),
+                entity.getClassLevel().getOrdinal(),
+                entity.getBoard().getCode(),
+                entity.getBoard().getName());
     }
 }

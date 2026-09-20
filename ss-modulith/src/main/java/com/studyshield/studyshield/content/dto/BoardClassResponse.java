@@ -4,5 +4,8 @@ public record BoardClassResponse(
         Long id,
         Long boardId,
         Long classLevelId,
-        String displayName
+        String displayName,
+        Integer ordinal,
+        String boardCode,
+        String boardName
 ) {}

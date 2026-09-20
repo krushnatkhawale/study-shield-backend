@@ -78,9 +78,15 @@ public class OfferingService {
     }
 
     private OfferingResponse map(Offering entity) {
+        BoardClass bc = entity.getBoardClass();
         return new OfferingResponse(
                 entity.getId(),
-                entity.getBoardClass().getId(),
-                entity.getSubject().getId());
+                bc.getId(),
+                entity.getSubject().getId(),
+                bc.getDisplayName(),
+                bc.getClassLevel().getOrdinal(),
+                bc.getBoard().getCode(),
+                entity.getSubject().getCode(),
+                entity.getSubject().getName());
     }
 }

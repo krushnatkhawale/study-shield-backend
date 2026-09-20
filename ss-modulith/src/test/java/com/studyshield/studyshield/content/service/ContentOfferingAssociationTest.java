@@ -72,8 +72,11 @@ class ContentOfferingAssociationTest {
 
         Board board = new Board();
         board.setId(2L);
+        board.setCode("CBSE");
+        board.setName("CBSE");
         ClassLevel level = new ClassLevel();
         level.setId(3L);
+        level.setOrdinal(7);
         BoardClass bc = new BoardClass();
         bc.setId(9L);
         bc.setBoard(board);
@@ -84,8 +87,10 @@ class ContentOfferingAssociationTest {
         when(repo.save(any())).thenReturn(bc);
         when(repo.findByBoardId(2L)).thenReturn(List.of(bc));
 
-        var created = service.create(new BoardClassRequest(2L, 3L, "CBSE Class 3"));
+        var created = service.create(new BoardClassRequest(2L, 3L, 7, "CBSE Class 3"));
         assertThat(created.displayName()).isEqualTo("CBSE Class 3");
+        assertThat(created.ordinal()).isEqualTo(7);
+        assertThat(created.boardCode()).isEqualTo("CBSE");
         assertThat(service.getByBoardId(2L)).hasSize(1);
 
         BoardClassController controller = new BoardClassController(service);
@@ -103,6 +108,16 @@ class ContentOfferingAssociationTest {
 
         BoardClass bc = new BoardClass();
         bc.setId(9L);
+        Board ob = new Board();
+        ob.setId(2L);
+        ob.setCode("CBSE");
+        ob.setName("CBSE");
+        ClassLevel ol = new ClassLevel();
+        ol.setId(3L);
+        ol.setOrdinal(7);
+        bc.setBoard(ob);
+        bc.setClassLevel(ol);
+        bc.setDisplayName("CBSE Class 3");
         Subject subject = Subject.builder().name("Maths").code("MATH").build();
         subject.setId(5L);
         Offering offering = new Offering();
@@ -116,6 +131,10 @@ class ContentOfferingAssociationTest {
 
         var created = service.create(new OfferingRequest(9L, 5L));
         assertThat(created.boardClassId()).isEqualTo(9L);
+        assertThat(created.displayName()).isEqualTo("CBSE Class 3");
+        assertThat(created.ordinal()).isEqualTo(7);
+        assertThat(created.subjectCode()).isEqualTo("MATH");
+        assertThat(created.subjectName()).isEqualTo("Maths");
         assertThat(service.getByBoardClassId(9L)).hasSize(1);
 
         OfferingController controller = new OfferingController(service);
