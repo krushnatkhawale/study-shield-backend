@@ -145,6 +145,26 @@ class QuestionBankContentTest {
         }
     }
 
+    @Test
+    void everyBandFromNurseryToClass4HasItsOwnHindiNativeQuizInDevanagari() {
+        var bands = List.of("Nursery", "Junior KG", "Sr KG",
+                "Class 1", "Class 2", "Class 3", "Class 4");
+        var firstQuestions = new HashSet<String>();
+        for (String band : bands) {
+            var subjects = QuestionBankContent.BANK.get(band);
+            assertThat(subjects).as("band %s", band).isNotNull();
+            var hindiNative = subjects.get(QuestionBankContent.SUBJECT_HINDI_NATIVE);
+            assertThat(hindiNative).as("Hindi Native in %s", band).isNotNull();
+            assertThat(hindiNative.size()).as("Hindi Native questions in %s", band)
+                    .isGreaterThanOrEqualTo(10);
+            for (var q : hindiNative) {
+                assertThat(q.text()).as(q.text()).matches(".*\\p{IsDevanagari}.*");
+            }
+            firstQuestions.add(hindiNative.get(0).text());
+        }
+        assertThat(firstQuestions.size()).as("each band opens with a different question").isEqualTo(bands.size());
+    }
+
     private List<QuestionBankContent.SeedQuestion> allQuestions() {
         return QuestionBankContent.BANK.values().stream()
                 .flatMap(s -> s.values().stream())
