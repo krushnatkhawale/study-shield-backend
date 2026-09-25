@@ -165,6 +165,22 @@ class QuestionBankContentTest {
         assertThat(firstQuestions.size()).as("each band opens with a different question").isEqualTo(bands.size());
     }
 
+    @Test
+    void preNurseryHasItsOwnHindiNativeTierSharingNoQuestionWithAnyOtherTier() {
+        var tiers = List.of("PreNursery", "Nursery", "Junior KG", "Sr KG",
+                "Class 1", "Class 2", "Class 3", "Class 4");
+        var seen = new HashSet<String>();
+        for (String tier : tiers) {
+            var bank = QuestionBankContent.hindiNativeForBand(tier);
+            assertThat(bank).as("Hindi Native tier %s", tier).isNotNull();
+            assertThat(bank.size()).as("Hindi Native questions in %s", tier).isGreaterThanOrEqualTo(10);
+            for (var q : bank) {
+                assertThat(q.text()).as(q.text()).matches(".*\\p{IsDevanagari}.*");
+                assertThat(seen.add(q.text())).as("shared question across tiers: " + q.text()).isTrue();
+            }
+        }
+    }
+
     private List<QuestionBankContent.SeedQuestion> allQuestions() {
         return QuestionBankContent.BANK.values().stream()
                 .flatMap(s -> s.values().stream())

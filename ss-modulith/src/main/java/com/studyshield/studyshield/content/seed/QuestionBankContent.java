@@ -95,12 +95,30 @@ public final class QuestionBankContent {
     /** Subject name for Devanagari-script Hindi questions (Indian boards). */
     public static final String SUBJECT_HINDI_NATIVE = "Hindi Native";
 
+    /** PreNursery (age 2-3, non-Hindi regions): NO letters to read — only sounds,
+     *  animals, food, body parts; parent reads aloud. All options distinct words.
+     *  Devanagari. Shares NOTHING with any other tier (texts unique). */
+    private static final List<SeedQuestion> HINDI_NATIVE_PRENURSERY = List.of(
+            mcq("कौन-सा जानवर ‘भौं-भौं’ करता है?", "कुत्ता", "मछली", "चिड़िया", "तितली"),
+            mcq("कौन-सा जानवर ‘म्याऊँ-म्याऊँ’ करता है?", "बिल्ली", "घोड़ा", "बकरी", "हाथी"),
+            mcq("‘अ’ से कौन-सा जानवर आता है? (सुनकर बताओ)", "अजगर", "कबूतर", "मोर", "तोता"),
+            mcq("‘आ’ से कौन-सा फल आता है?", "आम", "केला", "सेब", "अंगूर"),
+            mcq("‘क’ से कौन-सा पक्षी आता है?", "कौआ", "मोर", "तोता", "बतख"),
+            mcq("हम किससे खाना खाते हैं?", "मुँह", "नाक", "कान", "पैर"),
+            mcq("हम किससे ताली बजाते हैं?", "हाथ", "पैर", "नाक", "पेट"),
+            mcq("‘दूध’ हमें कौन देता है?", "गाय", "कुत्ता", "बिल्ली", "चूहा"),
+            mcq("आसमान में क्या चमकता है?", "सूरज", "पेड़", "घर", "कुर्सी"),
+            mcq("‘माँ’ कौन होती है?", "मेरी मम्मी", "मेरी गेंद", "मेरा जूता", "मेरी टोपी"),
+            tf("कुत्ता ‘भौं-भौं’ करता है।", true),
+            tf("चिड़िया पानी में तैरती है।", false)
+    );
+
     /** Nursery (age 3, non-Hindi regions): no reading needed — sounds, animals,
      *  single letters/words; parent reads the prompt aloud. Devanagari. */
     private static final List<SeedQuestion> HINDI_NATIVE_NURSERY = List.of(
             mcq("‘अ’ के बाद क्या आता है?", "आ", "क", "म", "प"),
-            mcq("कौन-सा जानवर ‘भौं-भौं’ करता है?", "कुत्ता", "बिल्ली", "गाय", "तोता"),
-            mcq("कौन-सा जानवर ‘म्याऊँ’ करता है?", "बिल्ली", "कुत्ता", "घोड़ा", "बकरी"),
+            mcq("‘बकरी’ कैसे बोलती है? (सुनकर बताओ)", "मैं-मैं", "भौं-भौं", "म्याऊँ", "काँव-काँव"),
+            mcq("‘कौआ’ कैसे बोलता है?", "काँव-काँव", "म्याऊँ", "भौं-भौं", "चें-चें"),
             mcq("‘मछली’ कहाँ रहती है?", "पानी में", "पेड़ पर", "घर में", "आसमान में"),
             mcq("हम किससे देखते हैं?", "आँख", "नाक", "कान", "हाथ"),
             mcq("‘केला’ किस रंग का होता है?", "पीला", "लाल", "नीला", "हरा"),
@@ -124,6 +142,7 @@ public final class QuestionBankContent {
             mcq("‘सेब’ किस अक्षर से शुरू होता है?", "स", "म", "क", "प"),
             mcq("हम नाक से क्या करते हैं?", "सूँघते हैं", "देखते हैं", "सुनते हैं", "चखते हैं"),
             mcq("सप्ताह में कितने दिन होते हैं?", "सात", "पाँच", "छह", "दस"),
+            mcq("‘क’ से शुरू होने वाले चारों में कौन-सा शब्द है?", "कमल", "अमर", "इमली", "उल्लू"),
             tf("‘ई’ एक स्वर है।", true),
             tf("‘क’ एक स्वर है।", false)
     );
@@ -140,6 +159,7 @@ public final class QuestionBankContent {
             mcq("गिनती में ‘दो’ के बाद क्या आता है?", "तीन", "एक", "चार", "पाँच"),
             mcq("गिनती में ‘चार’ से पहले क्या आता है?", "तीन", "पाँच", "दो", "छह"),
             mcq("‘पीला’ रंग किस फल का होता है?", "केला", "सेब", "अंगूर", "जामुन"),
+            mcq("‘म’ से शुरू होने वाले चारों में कौन-सा शब्द है?", "मटका", "अनार", "इमली", "उल्लू"),
             tf("‘अ’ से ‘अः’ तक स्वर होते हैं।", true),
             tf("‘क’ के बाद ‘ग’ आता है।", false)
     );
@@ -156,6 +176,7 @@ public final class QuestionBankContent {
             mcq("गिनती में ‘पाँच’ के बाद क्या आता है?", "छह", "चार", "सात", "आठ"),
             mcq("‘फल’ का मतलब क्या है?", "खाने की चीज़", "पहनने की चीज़", "खेलने की चीज़", "लिखने की चीज़"),
             mcq("‘पानी’ का पर्यायवाची क्या है?", "जल", "आग", "हवा", "मिट्टी"),
+            mcq("‘त’ से शुरू होने वाले चारों में कौन-सा शब्द है?", "तरबूज", "अदरक", "इलायची", "उड़द"),
             tf("‘विशेषण’ नहीं, ‘किताब’ एक नाम वाला शब्द है।", true),
             tf("‘दिन’ का विलोम ‘सुबह’ है।", false)
     );
@@ -172,6 +193,7 @@ public final class QuestionBankContent {
             mcq("‘ऊपर’ का विलोम क्या है?", "नीचे", "आगे", "पीछे", "पास"),
             mcq("‘मछली तैरती है’ — इसमें क्रिया क्या है?", "तैरती है", "मछली", "है", "ती"),
             mcq("‘ए’ की मात्रा वाला शब्द कौन-सा है?", "केला", "किला", "फूल", "गुड़"),
+            mcq("‘स’ से शुरू होने वाले चारों में कौन-सा शब्द है?", "संतर", "अखरोट", "इमली", "उड़द"),
             tf("‘सीता’ एक संज्ञा है।", true),
             tf("‘छोटा’ का विलोम ‘नन्हा’ है।", false)
     );
@@ -188,6 +210,7 @@ public final class QuestionBankContent {
             mcq("‘पुस्तक’ का पर्यायवाची क्या है?", "किताब", "कलम", "कापी", "पन्ना"),
             mcq("हिंदी गिनती में ‘तीन’ के बाद क्या आता है?", "चार", "दो", "पाँच", "छह"),
             mcq("‘हम खेल के मैदान में खेलते हैं’ — ‘हम’ क्या है?", "सर्वनाम", "संज्ञा", "विशेषण", "क्रिया"),
+            mcq("‘प’ से शुरू होने वाले चारों में कौन-सा शब्द है?", "पपीता", "अमरूद", "इमली", "उल्लू"),
             tf("‘विशेषण’ संज्ञा की विशेषता बताता है।", true),
             tf("‘आकाश’ का पर्यायवाची ‘धरती’ है।", false)
     );
@@ -204,6 +227,7 @@ public final class QuestionBankContent {
             mcq("‘सत्य’ का विलोम क्या है?", "असत्य", "सही", "अच्छा", "नया"),
             mcq("‘जो लिखा न जा सके’ — एक शब्द क्या है?", "अलेख्य", "अपठनीय", "अज्ञेय", "अदृश्य"),
             mcq("‘वीर’ शब्द का भाववाचक रूप क्या है?", "वीरता", "वीरान", "वीरों", "विर"),
+            mcq("‘न’ से शुरू होने वाले चारों में कौन-सा शब्द है?", "नारियल", "अनार", "इमली", "उल्लू"),
             tf("‘दिन’ का विलोम ‘रात’ है।", true),
             tf("‘आँखों का तारा’ का अर्थ ‘बहुत दूर’ है।", false)
     );
@@ -970,11 +994,18 @@ public final class QuestionBankContent {
         return Map.copyOf(out);
     }
 
+    /** Public entry for tests and loaders: Devanagari tier for any class/band name,
+     *  including PreNursery (dedicated tier, shares nothing with other tiers). */
+    public static List<SeedQuestion> hindiNativeForBand(String band) {
+        return hindiNativeFor(band);
+    }
+
     /** Picks the Devanagari tier for a band key (per-class from Nursery to Class 4,
      *  shared primary tier for Class 5, upper tier for Class 6+). */
     private static List<SeedQuestion> hindiNativeFor(String band) {
         if (band == null) return HINDI_NATIVE_C4;
         String t = band.trim().toLowerCase(Locale.ROOT);
+        if (t.contains("pre") && t.contains("nursery")) return HINDI_NATIVE_PRENURSERY;
         if (t.contains("nursery") || t.equals("trial") || t.equals("exp")) return HINDI_NATIVE_NURSERY;
         if (t.contains("junior") || t.contains("lkg")) return HINDI_NATIVE_LKG;
         if (t.contains("senior") || t.contains("ukg") || t.contains("sr")) return HINDI_NATIVE_SRKG;
