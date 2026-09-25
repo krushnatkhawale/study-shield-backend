@@ -1,5 +1,6 @@
 package com.studyshield.studyshield.content.seed;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -17,6 +18,11 @@ import java.util.Map;
  * The "Trial" class maps to the Nursery band; clients never seed Trial content
  * separately.  "Hindi" questions under lower-age bands use English text with
  * Hindi-appropriate topics (D3); actual Hindi-script content comes later.
+ * <p>
+ * "Hindi Native" is a separate subject for Indian boards (CBSE/MH/ICSE/ALL) whose
+ * questions are authored in Devanagari script. Tiered by age: early (Nursery/KG),
+ * primary (Class 1-5), upper (Class 6-10). True/False answers stay "True"/"False"
+ * (matching the shared quiz contract); the question text and MCQ options are Hindi.
  * <p>
  * To add questions later: append entries here or create questions via the admin
  * content APIs ({@code /api/v1/questions}). This class is a script path, not a runtime dependency.
@@ -86,7 +92,59 @@ public final class QuestionBankContent {
         return new SeedQuestion(text, false, List.of(correct, others[0], others[1], others[2]), correct);
     }
 
-    public static final Map<String, Map<String, List<SeedQuestion>>> BANK = Map.ofEntries(
+    /** Subject name for Devanagari-script Hindi questions (Indian boards). */
+    public static final String SUBJECT_HINDI_NATIVE = "Hindi Native";
+
+    /** Early years (Nursery/KG): varnmala, simple words, nature — Devanagari. */
+    private static final List<SeedQuestion> HINDI_NATIVE_EARLY = List.of(
+            mcq("‘अ’ के बाद कौन-सा अक्षर आता है?", "आ", "ई", "ऊ", "ओ"),
+            mcq("‘क’ से क्या शुरू होता है?", "कबूतर", "गमला", "चम्मच", "फल"),
+            mcq("‘अ’, ‘आ’, ‘इ’ क्या हैं?", "स्वर", "व्यंजन", "मात्रा", "शब्द"),
+            mcq("‘मछली’ कहाँ रहती है?", "पानी में", "पेड़ पर", "आसमान में", "घोंसले में"),
+            mcq("सूरज किस दिशा से निकलता है?", "पूरब", "पश्चिम", "उत्तर", "दक्षिण"),
+            mcq("‘गाय’ हमें क्या देती है?", "दूध", "अंडा", "ऊन", "शहद"),
+            mcq("‘पीला’ रंग कौन-से फल का होता है?", "केला", "सेब", "अंगूर", "संतरा"),
+            mcq("सप्ताह में कितने दिन होते हैं?", "सात", "पाँच", "छह", "दस"),
+            mcq("हम आँखों से क्या करते हैं?", "देखते हैं", "सुनते हैं", "सूँघते हैं", "चखते हैं"),
+            mcq("‘कुत्ता’ कैसे बोलता है?", "भौं-भौं", "म्याऊँ", "काँव-काँव", "चीं-चीं"),
+            tf("‘अ’ एक स्वर है।", true),
+            tf("सूरज रात को निकलता है।", false)
+    );
+
+    /** Primary (Class 1-5): matra, sangya/sarvnam, vilom, paryayvachi — Devanagari. */
+    private static final List<SeedQuestion> HINDI_NATIVE_PRIMARY = List.of(
+            mcq("‘किताब’ शब्द में ‘ि’ की मात्रा किस अक्षर पर है?", "क", "त", "ब", "भ"),
+            mcq("किसी व्यक्ति, वस्तु या स्थान के नाम को क्या कहते हैं?", "संज्ञा", "सर्वनाम", "विशेषण", "क्रिया"),
+            mcq("‘मैं’, ‘तुम’, ‘वह’ क्या हैं?", "सर्वनाम", "संज्ञा", "विशेषण", "अव्यय"),
+            mcq("‘बड़ा’ का विलोम शब्द क्या है?", "छोटा", "लंबा", "मोटा", "ऊँचा"),
+            mcq("‘सुख’ का विलोम क्या है?", "दुःख", "खुशी", "आनंद", "हँसी"),
+            mcq("‘पानी’ का पर्यायवाची क्या है?", "जल", "आग", "हवा", "मिट्टी"),
+            mcq("‘सूरज’ का पर्यायवाची क्या है?", "सूर्य", "चाँद", "तारा", "बादल"),
+            mcq("‘सीता गाना गाती है’ — इसमें क्रिया क्या है?", "गाती है", "सीता", "गाना", "है"),
+            mcq("हिंदी वर्णमाला में ‘क’ के बाद क्या आता है?", "ख", "ग", "घ", "ङ"),
+            mcq("गिनती में ‘पाँच’ के बाद क्या आता है?", "छह", "चार", "सात", "आठ"),
+            tf("‘विशेषण’ संज्ञा की विशेषता बताता है।", true),
+            tf("‘दिन’ का विलोम ‘सुबह’ है।", false)
+    );
+
+    /** Upper (Class 6-10): samas, sandhi, muhavare, sahitya — Devanagari. */
+    private static final List<SeedQuestion> HINDI_NATIVE_UPPER = List.of(
+            mcq("‘राजा-रानी’ में कौन-सा समास है?", "द्वंद्व", "तत्पुरुष", "कर्मधारय", "अव्ययीभाव"),
+            mcq("‘विद्यालय’ का संधि-विच्छेद क्या है?", "विद्या + आलय", "वि + द्यालय", "विद्य + आलय", "विद्या + लय"),
+            mcq("‘नौ दो ग्यारह होना’ मुहावरे का अर्थ क्या है?", "भाग जाना", "खुश होना", "लड़ना", "सो जाना"),
+            mcq("‘आँखों का तारा’ का अर्थ क्या है?", "बहुत प्यारा", "बहुत दूर", "बहुत चमकीला", "बहुत छोटा"),
+            mcq("‘मधुशाला’ के रचयिता कौन हैं?", "हरिवंश राय बच्चन", "जयशंकर प्रसाद", "सूर्यकांत निराला", "महादेवी वर्मा"),
+            mcq("‘गोदान’ उपन्यास किसने लिखा?", "प्रेमचंद", "जयशंकर प्रसाद", "फणीश्वरनाथ रेणु", "यशपाल"),
+            mcq("‘वीर’ रस का स्थायी भाव क्या है?", "उत्साह", "शोक", "हास", "भय"),
+            mcq("‘लेखक’ शब्द में कौन-सा प्रत्यय है?", "अक", "इक", "त्व", "ता"),
+            mcq("‘सत्य’ का विलोम क्या है?", "असत्य", "सही", "अच्छा", "नया"),
+            mcq("‘जो लिखा न जा सके’ — इसके लिए एक शब्द क्या है?", "अलेख्य", "अपठनीय", "अज्ञेय", "अदृश्य"),
+            tf("‘तत्पुरुष समास’ में दूसरा पद प्रधान होता है।", true),
+            tf("‘संधि’ में दो वर्णों का मेल नहीं होता।", false)
+    );
+
+    public static final Map<String, Map<String, List<SeedQuestion>>> BANK =
+            withHindiNative(Map.ofEntries(
             Map.entry(BAND_SR_KG, Map.of(
                     "Math", List.of(
                             mcq("How many fingers are on one hand?", "5", "4", "6", "10"),
@@ -335,7 +393,7 @@ public final class QuestionBankContent {
             Map.entry("Class 7", class7()),
             Map.entry("Class 8", class8()),
             Map.entry("Class 9", class9()),
-            Map.entry("Class 10", class10()));
+            Map.entry("Class 10", class10())));
 
     /** Class 2 (age 7-8): two/three-digit numbers, intro multiplication, plants/animals, basic grammar. */
     private static Map<String, List<SeedQuestion>> class2() {
@@ -813,6 +871,36 @@ public final class QuestionBankContent {
                         mcq("UPI is developed and operated by…", "NPCI", "SEBI", "TRAI", "IRDAI"),
                         tf("Voting age in India is 18 years.", true)
                 ));
+    }
+
+    /**
+     * Merges the per-band "Hindi Native" (Devanagari) bank into every curated band.
+     * Tiered by age so juniors get varnmala basics while upper classes get
+     * vyakaran/sahitya. Runs once at class-load; the base literal stays untouched.
+     */
+    private static Map<String, Map<String, List<SeedQuestion>>> withHindiNative(
+            Map<String, Map<String, List<SeedQuestion>>> base) {
+        Map<String, Map<String, List<SeedQuestion>>> out = new LinkedHashMap<>(base);
+        for (Map.Entry<String, Map<String, List<SeedQuestion>>> e : base.entrySet()) {
+            Map<String, List<SeedQuestion>> subjects = new LinkedHashMap<>(e.getValue());
+            subjects.put(SUBJECT_HINDI_NATIVE, hindiNativeFor(e.getKey()));
+            out.put(e.getKey(), Map.copyOf(subjects));
+        }
+        return Map.copyOf(out);
+    }
+
+    /** Picks the Devanagari tier for a band key (early / primary / upper). */
+    private static List<SeedQuestion> hindiNativeFor(String band) {
+        if (band == null) return HINDI_NATIVE_PRIMARY;
+        String t = band.trim().toLowerCase(Locale.ROOT);
+        if (t.contains("nursery") || t.contains("junior") || t.contains("lkg")
+                || t.contains("senior") || t.contains("ukg") || t.contains("sr")
+                || t.equals("trial") || t.equals("exp")) {
+            return HINDI_NATIVE_EARLY;
+        }
+        int n = classNumber(t);
+        if (n >= 6) return HINDI_NATIVE_UPPER;
+        return HINDI_NATIVE_PRIMARY;
     }
 
     /**

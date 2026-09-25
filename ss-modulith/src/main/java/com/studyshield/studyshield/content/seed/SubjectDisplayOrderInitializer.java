@@ -32,7 +32,8 @@ public class SubjectDisplayOrderInitializer implements ApplicationRunner {
             "evs", 2,
             "english", 3,
             "hindi", 4,
-            "general knowledge", 5
+            "hindi native", 5,
+            "general knowledge", 6
     );
     private static final int LEGACY_FALLBACK_ORDER = 10;
 

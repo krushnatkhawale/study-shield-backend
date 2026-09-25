@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/studyshield}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        # Local run against the shared/prod database pointed at by DATABASE_URL.
+        # Activate with SPRING_PROFILES_ACTIVE=local-with-proddb
+        # (or --spring.profiles.active=local-with-proddb).
+        default_schema: '"ss-dev"'

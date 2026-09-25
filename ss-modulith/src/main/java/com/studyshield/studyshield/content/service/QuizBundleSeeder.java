@@ -33,7 +33,7 @@ public class QuizBundleSeeder {
     public static final int QUESTIONS_PER_QUIZ = 10;
 
     private static final List<String> DEFAULT_SUBJECTS = List.of(
-            "Math", "EVS", "English", "Hindi"
+            "Math", "EVS", "English", "Hindi", QuestionBankContent.SUBJECT_HINDI_NATIVE
     );
 
     private final BoardRepository boardRepository;
@@ -73,6 +73,10 @@ public class QuizBundleSeeder {
         String band = QuestionBankContent.bandForClassName(classGrade.getName());
         if (subjects.isEmpty()) {
             subjects = createDefaultSubjects(classGrade, band);
+        } else {
+            // Backfill: the bank may have gained subjects (e.g. "Hindi Native") after this
+            // class was first seeded. Add any missing bank subject so a restart heals old rows.
+            subjects = backfillMissingSubjects(classGrade, band, subjects);
         }
 
         for (Subject subject : subjects) {
@@ -133,7 +137,7 @@ public class QuizBundleSeeder {
         return List.copyOf(QuestionBankContent.BANK.getOrDefault(band, Map.of()).keySet());
     }
 
-    /** Math, EVS, English, Hindi first — Map keySet order is not stable. */
+    /** Math, EVS, English, Hindi, Hindi Native first — Map keySet order is not stable. */
     private static List<String> orderSubjectNames(List<String> names) {
         if (names.isEmpty()) {
             return names;
@@ -150,6 +154,43 @@ public class QuizBundleSeeder {
             }
         }
         return ordered;
+    }
+
+    /**
+     * Adds bank subjects missing from an already-seeded class (e.g. "Hindi Native" added
+     * after the class row was created). Idempotent: existing names are left untouched and
+     * new subjects append after the current max displayOrder.
+     */
+    private List<Subject> backfillMissingSubjects(ClassGrade classGrade, String band, List<Subject> existing) {
+        List<String> wanted = orderSubjectNames(curatedSubjectNames(band));
+        if (wanted.isEmpty()) {
+            return existing;
+        }
+        java.util.Set<String> have = new java.util.HashSet<>();
+        int maxOrder = 0;
+        for (Subject s : existing) {
+            if (s.getName() != null) {
+                have.add(s.getName().toLowerCase(Locale.ROOT).trim());
+            }
+            maxOrder = Math.max(maxOrder, s.getDisplayOrder());
+        }
+        List<Subject> all = new ArrayList<>(existing);
+        for (String name : wanted) {
+            if (have.contains(name.toLowerCase(Locale.ROOT).trim())) {
+                continue;
+            }
+            String code = name.toUpperCase().replace(" ", "_");
+            Subject created = subjectRepository.save(Subject.builder()
+                    .name(name)
+                    .code(code)
+                    .classGrade(classGrade)
+                    .active(true)
+                    .displayOrder(++maxOrder)
+                    .build());
+            log.info("[FreemiumSeed] Backfilled subject name={} class={}", name, classGrade.getName());
+            all.add(created);
+        }
+        return all;
     }
 
     /**
@@ -246,6 +287,8 @@ public class QuizBundleSeeder {
     }
 
     private Quiz createQuiz(ContentPack pack, String subjectName, int freemiumIndex) {
+        // Hindi Native quizzes are authored in Devanagari; everything else stays English.
+        String language = QuestionBankContent.SUBJECT_HINDI_NATIVE.equals(subjectName) ? "Hindi" : "English";
         return quizRepository.save(Quiz.builder()
                 .title(subjectName + " · Quiz " + freemiumIndex)
                 .description("Freemium quiz " + freemiumIndex + " for " + subjectName)
@@ -254,7 +297,7 @@ public class QuizBundleSeeder {
                 .questionCount(QUESTIONS_PER_QUIZ)
                 .contentTier(ContentTier.FREEMIUM)
                 .freemiumIndex(freemiumIndex)
-                .language("English")
+                .language(language)
                 .active(true)
                 .build());
     }
@@ -272,7 +315,7 @@ public class QuizBundleSeeder {
         for (int order = activeCount; order < slots; order++) {
             SeedQuestion sq = source.get(order % source.size());
             int n = order + 1;
-            batch.add(toQuestion(sq, quiz, "qb_" + bandSlug + "_" + slug(subjectName)
+            batch.add(toQuestion(sq, quiz, subjectName, "qb_" + bandSlug + "_" + slug(subjectName)
                     + "_q" + freemiumIndex + "_" + n, order));
         }
         if (!batch.isEmpty()) {
@@ -293,7 +336,7 @@ public class QuizBundleSeeder {
         return QuestionBankContent.FALLBACK_BANK;
     }
 
-    private Question toQuestion(SeedQuestion sq, Quiz quiz, String resourceId, int orderIndex) {
+    private Question toQuestion(SeedQuestion sq, Quiz quiz, String subjectName, String resourceId, int orderIndex) {
         boolean tf = sq.trueFalse();
         List<String> texts = new ArrayList<>(sq.options());
         if (!tf && texts.size() > 1) {
@@ -305,6 +348,8 @@ public class QuizBundleSeeder {
             options.add(new QuestionOption(OPTION_IDS.get(i), texts.get(i), null));
         }
         String correctId = correctOptionId(options, sq.correct());
+        List<String> languages = QuestionBankContent.SUBJECT_HINDI_NATIVE.equals(subjectName)
+                ? List.of("Hindi") : List.of("English");
         return Question.builder()
                 .resourceId(resourceId)
                 .questionText(sq.text())
@@ -318,7 +363,7 @@ public class QuizBundleSeeder {
                 .optionD(texts.size() > 3 ? texts.get(3) : "")
                 .points(1)
                 .difficulty(Difficulty.EASY)
-                .languages(List.of("English"))
+                .languages(languages)
                 .tags(List.of("question-bank", tf ? "true-false" : "single-choice"))
                 .quiz(quiz)
                 .orderIndex(orderIndex)
