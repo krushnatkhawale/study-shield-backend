@@ -42,6 +42,7 @@ public final class QuestionBankContent {
     public static final String BAND_SR_KG = "Sr KG";
     public static final String BAND_LKG = "Junior KG";
     public static final String BAND_NURSERY = "Nursery";
+    public static final String BAND_PRENURSERY = "PreNursery";
     public static final String BAND_CLASS_1 = "Class 1";
     public static final String BAND_TRIAL = "Trial";
     public static final int MIN_CURATED_CLASS = 2;
@@ -57,6 +58,7 @@ public final class QuestionBankContent {
     public static String bandForClassName(String normalizedClassName) {
         if (normalizedClassName == null) return null;
         String t = normalizedClassName.trim().toLowerCase(Locale.ROOT);
+        if (t.contains("pre") && t.contains("nursery")) return BAND_PRENURSERY;
         if (t.contains("sr") || t.contains("senior") || t.contains("ukg")) return BAND_SR_KG;
         if (t.contains("junior") || t.contains("lkg")) return BAND_LKG;
         if (t.contains("nursery")) return BAND_NURSERY;
@@ -75,6 +77,7 @@ public final class QuestionBankContent {
 
     /** Maps a child's age to a reasonable class band so sessions can filter by age alone. */
     public static String classNameForAge(int age) {
+        if (age <= 2) return BAND_PRENURSERY;
         if (age <= 3) return BAND_NURSERY;
         if (age <= 4) return BAND_LKG;
         if (age <= 5) return BAND_SR_KG;
@@ -92,6 +95,17 @@ public final class QuestionBankContent {
         return new SeedQuestion(text, false, List.of(correct, others[0], others[1], others[2]), correct);
     }
 
+    /**
+     * pic() helper: image-prompt question for pre-literate kids. The emoji acts as the
+     * picture card (no image host required — renders on every device); the 4 options
+     * stay plain text for the child to choose from (parent reads aloud).
+     */
+    private static SeedQuestion pic(String emoji, String pictureLabel, String prompt,
+                                    String correct, String... others) {
+        return mcq("🖼️ [" + emoji + " picture: " + pictureLabel + "] " + prompt,
+                correct, others[0], others[1], others[2]);
+    }
+
     /** Subject name for Devanagari-script Hindi questions (Indian boards). */
     public static final String SUBJECT_HINDI_NATIVE = "Hindi Native";
 
@@ -99,16 +113,16 @@ public final class QuestionBankContent {
      *  animals, food, body parts; parent reads aloud. All options distinct words.
      *  Devanagari. Shares NOTHING with any other tier (texts unique). */
     private static final List<SeedQuestion> HINDI_NATIVE_PRENURSERY = List.of(
-            mcq("कौन-सा जानवर ‘भौं-भौं’ करता है?", "कुत्ता", "मछली", "चिड़िया", "तितली"),
-            mcq("कौन-सा जानवर ‘म्याऊँ-म्याऊँ’ करता है?", "बिल्ली", "घोड़ा", "बकरी", "हाथी"),
-            mcq("‘अ’ से कौन-सा जानवर आता है? (सुनकर बताओ)", "अजगर", "कबूतर", "मोर", "तोता"),
-            mcq("‘आ’ से कौन-सा फल आता है?", "आम", "केला", "सेब", "अंगूर"),
-            mcq("‘क’ से कौन-सा पक्षी आता है?", "कौआ", "मोर", "तोता", "बतख"),
-            mcq("हम किससे खाना खाते हैं?", "मुँह", "नाक", "कान", "पैर"),
+            pic("🐶", "कुत्ता", "तस्वीर देखो — यह कौन-सा जानवर है?", "कुत्ता", "बिल्ली", "मछली", "चिड़िया"),
+            pic("🐱", "बिल्ली", "तस्वीर देखो — ‘म्याऊँ-म्याऊँ’ कौन करता है?", "बिल्ली", "कुत्ता", "घोड़ा", "बकरी"),
+            pic("🥭", "आम", "तस्वीर देखो — ‘आ’ से कौन-सा फल आता है?", "आम", "केला", "सेब", "अंगूर"),
+            pic("🍌", "केला", "तस्वीर देखो — यह कौन-सा फल है?", "केला", "आम", "सेब", "संतरा"),
+            pic("🐘", "हाथी", "तस्वीर देखो — सबसे बड़ा जानवर कौन-सा है?", "हाथी", "कुत्ता", "बिल्ली", "चूहा"),
+            pic("🐟", "मछली", "तस्वीर देखो — पानी में कौन रहता है?", "मछली", "चिड़िया", "कुत्ता", "बिल्ली"),
+            pic("☀️", "सूरज", "तस्वीर देखो — आसमान में क्या चमकता है?", "सूरज", "पेड़", "घर", "कुर्सी"),
+            pic("🐄", "गाय", "तस्वीर देखो — ‘दूध’ हमें कौन देता है?", "गाय", "कुत्ता", "बिल्ली", "चूहा"),
             mcq("हम किससे ताली बजाते हैं?", "हाथ", "पैर", "नाक", "पेट"),
-            mcq("‘दूध’ हमें कौन देता है?", "गाय", "कुत्ता", "बिल्ली", "चूहा"),
-            mcq("आसमान में क्या चमकता है?", "सूरज", "पेड़", "घर", "कुर्सी"),
-            mcq("‘माँ’ कौन होती है?", "मेरी मम्मी", "मेरी गेंद", "मेरा जूता", "मेरी टोपी"),
+            mcq("हम किससे खाना खाते हैं?", "मुँह", "नाक", "कान", "पैर"),
             tf("कुत्ता ‘भौं-भौं’ करता है।", true),
             tf("चिड़िया पानी में तैरती है।", false)
     );
@@ -116,9 +130,12 @@ public final class QuestionBankContent {
     /** Nursery (age 3, non-Hindi regions): no reading needed — sounds, animals,
      *  single letters/words; parent reads the prompt aloud. Devanagari. */
     private static final List<SeedQuestion> HINDI_NATIVE_NURSERY = List.of(
-            mcq("‘अ’ के बाद क्या आता है?", "आ", "क", "म", "प"),
-            mcq("‘बकरी’ कैसे बोलती है? (सुनकर बताओ)", "मैं-मैं", "भौं-भौं", "म्याऊँ", "काँव-काँव"),
-            mcq("‘कौआ’ कैसे बोलता है?", "काँव-काँव", "म्याऊँ", "भौं-भौं", "चें-चें"),
+            pic("🦁", "शेर", "तस्वीर देखो — जंगल का राजा कौन है?", "शेर", "हाथी", "भालू", "बंदर"),
+            pic("🐵", "बंदर", "तस्वीर देखो — पेड़ पर कौन कूदता है?", "बंदर", "शेर", "घोड़ा", "गाय"),
+            pic("🍎", "सेब", "तस्वीर देखो — यह कौन-सा फल है?", "सेब", "केला", "आम", "अंगूर"),
+            pic("🦜", "तोता", "तस्वीर देखो — हरे पंखों वाला पक्षी कौन-सा है?", "तोता", "कौआ", "मोर", "कबूतर"),
+            pic("🌙", "चाँद", "तस्वीर देखो — रात में आसमान में क्या दिखता है?", "चाँद", "सूरज", "बादल", "तारा"),
+            pic("🐕", "कुत्ता", "तस्वीर देखो — ‘भौं-भौं’ करने वाला जानवर चुनो।", "कुत्ता", "बिल्ली", "खरगोश", "चूहा"),
             mcq("‘मछली’ कहाँ रहती है?", "पानी में", "पेड़ पर", "घर में", "आसमान में"),
             mcq("हम किससे देखते हैं?", "आँख", "नाक", "कान", "हाथ"),
             mcq("‘केला’ किस रंग का होता है?", "पीला", "लाल", "नीला", "हरा"),
@@ -132,6 +149,12 @@ public final class QuestionBankContent {
 
     /** Junior KG (age 4): swar recognition (अ–ऊ), first vyanjan sounds. Devanagari. */
     private static final List<SeedQuestion> HINDI_NATIVE_LKG = List.of(
+            pic("🐅", "बाघ", "तस्वीर देखो — धारीदार बड़ी बिल्ली कौन-सी है?", "बाघ", "शेर", "चीता", "तेंदुआ"),
+            pic("🍇", "अंगूर", "तस्वीर देखो — गुच्छे में लगने वाला फल कौन-सा है?", "अंगूर", "केला", "आम", "सेब"),
+            pic("🦚", "मोर", "तस्वीर देखो — रंग-बिरंगे पंख फैलाने वाला पक्षी कौन-सा है?", "मोर", "तोता", "कौआ", "बतख"),
+            pic("🐴", "घोड़ा", "तस्वीर देखो — तेज़ दौड़ने वाला जानवर कौन-सा है?", "घोड़ा", "गधा", "ऊँट", "बैल"),
+            pic("🌳", "पेड़", "तस्वीर देखो — जिस पर फल लगते हैं, वह क्या है?", "पेड़", "फूल", "घास", "पत्ता"),
+            pic("🚗", "गाड़ी", "तस्वीर देखो — चार पहियों वाली सवारी कौन-सी है?", "गाड़ी", "साइकिल", "बस", "नाव"),
             mcq("‘आ’ के बाद कौन-सा स्वर आता है?", "इ", "क", "म", "अ"),
             mcq("‘इ’ के बाद कौन-सा स्वर आता है?", "ई", "आ", "उ", "ए"),
             mcq("‘क’ से क्या शुरू होता है?", "कबूतर", "गमला", "चम्मच", "फल"),
@@ -149,6 +172,12 @@ public final class QuestionBankContent {
 
     /** Senior KG (age 5): full swar, vyanjan order, 2-letter words, आ मात्रा, गिनती. */
     private static final List<SeedQuestion> HINDI_NATIVE_SRKG = List.of(
+            pic("🦒", "जिराफ़", "तस्वीर देखो — सबसे लंबी गर्दन वाला जानवर कौन-सा है?", "जिराफ़", "हाथी", "ऊँट", "घोड़ा"),
+            pic("🍉", "तरबूज", "तस्वीर देखो — अंदर से लाल बड़ा फल कौन-सा है?", "तरबूज", "खरबूजा", "आम", "सेब"),
+            pic("🦉", "उल्लू", "तस्वीर देखो — रात में जागने वाला पक्षी कौन-सा है?", "उल्लू", "तोता", "कौआ", "मोर"),
+            pic("🏠", "घर", "तस्वीर देखो — हम सब कहाँ रहते हैं?", "घर", "स्कूल", "बाज़ार", "मंदिर"),
+            pic("✏️", "पेंसिल", "तस्वीर देखो — लिखने के काम आने वाली चीज़ कौन-सी है?", "पेंसिल", "किताब", "गेंद", "चम्मच"),
+            pic("🐢", "कछुआ", "तस्वीर देखो — धीरे चलने वाला जानवर कौन-सा है?", "कछुआ", "खरगोश", "चूहा", "मेंढक"),
             mcq("‘उ’ के बाद कौन-सा स्वर आता है?", "ऊ", "ए", "ओ", "अं"),
             mcq("हिंदी वर्णमाला में ‘क’ के बाद क्या आता है?", "ख", "ग", "घ", "ङ"),
             mcq("‘ख’ के बाद क्या आता है?", "ग", "क", "घ", "च"),
@@ -250,6 +279,56 @@ public final class QuestionBankContent {
 
     public static final Map<String, Map<String, List<SeedQuestion>>> BANK =
             withHindiNative(Map.ofEntries(
+            Map.entry(BAND_PRENURSERY, Map.of(
+                    "Math", List.of(
+                            pic("🍎", "apples", "Look at the picture. How many apples do you see? 🍎🍎", "2", "1", "3", "4"),
+                            pic("⭐", "stars", "Look at the picture. How many stars? ⭐⭐⭐", "3", "2", "4", "5"),
+                            pic("🔴", "red ball", "Look at the picture. What shape is the ball?", "Circle", "Square", "Triangle", "Star"),
+                            pic("🐶", "dogs", "Look at the picture. How many dogs? 🐶", "1", "2", "3", "5"),
+                            pic("🖐️", "hand", "Look at the picture. How many fingers on one hand?", "5", "4", "6", "3"),
+                            pic("🟦", "blue square", "Look at the picture. Which shape is this?", "Square", "Circle", "Triangle", "Star"),
+                            mcq("Which shape has three sides?", "Triangle", "Circle", "Square", "Star"),
+                            mcq("What is 1 + 1?", "2", "1", "3", "4"),
+                            mcq("How many ears do we have?", "2", "1", "3", "4"),
+                            tf("A ball is round.", true)
+                    ),
+                    "EVS", List.of(
+                            pic("🐘", "elephant", "Look at the picture. Which animal is very big?", "Elephant", "Cat", "Dog", "Rat"),
+                            pic("🍌", "banana", "Look at the picture. Which fruit is this?", "Banana", "Apple", "Mango", "Grapes"),
+                            pic("🐥", "chick", "Look at the picture. Which baby bird says 'cheep-cheep'?", "Chick", "Puppy", "Calf", "Kitten"),
+                            pic("🌝", "moon", "Look at the picture. What comes out at night?", "Moon", "Sun", "Rainbow", "Cloud"),
+                            pic("🐠", "fish", "Look at the picture. Which animal swims?", "Fish", "Bird", "Dog", "Cat"),
+                            pic("🥛", "milk", "Look at the picture. What do we drink every morning?", "Milk", "Water", "Juice", "Tea"),
+                            mcq("We see with our…", "Eyes", "Nose", "Ears", "Feet"),
+                            mcq("We clap with our…", "Hands", "Legs", "Eyes", "Nose"),
+                            tf("We should drink water every day.", true),
+                            tf("Dogs can fly.", false)
+                    ),
+                    "English", List.of(
+                            pic("🍏", "green apple", "Look at the picture. Which letter does 'Apple' start with?", "A", "B", "C", "D"),
+                            pic("⚽", "football", "Look at the picture. Which letter does 'Ball' start with?", "B", "C", "D", "E"),
+                            pic("🐈", "black cat", "Look at the picture. Which letter does 'Cat' start with?", "C", "A", "B", "D"),
+                            pic("🐕", "brown dog", "Look at the picture. Which letter does 'Dog' start with?", "D", "C", "B", "A"),
+                            pic("🥚", "egg", "Look at the picture. Which letter does 'Egg' start with?", "E", "F", "G", "H"),
+                            pic("🐟", "gold fish", "Look at the picture. Which letter does 'Fish' start with?", "F", "E", "G", "B"),
+                            mcq("What is the opposite of big?", "Small", "Tall", "Fat", "Long"),
+                            mcq("What is the opposite of hot?", "Cold", "Warm", "Wet", "Fast"),
+                            tf("'Apple' starts with the letter A.", true),
+                            tf("'Dog' starts with the letter C.", false)
+                    ),
+                    "Hindi", List.of(
+                            pic("🥭", "ripe mango", "Look at the picture. Which fruit is yellow and sweet?", "Mango", "Apple", "Banana", "Grapes"),
+                            pic("🌹", "red rose", "Look at the picture. Which flower smells sweet?", "Rose", "Lotus", "Leaf", "Grass"),
+                            pic("🦜", "green parrot", "Look at the picture. Which bird is green?", "Parrot", "Crow", "Duck", "Hen"),
+                            pic("🐄", "white cow", "Look at the picture. Who gives us milk?", "Cow", "Dog", "Cat", "Hen"),
+                            pic("☀️", "morning sun", "Look at the picture. When does the sun come out?", "Morning", "Night", "Evening", "Afternoon"),
+                            pic("🌙", "night moon", "Look at the picture. When does the moon come out?", "Night", "Morning", "Noon", "Evening"),
+                            mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
+                            mcq("We wear shoes on our…", "Feet", "Hands", "Head", "Ears"),
+                            tf("We should brush our teeth every morning.", true),
+                            tf("Fish live on trees.", false)
+                    )
+            )),
             Map.entry(BAND_SR_KG, Map.of(
                     "Math", List.of(
                             mcq("How many fingers are on one hand?", "5", "4", "6", "10"),
@@ -269,55 +348,40 @@ public final class QuestionBankContent {
                             tf("3 is more than 5.", false)
                     ),
                     "EVS", List.of(
-                            mcq("We smell with our…", "Nose", "Eyes", "Ears", "Hands"),
-                            mcq("Which animal gives us milk?", "Cow", "Dog", "Cat", "Hen"),
-                            mcq("A baby dog is called a…", "Puppy", "Kitten", "Calf", "Chick"),
-                            mcq("We see with our…", "Eyes", "Nose", "Ears", "Feet"),
+                            pic("🦁", "lion", "Look at the picture. Which animal is the king of the jungle?", "Lion", "Tiger", "Bear", "Wolf"),
+                            pic("🐬", "dolphin", "Look at the picture. Which animal lives in water?", "Dolphin", "Monkey", "Goat", "Horse"),
+                            pic("🦷", "teeth", "Look at the picture. What do we brush every morning?", "Teeth", "Hair", "Hands", "Ears"),
+                            pic("👃", "nose", "Look at the picture. What do we smell with?", "Nose", "Eyes", "Ears", "Hands"),
+                            pic("🐾", "puppy", "Look at the picture. A baby dog is called a…", "Puppy", "Kitten", "Calf", "Chick"),
+                            pic("🐮", "calf", "Look at the picture. A baby cow is called a…", "Calf", "Puppy", "Kitten", "Duckling"),
                             mcq("Which one is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
                             mcq("How many legs does a bird have?", "2", "4", "6", "8"),
                             mcq("We hear with our…", "Ears", "Eyes", "Nose", "Mouth"),
-                            mcq("Which animal says 'meow'?", "Cat", "Dog", "Cow", "Lion"),
-                            mcq("Which body part helps us walk?", "Legs", "Ears", "Eyes", "Nose"),
-                            tf("We should drink water every day.", true),
-                            mcq("A baby cow is called a…", "Calf", "Puppy", "Kitten", "Duckling"),
-                            mcq("Which one can fly?", "Butterfly", "Dog", "Fish", "Cow"),
-                            mcq("We taste with our…", "Tongue", "Nose", "Ears", "Hands"),
-                            mcq("A fish lives in…", "Water", "A tree", "The sky", "A nest"),
-                            tf("The sun rises at night.", false)
+                            tf("We should drink water every day.", true)
                     ),
                     "English", List.of(
+                            pic("🍎", "apple", "Look at the picture. Which letter does 'Apple' start with?", "A", "B", "M", "S"),
+                            pic("🐘", "elephant", "Look at the picture. Which letter does 'Elephant' start with?", "E", "F", "A", "L"),
+                            pic("🎈", "balloon", "Look at the picture. Which word starts with B?", "Balloon", "Sun", "Moon", "Star"),
+                            pic("🐈", "cat", "Look at the picture. Which word does 'Bat' rhyme with?", "Cat", "Cup", "Sun", "Dog"),
+                            pic("🔵", "blue circle", "Look at the picture. Which word is a colour?", "Blue", "Run", "Table", "Jump"),
+                            pic("⬆️", "arrow up", "Look at the picture. What is the opposite of up?", "Down", "Top", "Over", "High"),
                             mcq("Which letter comes after A?", "B", "C", "Z", "A"),
-                            mcq("'Apple' starts with which letter?", "A", "B", "M", "S"),
                             mcq("What is the opposite of big?", "Small", "Tall", "Fat", "Long"),
-                            mcq("Which one is a vowel?", "a", "b", "c", "d"),
-                            mcq("'Bat' rhymes with…", "Cat", "Cup", "Sun", "Dog"),
-                            mcq("'Elephant' starts with which letter?", "E", "F", "A", "L"),
                             mcq("What is the opposite of hot?", "Cold", "Warm", "Wet", "Fast"),
-                            tf("'Ball' starts with the letter B.", true),
-                            mcq("One cat, two…", "Cats", "Cat", "Cates", "Cati"),
-                            mcq("Which word names an animal?", "Lion", "Red", "Jump", "Hot"),
-                            mcq("Fill the missing letter: C_T (cat)", "a", "o", "u", "e"),
-                            mcq("What is the opposite of up?", "Down", "Top", "Over", "High"),
-                            mcq("'Sun' starts with which letter?", "S", "F", "M", "B"),
-                            mcq("Which word is a colour?", "Blue", "Run", "Table", "Jump"),
                             tf("We write from left to right.", true)
                     ),
                     "Hindi", List.of(
-                            mcq("Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
-                            mcq("Who treats us when we are sick?", "Doctor", "Teacher", "Farmer", "Driver"),
-                            mcq("Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
-                            mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
-                            mcq("Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
-                            mcq("How many colours are in a rainbow?", "7", "3", "5", "10"),
+                            pic("🛑", "stop sign", "Look at the picture. Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
+                            pic("👩‍🏫", "teacher", "Look at the picture. Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
+                            pic("🌿", "grass", "Look at the picture. What colour is grass?", "Green", "Red", "Blue", "Black"),
+                            pic("🦷", "teeth", "Look at the picture. What should we brush every morning?", "Teeth", "Hair", "Shoes", "Hands"),
+                            pic("🐦", "peacock", "Look at the picture. Which is the national bird of India?", "Peacock", "Crow", "Parrot", "Hen"),
+                            pic("🚗", "car", "Look at the picture. How many wheels does a car have?", "4", "2", "3", "6"),
                             mcq("Which is the biggest land animal?", "Elephant", "Horse", "Dog", "Goat"),
                             mcq("A firefighter puts out…", "Fire", "Light", "Water", "Food"),
                             mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
-                            mcq("Which animal lives in water?", "Fish", "Cow", "Hen", "Monkey"),
-                            mcq("We wear shoes on our…", "Feet", "Hands", "Head", "Ears"),
-                            mcq("Which is the national bird of India?", "Peacock", "Crow", "Parrot", "Hen"),
-                            tf("We should brush our teeth every morning.", true),
-                            mcq("Who brings us letters?", "Postman", "Pilot", "Chef", "Tailor"),
-                            mcq("How many wheels does a car have?", "4", "2", "3", "6")
+                            mcq("Which animal lives in water?", "Fish", "Cow", "Hen", "Monkey")
                     )
             )),
             Map.entry(BAND_CLASS_1, Map.of(
@@ -404,38 +468,38 @@ public final class QuestionBankContent {
                             mcq("How many ears do we have?", "2", "1", "3", "4")
                     ),
                     "EVS", List.of(
+                            pic("🐶", "dog", "Look at the picture. Which animal is this?", "Dog", "Cat", "Cow", "Lion"),
+                            pic("🍎", "apple", "Look at the picture. Which fruit is this?", "Apple", "Banana", "Mango", "Orange"),
+                            pic("🐱", "cat", "Look at the picture. Which animal says 'meow'?", "Cat", "Dog", "Cow", "Goat"),
+                            pic("☀️", "sun", "Look at the picture. What do you see in the sky in the morning?", "Sun", "Moon", "Star", "Cloud"),
+                            pic("🐟", "fish", "Look at the picture. Where does this animal live?", "Water", "Tree", "Sky", "Nest"),
+                            pic("🍌", "banana", "Look at the picture. Which fruit is yellow and long?", "Banana", "Apple", "Grapes", "Mango"),
                             mcq("We smell with our…", "Nose", "Eyes", "Ears", "Hands"),
-                            mcq("Which animal says 'meow'?", "Cat", "Dog", "Cow", "Lion"),
                             mcq("We see with our…", "Eyes", "Nose", "Ears", "Feet"),
-                            mcq("Which one is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
-                            mcq("How many legs does a bird have?", "2", "4", "6", "8"),
                             mcq("We hear with our…", "Ears", "Eyes", "Nose", "Mouth"),
-                            mcq("Which body part helps us walk?", "Legs", "Ears", "Eyes", "Nose"),
-                            tf("We should drink water every day.", true),
-                            mcq("A fish lives in…", "Water", "A tree", "The sky", "A nest"),
-                            tf("The sun rises in the morning.", true)
+                            tf("We should drink water every day.", true)
                     ),
                     "English", List.of(
+                            pic("🦁", "lion", "Look at the picture. Which word names this animal?", "Lion", "Table", "Red", "Run"),
+                            pic("🐘", "elephant", "Look at the picture. Which word names this animal?", "Elephant", "Egg", "Ant", "Ink"),
+                            pic("🍇", "grapes", "Look at the picture. Which word names this fruit?", "Grapes", "Glass", "Green", "Gate"),
+                            pic("🌙", "moon", "Look at the picture. Which word names what you see at night?", "Moon", "Man", "Mat", "Mug"),
+                            pic("🐵", "monkey", "Look at the picture. Which word names this animal?", "Monkey", "Money", "Mother", "Milk"),
+                            pic("⚽", "ball", "Look at the picture. Which word names this toy?", "Ball", "Bat", "Bus", "Bed"),
                             mcq("Which letter comes after A?", "B", "C", "Z", "A"),
                             mcq("'Apple' starts with which letter?", "A", "B", "M", "S"),
                             mcq("What is the opposite of big?", "Small", "Tall", "Fat", "Long"),
-                            mcq("'Bat' rhymes with…", "Cat", "Cup", "Sun", "Dog"),
-                            mcq("'Elephant' starts with which letter?", "E", "F", "A", "L"),
-                            mcq("What is the opposite of hot?", "Cold", "Warm", "Wet", "Fast"),
-                            tf("'Ball' starts with the letter B.", true),
-                            mcq("One cat, two…", "Cats", "Cat", "Cates", "Cati"),
-                            mcq("'Sun' starts with which letter?", "S", "F", "M", "B"),
-                            mcq("Which word names an animal?", "Lion", "Red", "Jump", "Hot")
+                            tf("'Ball' starts with the letter B.", true)
                     ),
                     "Hindi", List.of(
-                            mcq("Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
-                            mcq("Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
+                            pic("🐄", "cow", "Look at the picture. Which animal gives us milk?", "Cow", "Dog", "Hen", "Goat"),
+                            pic("🦚", "peacock", "Look at the picture. Which bird is this?", "Peacock", "Crow", "Parrot", "Duck"),
+                            pic("🌧️", "rain", "Look at the picture. What is falling from the clouds?", "Rain", "Snow", "Sun", "Stars"),
+                            pic("🌹", "rose", "Look at the picture. Which flower is this?", "Rose", "Lotus", "Mango", "Leaf"),
+                            pic("🚲", "bicycle", "Look at the picture. How many wheels does it have?", "2", "3", "4", "1"),
+                            pic("🏫", "school", "Look at the picture. Where do children study?", "School", "Park", "Shop", "Home"),
                             mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
-                            mcq("Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
-                            mcq("How many colours are in a rainbow?", "7", "3", "5", "10"),
                             mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
-                            mcq("Which animal lives in water?", "Fish", "Cow", "Hen", "Monkey"),
-                            mcq("Who brings us letters?", "Postman", "Pilot", "Chef", "Tailor"),
                             mcq("We wear shoes on our…", "Feet", "Hands", "Head", "Ears"),
                             tf("We should brush our teeth every morning.", true)
                     )
@@ -454,38 +518,38 @@ public final class QuestionBankContent {
                             mcq("Which number do we start counting with?", "1", "0", "2", "10")
                     ),
                     "EVS", List.of(
+                            pic("🐯", "tiger", "Look at the picture. Which animal is this?", "Tiger", "Lion", "Cat", "Dog"),
+                            pic("🥭", "mango", "Look at the picture. Which fruit is called the king of fruits?", "Mango", "Apple", "Banana", "Orange"),
+                            pic("🦋", "butterfly", "Look at the picture. Which one can fly?", "Butterfly", "Ant", "Fish", "Frog"),
+                            pic("🐢", "tortoise", "Look at the picture. Which animal walks very slowly?", "Tortoise", "Rabbit", "Horse", "Dog"),
+                            pic("🌻", "sunflower", "Look at the picture. Which flower is this?", "Sunflower", "Rose", "Lotus", "Jasmine"),
+                            pic("🐧", "penguin", "Look at the picture. Which bird cannot fly?", "Penguin", "Crow", "Sparrow", "Parrot"),
                             mcq("We smell with our…", "Nose", "Eyes", "Ears", "Hands"),
-                            mcq("Which animal gives us milk?", "Cow", "Dog", "Cat", "Hen"),
                             mcq("A baby dog is called a…", "Puppy", "Kitten", "Calf", "Chick"),
                             mcq("We see with our…", "Eyes", "Nose", "Ears", "Feet"),
-                            mcq("Which one is a fruit?", "Mango", "Carrot", "Potato", "Onion"),
-                            mcq("How many legs does a bird have?", "2", "4", "6", "8"),
-                            mcq("We hear with our…", "Ears", "Eyes", "Nose", "Mouth"),
-                            mcq("Which animal says 'meow'?", "Cat", "Dog", "Cow", "Lion"),
-                            mcq("Which body part helps us walk?", "Legs", "Ears", "Eyes", "Nose"),
                             tf("We should drink water every day.", true)
                     ),
                     "English", List.of(
+                            pic("🐯", "tiger", "Look at the picture. Which word starts with T?", "Tiger", "Lion", "Bear", "Wolf"),
+                            pic("✏️", "pencil", "Look at the picture. Which word names what you write with?", "Pencil", "Paper", "Pen", "Book"),
+                            pic("🐠", "fish", "Look at the picture. Which word names this animal?", "Fish", "Frog", "Fox", "Fan"),
+                            pic("🍰", "cake", "Look at the picture. Which word rhymes with 'lake'?", "Cake", "Cook", "Cup", "Corn"),
+                            pic("🌞", "sun", "Look at the picture. Which word rhymes with 'fun'?", "Sun", "Sand", "Song", "Spoon"),
+                            pic("📚", "books", "Look at the picture. One book, two…", "Books", "Book", "Bookes", "Bookies"),
                             mcq("Which letter comes after A?", "B", "C", "Z", "A"),
-                            mcq("'Apple' starts with which letter?", "A", "B", "M", "S"),
-                            mcq("What is the opposite of big?", "Small", "Tall", "Fat", "Long"),
                             mcq("Which one is a vowel?", "a", "b", "c", "d"),
-                            mcq("'Bat' rhymes with…", "Cat", "Cup", "Sun", "Dog"),
-                            mcq("'Elephant' starts with which letter?", "E", "F", "A", "L"),
                             mcq("What is the opposite of hot?", "Cold", "Warm", "Wet", "Fast"),
-                            tf("'Ball' starts with the letter B.", true),
-                            mcq("One cat, two…", "Cats", "Cat", "Cates", "Cati"),
-                            mcq("Which word names an animal?", "Lion", "Red", "Jump", "Hot")
+                            tf("'Ball' starts with the letter B.", true)
                     ),
                     "Hindi", List.of(
-                            mcq("Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
-                            mcq("Who treats us when we are sick?", "Doctor", "Teacher", "Farmer", "Driver"),
-                            mcq("Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
+                            pic("🚦", "traffic light", "Look at the picture. What does the red light say?", "Stop", "Go", "Run", "Jump"),
+                            pic("👩‍⚕️", "doctor", "Look at the picture. Who treats us when we are sick?", "Doctor", "Teacher", "Farmer", "Driver"),
+                            pic("✈️", "aeroplane", "Look at the picture. Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
+                            pic("🌈", "rainbow", "Look at the picture. How many colours are in a rainbow?", "7", "3", "5", "10"),
+                            pic("🔥", "fire", "Look at the picture. What does a firefighter put out?", "Fire", "Water", "Light", "Food"),
+                            pic("📮", "postman", "Look at the picture. Who brings us letters?", "Postman", "Pilot", "Chef", "Tailor"),
                             mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
-                            mcq("Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
-                            mcq("How many colours are in a rainbow?", "7", "3", "5", "10"),
                             mcq("Which is the biggest land animal?", "Elephant", "Horse", "Dog", "Goat"),
-                            mcq("A firefighter puts out…", "Fire", "Light", "Water", "Food"),
                             mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
                             mcq("Which animal lives in water?", "Fish", "Cow", "Hen", "Monkey")
                     )
