@@ -32,12 +32,21 @@ public final class QuestionBankContent {
     private QuestionBankContent() {}
 
     /**
-     * @param text      question text
-     * @param trueFalse true → options are [True, False]
-     * @param options   answer choices (already includes True/False for trueFalse)
-     * @param correct   option text of the single correct answer
+     * @param text        question text (for picture questions: the picture card only,
+     *                    e.g. "🖼️ [🦁 picture: lion]" — no dictation mixed in)
+     * @param trueFalse   true → options are [True, False]
+     * @param options     answer choices (already includes True/False for trueFalse)
+     * @param correct     option text of the single correct answer
+     * @param description spoken/read-aloud dictation for picture questions
+     *                    (stored on {@code Question.explanation}, shown smaller on TV
+     *                    while the picture renders big); null for text questions
      */
-    public record SeedQuestion(String text, boolean trueFalse, List<String> options, String correct) {}
+    public record SeedQuestion(String text, boolean trueFalse, List<String> options, String correct,
+                               String description) {
+        public SeedQuestion(String text, boolean trueFalse, List<String> options, String correct) {
+            this(text, trueFalse, options, correct, null);
+        }
+    }
 
     public static final String BAND_SR_KG = "Sr KG";
     public static final String BAND_LKG = "Junior KG";
@@ -99,11 +108,20 @@ public final class QuestionBankContent {
      * pic() helper: image-prompt question for pre-literate kids. The emoji acts as the
      * picture card (no image host required — renders on every device); the 4 options
      * stay plain text for the child to choose from (parent reads aloud).
+     * The picture card goes in {@code text}; the spoken prompt (dictation) goes in
+     * {@code description} so the TV can render the picture big and the words small.
      */
     private static SeedQuestion pic(String emoji, String pictureLabel, String prompt,
                                     String correct, String... others) {
-        return mcq("🖼️ [" + emoji + " picture: " + pictureLabel + "] " + prompt,
-                correct, others[0], others[1], others[2]);
+        return new SeedQuestion("🖼️ [" + emoji + " picture: " + pictureLabel + "]",
+                false, List.of(correct, others[0], others[1], others[2]), correct, prompt);
+    }
+
+    /** Hard cap: no quiz ever serves more than 10 questions (first 10 win). */
+    static final int MAX_QUESTIONS_PER_QUIZ = 10;
+
+    static List<SeedQuestion> cap10(List<SeedQuestion> questions) {
+        return questions.size() <= MAX_QUESTIONS_PER_QUIZ ? questions : List.copyOf(questions.subList(0, MAX_QUESTIONS_PER_QUIZ));
     }
 
     /** Subject name for Devanagari-script Hindi questions (Indian boards). */
@@ -375,9 +393,9 @@ public final class QuestionBankContent {
                             pic("🛑", "stop sign", "Look at the picture. Red light on traffic signals means…", "Stop", "Go", "Run", "Dance"),
                             pic("👩‍🏫", "teacher", "Look at the picture. Who teaches us in school?", "Teacher", "Doctor", "Postman", "Cook"),
                             pic("🌿", "grass", "Look at the picture. What colour is grass?", "Green", "Red", "Blue", "Black"),
-                            pic("🦷", "teeth", "Look at the picture. What should we brush every morning?", "Teeth", "Hair", "Shoes", "Hands"),
+                            pic("🪥", "teeth", "Look at the picture. What should we brush every morning?", "Teeth", "Hair", "Shoes", "Hands"),
                             pic("🐦", "peacock", "Look at the picture. Which is the national bird of India?", "Peacock", "Crow", "Parrot", "Hen"),
-                            pic("🚗", "car", "Look at the picture. How many wheels does a car have?", "4", "2", "3", "6"),
+                            pic("🚗", "car", "Look at the picture. Which word names this?", "Car", "Bus", "Train", "Ship"),
                             mcq("Which is the biggest land animal?", "Elephant", "Horse", "Dog", "Goat"),
                             mcq("A firefighter puts out…", "Fire", "Light", "Water", "Food"),
                             mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
@@ -441,11 +459,11 @@ public final class QuestionBankContent {
                             mcq("Which is the national animal of India?", "Tiger", "Lion", "Elephant", "Leopard"),
                             mcq("Which is the national flower of India?", "Lotus", "Rose", "Sunflower", "Marigold"),
                             mcq("Which festival is called the festival of lights?", "Diwali", "Holi", "Eid", "Christmas"),
-                            mcq("How many colours are on the Indian flag?", "3", "2", "4", "5"),
+                            mcq("Which greeting do we say in the morning?", "Good morning", "Good night", "Goodbye", "See you"),
                             tf("The peacock is the national bird of India.", true),
                             mcq("Who is called the Father of the Nation in India?", "Mahatma Gandhi", "Nehru", "Patel", "Bose"),
                             mcq("Which is the largest ocean on Earth?", "Pacific Ocean", "Indian Ocean", "Arctic Ocean", "Atlantic Ocean"),
-                            mcq("How many wheels does a bicycle have?", "2", "3", "4", "1"),
+                            mcq("The word 'bicycle' starts with the letter…", "B", "C", "D", "A"),
                             mcq("Which planet do we live on?", "Earth", "Mars", "Moon", "Sun"),
                             mcq("Which number do we dial to call the police in India?", "100", "101", "102", "108"),
                             mcq("Which meal do we eat in the morning?", "Breakfast", "Lunch", "Dinner", "Supper"),
@@ -496,7 +514,7 @@ public final class QuestionBankContent {
                             pic("🦚", "peacock", "Look at the picture. Which bird is this?", "Peacock", "Crow", "Parrot", "Duck"),
                             pic("🌧️", "rain", "Look at the picture. What is falling from the clouds?", "Rain", "Snow", "Sun", "Stars"),
                             pic("🌹", "rose", "Look at the picture. Which flower is this?", "Rose", "Lotus", "Mango", "Leaf"),
-                            pic("🚲", "bicycle", "Look at the picture. How many wheels does it have?", "2", "3", "4", "1"),
+                            pic("🦆", "duck", "Look at the picture. Which bird says 'quack-quack'?", "Duck", "Crow", "Hen", "Goat"),
                             pic("🏫", "school", "Look at the picture. Where do children study?", "School", "Park", "Shop", "Home"),
                             mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
                             mcq("What colour is a banana?", "Yellow", "Blue", "Purple", "Black"),
@@ -530,7 +548,7 @@ public final class QuestionBankContent {
                             tf("We should drink water every day.", true)
                     ),
                     "English", List.of(
-                            pic("🐯", "tiger", "Look at the picture. Which word starts with T?", "Tiger", "Lion", "Bear", "Wolf"),
+                            pic("🐅", "tiger", "Look at the picture. Which word starts with T?", "Tiger", "Lion", "Bear", "Wolf"),
                             pic("✏️", "pencil", "Look at the picture. Which word names what you write with?", "Pencil", "Paper", "Pen", "Book"),
                             pic("🐠", "fish", "Look at the picture. Which word names this animal?", "Fish", "Frog", "Fox", "Fan"),
                             pic("🍰", "cake", "Look at the picture. Which word rhymes with 'lake'?", "Cake", "Cook", "Cup", "Corn"),
@@ -545,7 +563,7 @@ public final class QuestionBankContent {
                             pic("🚦", "traffic light", "Look at the picture. What does the red light say?", "Stop", "Go", "Run", "Jump"),
                             pic("👩‍⚕️", "doctor", "Look at the picture. Who treats us when we are sick?", "Doctor", "Teacher", "Farmer", "Driver"),
                             pic("✈️", "aeroplane", "Look at the picture. Which vehicle flies in the sky?", "Aeroplane", "Bus", "Ship", "Car"),
-                            pic("🌈", "rainbow", "Look at the picture. How many colours are in a rainbow?", "7", "3", "5", "10"),
+                            pic("🌈", "rainbow", "Look at the picture. Which word names this?", "Rainbow", "River", "Road", "Rocket"),
                             pic("🔥", "fire", "Look at the picture. What does a firefighter put out?", "Fire", "Water", "Light", "Food"),
                             pic("📮", "postman", "Look at the picture. Who brings us letters?", "Postman", "Pilot", "Chef", "Tailor"),
                             mcq("What colour is grass?", "Green", "Red", "Blue", "Black"),
@@ -605,7 +623,7 @@ public final class QuestionBankContent {
                 ),
                 "Hindi", List.of(
                         mcq("Which is the national flower of India?", "Lotus", "Rose", "Sunflower", "Marigold"),
-                        mcq("How many days are there in a year?", "365", "300", "400", "360"),
+                        mcq("Which word names the season when the sun shines brightest?", "Summer", "Winter", "Rainy", "Spring"),
                         mcq("Which animal is called the ship of the desert?", "Camel", "Horse", "Donkey", "Elephant"),
                         tf("The Indian flag has three colours.", true),
                         mcq("Which is the largest animal on Earth?", "Blue whale", "Elephant", "Giraffe", "Shark"),
@@ -658,7 +676,7 @@ public final class QuestionBankContent {
                 ),
                 "Hindi", List.of(
                         mcq("Who was the first President of India?", "Dr. Rajendra Prasad", "Dr. S. Radhakrishnan", "Jawaharlal Nehru", "Dr. A.P.J. Abdul Kalam"),
-                        mcq("How many continents are there on Earth?", "7", "5", "6", "8"),
+                        mcq("Which is the largest continent on Earth?", "Asia", "Africa", "Europe", "Australia"),
                         mcq("Which planet is closest to the Sun?", "Mercury", "Earth", "Venus", "Mars"),
                         tf("The cheetah is the fastest land animal.", true),
                         mcq("Which instrument has black and white keys?", "Piano", "Guitar", "Flute", "Drum"),
@@ -771,7 +789,7 @@ public final class QuestionBankContent {
                         mcq("The Olympic Games happen every…", "4 years", "2 years", "year", "5 years"),
                         mcq("Who was the first Indian woman in space?", "Kalpana Chawla", "Sunita Williams", "Indira Gandhi", "Sania Mirza"),
                         mcq("Which desert is the largest hot desert?", "Sahara", "Thar", "Gobi", "Kalahari"),
-                        mcq("How many players are on a football team on the field?", "11", "9", "10", "12"),
+                        mcq("Which game is played with a round ball kicked by feet?", "Football", "Cricket", "Chess", "Carrom"),
                         mcq("Which metal is liquid at room temperature?", "Mercury", "Iron", "Gold", "Silver"),
                         tf("The Taj Mahal is in Agra.", true)
                 ));
@@ -825,7 +843,7 @@ public final class QuestionBankContent {
                         mcq("The ancient Olympic Games were held in…", "Greece", "Rome", "Egypt", "India"),
                         mcq("Which instrument measures atmospheric pressure?", "Barometer", "Thermometer", "Speedometer", "Altimeter"),
                         mcq("Silk is obtained from…", "Silkworm", "Sheep", "Goat", "Camel"),
-                        mcq("How many main directions are there?", "4", "2", "6", "8"),
+                        mcq("Which instrument shows directions?", "Compass", "Thermometer", "Ruler", "Clock"),
                         tf("Photosynthesis happens mostly in leaves.", true)
                 ));
     }
@@ -923,7 +941,7 @@ public final class QuestionBankContent {
                         tf("Editing means checking for grammar, spelling and clarity.", true)
                 ),
                 "Hindi", List.of(
-                        mcq("The original Indian Constitution contained approximately how many Articles?", "395", "448", "250", "500"),
+                        mcq("The original Indian Constitution was handwritten by…", "Prem Behari Narain Raizada", "Rabindranath Tagore", "Sarojini Naidu", "Subhas Chandra Bose"),
                         mcq("The Revolt of 1857 started at…", "Meerut", "Delhi", "Kanpur", "Jhansi"),
                         tf("The World Wide Web was invented by Tim Berners-Lee.", true),
                         mcq("Which is the fastest land animal?", "Cheetah", "Lion", "Horse", "Leopard"),
@@ -972,7 +990,7 @@ public final class QuestionBankContent {
                         mcq("Identify the clause type: 'I know that he is honest.'", "Noun clause", "Adjective clause", "Adverb clause", "Main clause only"),
                         mcq("The antonym of 'scarce' is…", "Plentiful", "Limited", "Rare", "Sparse"),
                         mcq("Which sentence is grammatically correct?", "Between you and me, this is fine.", "Between you and I, this is fine.", "Between I and you, this is fine.", "Between us and I, this is fine."),
-                        mcq("A traditional haiku has how many syllables in total (5-7-5)?", "17", "12", "14", "20"),
+                        mcq("Which of these is a synonym of 'brave'?", "Courageous", "Cowardly", "Timid", "Weak"),
                         tf("Active voice makes writing more direct than passive voice.", true)
                 ),
                 "Hindi", List.of(
@@ -983,7 +1001,7 @@ public final class QuestionBankContent {
                         mcq("The Richter scale measures…", "Earthquakes", "Wind speed", "Temperature", "Ocean depth"),
                         mcq("Who wrote 'Discovery of India'?", "Jawaharlal Nehru", "Mahatma Gandhi", "Rabindranath Tagore", "Ambedkar"),
                         mcq("Which country gifted the Statue of Liberty to the USA?", "France", "Britain", "Spain", "Italy"),
-                        mcq("The Tropic of Cancer passes through how many Indian states?", "8", "6", "10", "5"),
+                        mcq("Which river is called the Ganga of the South?", "Godavari", "Yamuna", "Narmada", "Tapi"),
                         mcq("Blockchain technology was first applied to…", "Cryptocurrency", "Healthcare", "Education", "Farming"),
                         tf("Democracy means government by the people.", true)
                 ));
@@ -1036,7 +1054,7 @@ public final class QuestionBankContent {
                         mcq("The Paris Agreement deals with…", "Climate change", "Trade tariffs", "Space exploration", "Internet laws"),
                         mcq("Which organisation publishes the Human Development Index?", "UNDP", "WHO", "IMF", "World Bank"),
                         mcq("The first Indian satellite was…", "Aryabhata", "INSAT-1A", "Rohini", "Bhaskara"),
-                        mcq("Right to Education covers children aged…", "6 to 14 years", "5 to 15 years", "3 to 18 years", "8 to 16 years"),
+                        mcq("Who is known as the Father of the Indian Constitution?", "B. R. Ambedkar", "Mahatma Gandhi", "Jawaharlal Nehru", "Sardar Patel"),
                         mcq("UPI is developed and operated by…", "NPCI", "SEBI", "TRAI", "IRDAI"),
                         tf("Voting age in India is 18 years.", true)
                 ));
@@ -1046,22 +1064,28 @@ public final class QuestionBankContent {
      * Merges the per-band "Hindi Native" (Devanagari) bank into every curated band.
      * Tiered by age so juniors get varnmala basics while upper classes get
      * vyakaran/sahitya. Runs once at class-load; the base literal stays untouched.
+     * Every subject list is capped at {@link #MAX_QUESTIONS_PER_QUIZ} so no quiz
+     * ever serves more than 10 questions.
      */
     private static Map<String, Map<String, List<SeedQuestion>>> withHindiNative(
             Map<String, Map<String, List<SeedQuestion>>> base) {
-        Map<String, Map<String, List<SeedQuestion>>> out = new LinkedHashMap<>(base);
+        Map<String, Map<String, List<SeedQuestion>>> out = new LinkedHashMap<>();
         for (Map.Entry<String, Map<String, List<SeedQuestion>>> e : base.entrySet()) {
-            Map<String, List<SeedQuestion>> subjects = new LinkedHashMap<>(e.getValue());
-            subjects.put(SUBJECT_HINDI_NATIVE, hindiNativeFor(e.getKey()));
+            Map<String, List<SeedQuestion>> subjects = new LinkedHashMap<>();
+            for (Map.Entry<String, List<SeedQuestion>> s : e.getValue().entrySet()) {
+                subjects.put(s.getKey(), cap10(s.getValue()));
+            }
+            subjects.put(SUBJECT_HINDI_NATIVE, cap10(hindiNativeFor(e.getKey())));
             out.put(e.getKey(), Map.copyOf(subjects));
         }
         return Map.copyOf(out);
     }
 
     /** Public entry for tests and loaders: Devanagari tier for any class/band name,
-     *  including PreNursery (dedicated tier, shares nothing with other tiers). */
+     *  including PreNursery (dedicated tier, shares nothing with other tiers).
+     *  Capped at {@link #MAX_QUESTIONS_PER_QUIZ} like every other subject list. */
     public static List<SeedQuestion> hindiNativeForBand(String band) {
-        return hindiNativeFor(band);
+        return cap10(hindiNativeFor(band));
     }
 
     /** Picks the Devanagari tier for a band key (per-class from Nursery to Class 4,

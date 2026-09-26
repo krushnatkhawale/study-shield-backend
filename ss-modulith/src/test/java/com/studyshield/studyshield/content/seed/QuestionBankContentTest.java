@@ -181,6 +181,51 @@ class QuestionBankContentTest {
         }
     }
 
+    @Test
+    void noQuizServesMoreThanTenQuestions() {
+        for (var band : QuestionBankContent.BANK.entrySet()) {
+            for (var subject : band.getValue().entrySet()) {
+                assertThat(subject.getValue().size())
+                        .as("questions in %s / %s", band.getKey(), subject.getKey())
+                        .isLessThanOrEqualTo(QuestionBankContent.MAX_QUESTIONS_PER_QUIZ);
+            }
+        }
+        for (String band : List.of("PreNursery", "Nursery", "Junior KG", "Sr KG",
+                "Class 1", "Class 2", "Class 3", "Class 4", "Class 9", "Class 10")) {
+            assertThat(QuestionBankContent.hindiNativeForBand(band).size())
+                    .as("Hindi Native questions in %s", band)
+                    .isLessThanOrEqualTo(QuestionBankContent.MAX_QUESTIONS_PER_QUIZ);
+        }
+    }
+
+    @Test
+    void languageSubjectsHaveNoCountingOrArithmeticQuestions() {
+        for (var band : QuestionBankContent.BANK.entrySet()) {
+            for (String subject : List.of("English", "Hindi", QuestionBankContent.SUBJECT_HINDI_NATIVE)) {
+                var questions = band.getValue().get(subject);
+                if (questions == null) continue;
+                for (QuestionBankContent.SeedQuestion q : questions) {
+                    assertThat(q.text().toLowerCase()).as("[%s/%s] %s", band.getKey(), subject, q.text())
+                            .doesNotContain("how many");
+                    assertThat(q.text()).as("[%s/%s] %s", band.getKey(), subject, q.text())
+                            .doesNotMatch(".*\\bWhat is \\d.*");
+                }
+            }
+        }
+    }
+
+    @Test
+    void pictureQuestionsKeepThePictureInTextAndDictationInDescription() {
+        for (QuestionBankContent.SeedQuestion q : allQuestions()) {
+            if (q.text().startsWith("🖼️")) {
+                assertThat(q.text()).as(q.text()).matches("🖼️ \\[.+ picture: .+\\]");
+                assertThat(q.description()).as("dictation of " + q.text()).isNotBlank();
+            } else {
+                assertThat(q.description()).as("description of text question: " + q.text()).isNull();
+            }
+        }
+    }
+
     private List<QuestionBankContent.SeedQuestion> allQuestions() {
         return QuestionBankContent.BANK.values().stream()
                 .flatMap(s -> s.values().stream())

@@ -357,6 +357,7 @@ public class QuizBundleSeeder {
                 .options(options)
                 .correctAnswers(List.of(correctId))
                 .correctOption(correctId.toUpperCase(Locale.ROOT))
+                .explanation(sq.description())
                 .optionA(texts.size() > 0 ? texts.get(0) : "")
                 .optionB(texts.size() > 1 ? texts.get(1) : "")
                 .optionC(texts.size() > 2 ? texts.get(2) : "")
