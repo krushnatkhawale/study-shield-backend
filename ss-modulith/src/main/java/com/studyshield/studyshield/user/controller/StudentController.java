@@ -55,7 +55,11 @@ public class StudentController {
                 request.gender(),
                 request.birthYear(),
                 request.studentClass(),
-                true);
+                true,
+                request.revealReadLock(),
+                request.autoDictation(),
+                request.fastAnswerThresholdMs(),
+                request.greetingLanguage());
 
         ChildProfileResponse saved = childProfileService.create(childRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(StudentResponse.fromChildProfile(saved));
@@ -82,7 +86,11 @@ public class StudentController {
                 request.gender() != null ? request.gender() : existing.gender(),
                 request.birthYear() != null ? request.birthYear() : existing.birthYear(),
                 request.studentClass() != null ? request.studentClass() : existing.studentClass(),
-                existing.active());
+                existing.active(),
+                request.revealReadLock() != null ? request.revealReadLock() : existing.revealReadLock(),
+                request.autoDictation() != null ? request.autoDictation() : existing.autoDictation(),
+                request.fastAnswerThresholdMs() != null ? request.fastAnswerThresholdMs() : existing.fastAnswerThresholdMs(),
+                request.greetingLanguage() != null ? request.greetingLanguage() : existing.greetingLanguage());
 
         ChildProfileResponse updated = childProfileService.update(id, childRequest);
         return ResponseEntity.ok(StudentResponse.fromChildProfile(updated));

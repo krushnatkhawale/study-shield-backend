@@ -12,5 +12,9 @@ public record ChildProfileRequest(
     String gender,
     Integer birthYear,
     String studentClass,
-    boolean active
+    boolean active,
+    Boolean revealReadLock,
+    Boolean autoDictation,
+    Long fastAnswerThresholdMs,
+    String greetingLanguage
 ) {}

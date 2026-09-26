@@ -57,6 +57,10 @@ public class ChildProfileService {
                 .birthYear(request.birthYear())
                 .studentClass(request.studentClass())
                 .active(request.active())
+                .revealReadLock(request.revealReadLock() != null && request.revealReadLock())
+                .autoDictation(request.autoDictation() != null && request.autoDictation())
+                .fastAnswerThresholdMs(request.fastAnswerThresholdMs() != null ? request.fastAnswerThresholdMs() : 1500L)
+                .greetingLanguage(request.greetingLanguage() != null ? request.greetingLanguage() : "en")
                 .build();
         return mapToResponse(childProfileRepository.save(cp));
     }
@@ -91,6 +95,10 @@ public class ChildProfileService {
         cp.setBirthYear(request.birthYear());
         cp.setStudentClass(request.studentClass());
         cp.setActive(request.active());
+        if (request.revealReadLock() != null) cp.setRevealReadLock(request.revealReadLock());
+        if (request.autoDictation() != null) cp.setAutoDictation(request.autoDictation());
+        if (request.fastAnswerThresholdMs() != null) cp.setFastAnswerThresholdMs(request.fastAnswerThresholdMs());
+        if (request.greetingLanguage() != null) cp.setGreetingLanguage(request.greetingLanguage());
         return mapToResponse(childProfileRepository.save(cp));
     }
 
@@ -105,6 +113,8 @@ public class ChildProfileService {
                 cp.getUser().getId(), cp.getUser().getName(),
                 cp.getBoardId(), cp.getClassGradeId(),
                 cp.getGender(), cp.getBirthYear(), cp.getStudentClass(),
-                cp.isActive(), cp.getCreatedAt(), cp.getUpdatedAt());
+                cp.isActive(), cp.isRevealReadLock(), cp.isAutoDictation(),
+                cp.getFastAnswerThresholdMs(), cp.getGreetingLanguage(),
+                cp.getCreatedAt(), cp.getUpdatedAt());
     }
 }

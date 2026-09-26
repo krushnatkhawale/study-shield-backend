@@ -38,6 +38,18 @@ public class ChildProfile {
     @Column(nullable = false)
     private boolean active = true;
 
+    @Column(nullable = false)
+    private boolean revealReadLock = false;
+
+    @Column(nullable = false)
+    private boolean autoDictation = false;
+
+    @Column(nullable = false)
+    private long fastAnswerThresholdMs = 1500L;
+
+    @Column(length = 10, nullable = false)
+    private String greetingLanguage = "en";
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -65,6 +77,14 @@ public class ChildProfile {
     public void setGender(String gender) { this.gender = gender; }
     public Integer getBirthYear() { return birthYear; }
     public void setBirthYear(Integer birthYear) { this.birthYear = birthYear; }
+    public boolean isRevealReadLock() { return revealReadLock; }
+    public void setRevealReadLock(boolean revealReadLock) { this.revealReadLock = revealReadLock; }
+    public boolean isAutoDictation() { return autoDictation; }
+    public void setAutoDictation(boolean autoDictation) { this.autoDictation = autoDictation; }
+    public long getFastAnswerThresholdMs() { return fastAnswerThresholdMs; }
+    public void setFastAnswerThresholdMs(long fastAnswerThresholdMs) { this.fastAnswerThresholdMs = fastAnswerThresholdMs; }
+    public String getGreetingLanguage() { return greetingLanguage; }
+    public void setGreetingLanguage(String greetingLanguage) { this.greetingLanguage = greetingLanguage; }
     public String getStudentClass() { return studentClass; }
     public void setStudentClass(String studentClass) { this.studentClass = studentClass; }
     public LocalDateTime getCreatedAt() { return createdAt; }
@@ -82,6 +102,10 @@ public class ChildProfile {
         private Integer birthYear;
         private String studentClass;
         private boolean active = true;
+        private boolean revealReadLock = false;
+        private boolean autoDictation = false;
+        private long fastAnswerThresholdMs = 1500L;
+        private String greetingLanguage = "en";
 
         public Builder name(String name) { this.name = name; return this; }
         public Builder age(int age) { this.age = age; return this; }
@@ -92,6 +116,10 @@ public class ChildProfile {
         public Builder birthYear(Integer birthYear) { this.birthYear = birthYear; return this; }
         public Builder studentClass(String studentClass) { this.studentClass = studentClass; return this; }
         public Builder active(boolean active) { this.active = active; return this; }
+        public Builder revealReadLock(boolean v) { this.revealReadLock = v; return this; }
+        public Builder autoDictation(boolean v) { this.autoDictation = v; return this; }
+        public Builder fastAnswerThresholdMs(long v) { this.fastAnswerThresholdMs = v; return this; }
+        public Builder greetingLanguage(String v) { this.greetingLanguage = v; return this; }
 
         public ChildProfile build() {
             ChildProfile cp = new ChildProfile();
@@ -104,6 +132,10 @@ public class ChildProfile {
             cp.birthYear = this.birthYear;
             cp.studentClass = this.studentClass;
             cp.active = this.active;
+            cp.revealReadLock = this.revealReadLock;
+            cp.autoDictation = this.autoDictation;
+            cp.fastAnswerThresholdMs = this.fastAnswerThresholdMs;
+            cp.greetingLanguage = this.greetingLanguage;
             return cp;
         }
     }

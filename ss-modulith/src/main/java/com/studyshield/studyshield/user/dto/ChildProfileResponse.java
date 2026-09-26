@@ -14,6 +14,10 @@ public record ChildProfileResponse(
     Integer birthYear,
     String studentClass,
     boolean active,
+    boolean revealReadLock,
+    boolean autoDictation,
+    long fastAnswerThresholdMs,
+    String greetingLanguage,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {}
