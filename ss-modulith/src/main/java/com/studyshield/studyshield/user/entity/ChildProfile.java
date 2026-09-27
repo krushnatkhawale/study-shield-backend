@@ -38,16 +38,16 @@ public class ChildProfile {
     @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean revealReadLock = false;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean autoDictation = false;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "bigint default 1500")
     private long fastAnswerThresholdMs = 1500L;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10, nullable = false, columnDefinition = "varchar(10) default 'en'")
     private String greetingLanguage = "en";
 
     @CreationTimestamp
