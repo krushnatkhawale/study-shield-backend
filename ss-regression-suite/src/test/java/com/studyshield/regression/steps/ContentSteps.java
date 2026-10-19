@@ -137,18 +137,39 @@ public class ContentSteps {
 
     @Given("an offering for subject {string} exists under current board class")
     public void anOfferingForSubjectExistsUnderCurrentBoardClass(String subject) throws Exception {
-        Response boardClassResponse = contentApi.getBoardClass(context.getCurrentBoardClassId());
-        assertThat(boardClassResponse.getStatusCode()).isEqualTo(200);
+        Long subjectId = resolveOrCreateSubjectId(subject);
         String json = mapper.writeValueAsString(Map.of(
-                "boardCode", boardClassResponse.jsonPath().getString("boardCode"),
-                "className", boardClassResponse.jsonPath().getString("displayName"),
-                "subject", subject
+                "boardClassId", context.getCurrentBoardClassId(),
+                "subjectId", subjectId
         ));
         Response response = contentApi.createOffering(json);
         assertThat(response.getStatusCode()).isEqualTo(201);
         context.setLastResponse(response);
         context.setLastStatusCode(response.getStatusCode());
         context.setCurrentOfferingId(response.jsonPath().getLong("id"));
+    }
+
+    /** Offerings reference subjects by id; boot fixtures cover most, but scenarios may invent one. */
+    private Long resolveOrCreateSubjectId(String subject) throws Exception {
+        Response subjects = contentApi.getSubjects();
+        assertThat(subjects.getStatusCode()).isEqualTo(200);
+        Long existing = subjects.jsonPath().getList("", java.util.Map.class).stream()
+                .filter(m -> subject.equals(m.get("name")))
+                .findFirst()
+                .map(m -> ((Number) m.get("id")).longValue())
+                .orElse(null);
+        if (existing != null) {
+            return existing;
+        }
+        String json = mapper.writeValueAsString(Map.of(
+                "name", subject,
+                "code", subject.toUpperCase().replace(" ", "_"),
+                "description", "Created by regression offering step",
+                "active", true
+        ));
+        Response created = contentApi.createSubject(json);
+        assertThat(created.getStatusCode()).isEqualTo(201);
+        return created.jsonPath().getLong("id");
     }
 
     @Given("a global subject {string} exists")
