@@ -19,9 +19,11 @@ import java.util.stream.Collectors;
  * Loads questions via {@code POST /api/v1/questions/load}.
  * <p>
  * Each item carries enough metadata (boardCode, className, age, subject) to auto-create
- * the full Board → ClassGrade → Subject → ContentPack → Quiz → Question chain.
- * Items are grouped by (boardCode, className, subject) so a single batch can span
- * multiple grades and subjects.  Duplicate questions (same text within a quiz) are skipped.
+ * the full Board → BoardClass → BoardClassSubject(offering) → ContentPack → Quiz →
+ * Question chain. Items are grouped by (boardCode, className, subject) so a single sync
+ * can span multiple boards, grades, and subjects. Duplicate questions (same text within a
+ * quiz) are skipped. Content is anchored to the offering (board + class ordinal + global
+ * subject) — className is only ever resolved to an ordinal, never stored as identity.
  */
 @Service
 public class QuestionBankLoader {
@@ -29,23 +31,29 @@ public class QuestionBankLoader {
     private static final Logger log = LoggerFactory.getLogger(QuestionBankLoader.class);
     private static final int QUIZ_CAPACITY = 50;
 
+    private final AcademicCatalogResolver catalogResolver;
     private final BoardRepository boardRepository;
-    private final ClassGradeRepository classGradeRepository;
+    private final BoardClassRepository boardClassRepository;
+    private final BoardClassSubjectRepository boardClassSubjectRepository;
     private final SubjectRepository subjectRepository;
     private final ContentPackRepository contentPackRepository;
     private final QuizRepository quizRepository;
     private final QuestionRepository questionRepository;
 
     public QuestionBankLoader(
+            AcademicCatalogResolver catalogResolver,
             BoardRepository boardRepository,
-            ClassGradeRepository classGradeRepository,
+            BoardClassRepository boardClassRepository,
+            BoardClassSubjectRepository boardClassSubjectRepository,
             SubjectRepository subjectRepository,
             ContentPackRepository contentPackRepository,
             QuizRepository quizRepository,
             QuestionRepository questionRepository
     ) {
+        this.catalogResolver = catalogResolver;
         this.boardRepository = boardRepository;
-        this.classGradeRepository = classGradeRepository;
+        this.boardClassRepository = boardClassRepository;
+        this.boardClassSubjectRepository = boardClassSubjectRepository;
         this.subjectRepository = subjectRepository;
         this.contentPackRepository = contentPackRepository;
         this.quizRepository = quizRepository;
@@ -54,8 +62,9 @@ public class QuestionBankLoader {
 
     @Transactional
     public QuestionBankLoadResponse load(List<QuestionBankLoadItem> items) {
-        int boardsCreated = 0, classGradesCreated = 0, subjectsCreated = 0;
-        int contentPacksCreated = 0, quizzesCreated = 0, questionsCreated = 0, questionsSkipped = 0;
+        int boardsCreated = 0, boardClassesCreated = 0, offeringsCreated = 0;
+        int subjectsCreated = 0, contentPacksCreated = 0, quizzesCreated = 0;
+        int questionsCreated = 0, questionsSkipped = 0;
 
         // Group by (boardCode → className → subject)
         Map<String, Map<String, Map<String, List<QuestionBankLoadItem>>>> grouped = items.stream()
@@ -66,36 +75,45 @@ public class QuestionBankLoader {
                                 Collectors.groupingBy(QuestionBankLoadItem::subject))));
 
         for (var boardEntry : grouped.entrySet()) {
-            String boardCode = boardEntry.getKey();
-            Board board = resolveOrCreateBoard(boardCode);
-            if (board.getId() == null) boardsCreated++;
+            // Resolvers persist eagerly, so creation is detected by probing existence
+            // BEFORE each resolve-or-create call.
+            String boardCode = AcademicCatalogResolver.normalizeBoardCode(boardEntry.getKey());
+            boolean boardPre = boardRepository.existsByCode(boardCode);
+            var board = catalogResolver.resolveOrCreateBoard(boardCode);
+            if (!boardPre) boardsCreated++;
 
             for (var classEntry : boardEntry.getValue().entrySet()) {
-                String className = normalizeClassName(classEntry.getKey());
-                ClassGrade classGrade = classGradeRepository.findFirstByNameIgnoreCase(className)
-                        .or(() -> classGradeRepository.findFirstByNameIgnoreCase(classEntry.getKey()))
-                        .orElseGet(() -> {
-                            log.info("[BankLoad] Creating class grade name={}", className);
-                            return classGradeRepository.save(ClassGrade.builder()
-                                    .name(className)
-                                    .board(board)
-                                    .description("Auto-loaded via /questions/load")
-                                    .build());
-                        });
-                if (classGrade.getId() == null) classGradesCreated++;
+                String className = QuizBundleSeeder.normalizeClassName(classEntry.getKey());
+                boolean boardClassPre = boardClassRepository
+                        .existsByBoard_CodeAndClassLevel_Ordinal(boardCode, catalogResolver.ordinalForClassName(className));
+                var boardClass = catalogResolver.resolveBoardClass(boardCode, className);
+                if (!boardClassPre) boardClassesCreated++;
+                int boardOrdinal = boardClass.getClassLevel().getOrdinal();
 
                 for (var subjectEntry : classEntry.getValue().entrySet()) {
                     String subjectName = subjectEntry.getKey();
                     List<QuestionBankLoadItem> questions = subjectEntry.getValue();
+                    String subjectCode = subjectName.trim().toUpperCase(Locale.ROOT).replace(" ", "_");
+                    boolean subjectPre = subjectRepository.existsByCodeIgnoreCase(subjectCode);
 
-                    Subject subject = resolveOrCreateSubject(subjectName, classGrade);
-                    if (subject.getId() == null) subjectsCreated++;
+                    Subject subject = catalogResolver.resolveSubject(subjectName);
+                    if (!subjectPre) subjectsCreated++;
 
-                    ContentPack pack = resolveOrCreateContentPack(subject);
-                    if (pack.getId() == null) contentPacksCreated++;
+                    boolean offeringPre = boardClassSubjectRepository
+                            .existsByBoardClass_IdAndSubject_Id(boardClass.getId(), subject.getId());
+                    BoardClassSubject offering = catalogResolver.resolveOrCreateOffering(
+                            boardClass, subject);
+                    if (!offeringPre) offeringsCreated++;
 
+                    List<ContentPack> packsBefore = contentPackRepository.findByOfferingId(offering.getId());
+                    ContentPack pack = resolveOrCreateContentPack(offering, subject);
+                    if (packsBefore.isEmpty()) contentPacksCreated++;
+
+                    boolean quizPre = !quizRepository
+                            .findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                                    pack.getId(), ContentTier.FREEMIUM).isEmpty();
                     Quiz quiz = resolveOrCreateQuiz(pack, subjectName);
-                    if (quiz.getId() == null) quizzesCreated++;
+                    if (!quizPre) quizzesCreated++;
 
                     // Collect existing question texts to detect duplicates
                     var existingTexts = questionRepository.findByQuizId(quiz.getId()).stream()
@@ -114,8 +132,8 @@ public class QuestionBankLoader {
                     if (!batch.isEmpty()) {
                         questionRepository.saveAll(batch);
                         questionsCreated += batch.size();
-                        log.info("[BankLoad] Loaded {} questions into quiz {} ({}/{})",
-                                batch.size(), quiz.getId(), subjectName, className);
+                        log.info("[BankLoad] Loaded {} questions into quiz {} ({}/{}/{})",
+                                batch.size(), quiz.getId(), boardCode, className, subjectName);
                     }
 
                     // If quiz exceeds capacity, create a new one for remaining items
@@ -128,38 +146,12 @@ public class QuestionBankLoader {
             }
         }
 
-        log.info("[BankLoad] Done: boards={}, classGrades={}, subjects={}, packs={}, quizzes={}, questions={}, skipped={}",
-                boardsCreated, classGradesCreated, subjectsCreated, contentPacksCreated,
-                quizzesCreated, questionsCreated, questionsSkipped);
-
-        return new QuestionBankLoadResponse(boardsCreated, classGradesCreated, subjectsCreated,
+        log.info("[BankLoad] Done: boards={}, boardClasses={}, offerings={}, subjects={}, packs={}, quizzes={}, questions={}, skipped={}",
+                boardsCreated, boardClassesCreated, offeringsCreated, subjectsCreated,
                 contentPacksCreated, quizzesCreated, questionsCreated, questionsSkipped);
-    }
 
-    private Board resolveOrCreateBoard(String boardCode) {
-        String code = (boardCode == null || boardCode.isBlank() || "all".equalsIgnoreCase(boardCode))
-                ? "ALL"
-                : boardCode.trim().toUpperCase(Locale.ROOT);
-        return boardRepository.findByCode(code).orElseGet(() ->
-                boardRepository.save(Board.builder()
-                        .name(code.equals("ALL") ? "All Boards" : code)
-                        .code(code)
-                        .description("Loaded via /questions/load")
-                        .active(true)
-                        .build()));
-    }
-
-    private Subject resolveOrCreateSubject(String subjectName, ClassGrade classGrade) {
-        return subjectRepository.findByClassGradeIdAndNameIgnoreCase(classGrade.getId(), subjectName)
-                .orElseGet(() -> {
-                    String code = subjectName.toUpperCase(Locale.ROOT).replace(" ", "_");
-                    return subjectRepository.save(Subject.builder()
-                            .name(subjectName)
-                            .code(code)
-                            .classGrade(classGrade)
-                            .active(true)
-                            .build());
-                });
+        return new QuestionBankLoadResponse(boardsCreated, boardClassesCreated, offeringsCreated,
+                subjectsCreated, contentPacksCreated, quizzesCreated, questionsCreated, questionsSkipped);
     }
 
     /**
@@ -168,8 +160,8 @@ public class QuestionBankLoader {
      * reuse the existing freemium pack, convert a previously auto-created {@code Loaded <Subject>}
      * pack in place (no orphan packs, no question re-writes), or create a fresh freemium pack.
      */
-    private ContentPack resolveOrCreateContentPack(Subject subject) {
-        List<ContentPack> active = contentPackRepository.findBySubjectId(subject.getId()).stream()
+    private ContentPack resolveOrCreateContentPack(BoardClassSubject offering, Subject subject) {
+        List<ContentPack> active = contentPackRepository.findByOfferingId(offering.getId()).stream()
                 .filter(ContentPack::isActive)
                 .toList();
 
@@ -190,13 +182,14 @@ public class QuestionBankLoader {
         if (previouslyLoaded != null) {
             previouslyLoaded.setName("Freemium " + subject.getName());
             previouslyLoaded.setDescription("Freemium catalog pack (converted from auto-loaded)");
+            previouslyLoaded.setOffering(offering);
             return contentPackRepository.save(previouslyLoaded);
         }
 
         return contentPackRepository.save(ContentPack.builder()
                 .name("Freemium " + subject.getName())
                 .description("Freemium catalog pack")
-                .subject(subject)
+                .offering(offering)
                 .version(1)
                 .active(true)
                 .build());
@@ -283,14 +276,6 @@ public class QuestionBankLoader {
         return (opts.size() == 2 && hasTrue && hasFalse)
                 ? QuestionType.TRUE_FALSE
                 : QuestionType.SINGLE_CHOICE;
-    }
-
-    private static String normalizeClassName(String className) {
-        if (className == null) return "";
-        String t = className.trim();
-        if (t.matches("\\d+")) return "Class " + t;
-        if (t.matches("\\d+(st|nd|rd|th)")) return "Class " + t.replaceAll("(st|nd|rd|th)", "");
-        return t;
     }
 
     private static String slug(String value) {

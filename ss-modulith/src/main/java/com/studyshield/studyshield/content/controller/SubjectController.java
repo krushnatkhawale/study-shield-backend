@@ -35,11 +35,6 @@ public class SubjectController {
         return ResponseEntity.ok(subjectService.getAll());
     }
 
-    @GetMapping("/class-grade/{classGradeId}")
-    public ResponseEntity<List<SubjectResponse>> getByClassGradeId(@PathVariable Long classGradeId) {
-        return ResponseEntity.ok(subjectService.getByClassGradeId(classGradeId));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<SubjectResponse> update(@PathVariable Long id, @Valid @RequestBody SubjectRequest request) {
         return ResponseEntity.ok(subjectService.update(id, request));

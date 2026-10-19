@@ -43,7 +43,7 @@ public class Quiz {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offering_id", nullable = true)
-    private Offering offering;
+    private BoardClassSubject offering;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)
@@ -93,8 +93,8 @@ public class Quiz {
     public void setDescription(String description) { this.description = description; }
     public ContentPack getContentPack() { return contentPack; }
     public void setContentPack(ContentPack contentPack) { this.contentPack = contentPack; }
-    public Offering getOffering() { return offering; }
-    public void setOffering(Offering offering) { this.offering = offering; }
+    public BoardClassSubject getOffering() { return offering; }
+    public void setOffering(BoardClassSubject offering) { this.offering = offering; }
     public QuizType getQuizType() { return quizType; }
     public void setQuizType(QuizType quizType) { this.quizType = quizType; }
     public int getQuestionCount() { return questionCount; }
@@ -118,7 +118,7 @@ public class Quiz {
         private String title;
         private String description;
         private ContentPack contentPack;
-        private Offering offering;
+        private BoardClassSubject offering;
         private QuizType quizType = QuizType.STANDARD;
         private int questionCount = 10;
         private ContentTier contentTier = ContentTier.FREEMIUM;
@@ -129,7 +129,7 @@ public class Quiz {
         public Builder title(String title) { this.title = title; return this; }
         public Builder description(String description) { this.description = description; return this; }
         public Builder contentPack(ContentPack contentPack) { this.contentPack = contentPack; return this; }
-        public Builder offering(Offering offering) { this.offering = offering; return this; }
+        public Builder offering(BoardClassSubject offering) { this.offering = offering; return this; }
         public Builder quizType(QuizType quizType) { this.quizType = quizType; return this; }
         public Builder questionCount(int questionCount) { this.questionCount = questionCount; return this; }
         public Builder contentTier(ContentTier contentTier) { this.contentTier = contentTier; return this; }

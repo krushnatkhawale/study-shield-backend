@@ -18,6 +18,11 @@ spring:
       mode: never
 
 app:
+  academic-structure-seeding:
+    # Test-only AcademicStructureTestSeeder; off in the base test profile.
+    enabled: false
+  academic-data:
+    source: classpath
   jwt:
     secret: testSecretForTestingOnlyMustBe32BytesLong!
     expiration-ms: 86400000

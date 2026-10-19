@@ -2,41 +2,39 @@ package com.studyshield.studyshield.content.service;
 
 import com.studyshield.studyshield.content.dto.ContentPackRequest;
 import com.studyshield.studyshield.content.dto.ContentPackResponse;
+import com.studyshield.studyshield.content.entity.BoardClassSubject;
 import com.studyshield.studyshield.content.entity.ContentPack;
-import com.studyshield.studyshield.content.entity.Offering;
-import com.studyshield.studyshield.content.entity.Subject;
 import com.studyshield.studyshield.common.exception.ResourceNotFoundException;
+import com.studyshield.studyshield.content.repository.BoardClassSubjectRepository;
 import com.studyshield.studyshield.content.repository.ContentPackRepository;
-import com.studyshield.studyshield.content.repository.OfferingRepository;
-import com.studyshield.studyshield.content.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Content packs anchor to a {@link BoardClassSubject} offering (board + class ordinal +
+ * global subject) — never to a bare subject, and never to a display name.
+ */
 @Service
 @Transactional
 public class ContentPackService {
 
     private final ContentPackRepository contentPackRepository;
-    private final SubjectRepository subjectRepository;
-    private final OfferingRepository offeringRepository;
+    private final BoardClassSubjectRepository boardClassSubjectRepository;
 
-    public ContentPackService(ContentPackRepository contentPackRepository, SubjectRepository subjectRepository,
-                             OfferingRepository offeringRepository) {
+    public ContentPackService(ContentPackRepository contentPackRepository,
+                              BoardClassSubjectRepository boardClassSubjectRepository) {
         this.contentPackRepository = contentPackRepository;
-        this.subjectRepository = subjectRepository;
-        this.offeringRepository = offeringRepository;
+        this.boardClassSubjectRepository = boardClassSubjectRepository;
     }
 
     public ContentPackResponse create(ContentPackRequest request) {
-        Subject subject = subjectRepository.findById(request.subjectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Subject", request.subjectId()));
-        Offering offering = resolveOffering(request.offeringId());
+        BoardClassSubject offering = boardClassSubjectRepository.findById(request.offeringId())
+                .orElseThrow(() -> new ResourceNotFoundException("Offering", request.offeringId()));
         ContentPack contentPack = ContentPack.builder()
                 .name(request.name())
                 .description(request.description())
-                .subject(subject)
                 .offering(offering)
                 .version(request.version())
                 .active(request.active())
@@ -44,27 +42,18 @@ public class ContentPackService {
                 .validFrom(request.validFrom())
                 .validTo(request.validTo())
                 .build();
-        ContentPack saved = contentPackRepository.save(contentPack);
-        return mapToResponse(saved);
+        return mapToResponse(contentPackRepository.save(contentPack));
     }
 
     @Transactional(readOnly = true)
     public ContentPackResponse getById(Long id) {
-        ContentPack contentPack = contentPackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("ContentPack", id));
-        return mapToResponse(contentPack);
+        return mapToResponse(contentPackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("ContentPack", id)));
     }
 
     @Transactional(readOnly = true)
     public List<ContentPackResponse> getAll() {
         return contentPackRepository.findAll().stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<ContentPackResponse> getBySubjectId(Long subjectId) {
-        return contentPackRepository.findBySubjectId(subjectId).stream()
                 .map(this::mapToResponse)
                 .toList();
     }
@@ -79,19 +68,17 @@ public class ContentPackService {
     public ContentPackResponse update(Long id, ContentPackRequest request) {
         ContentPack contentPack = contentPackRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("ContentPack", id));
-        Subject subject = subjectRepository.findById(request.subjectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Subject", request.subjectId()));
+        BoardClassSubject offering = boardClassSubjectRepository.findById(request.offeringId())
+                .orElseThrow(() -> new ResourceNotFoundException("Offering", request.offeringId()));
         contentPack.setName(request.name());
         contentPack.setDescription(request.description());
-        contentPack.setSubject(subject);
-        contentPack.setOffering(resolveOffering(request.offeringId()));
+        contentPack.setOffering(offering);
         contentPack.setVersion(request.version());
         contentPack.setActive(request.active());
         contentPack.setPackType(request.packType() != null ? request.packType() : contentPack.getPackType());
         contentPack.setValidFrom(request.validFrom());
         contentPack.setValidTo(request.validTo());
-        ContentPack saved = contentPackRepository.save(contentPack);
-        return mapToResponse(saved);
+        return mapToResponse(contentPackRepository.save(contentPack));
     }
 
     public void delete(Long id) {
@@ -100,22 +87,18 @@ public class ContentPackService {
         contentPackRepository.delete(contentPack);
     }
 
-    private Offering resolveOffering(Long offeringId) {
-        if (offeringId == null) {
-            return null;
-        }
-        return offeringRepository.findById(offeringId)
-                .orElseThrow(() -> new ResourceNotFoundException("Offering", offeringId));
-    }
-
     private ContentPackResponse mapToResponse(ContentPack contentPack) {
+        BoardClassSubject offering = contentPack.getOffering();
         return new ContentPackResponse(
                 contentPack.getId(),
                 contentPack.getName(),
                 contentPack.getDescription(),
-                contentPack.getSubject().getId(),
-                contentPack.getSubject().getName(),
-                contentPack.getOffering() != null ? contentPack.getOffering().getId() : null,
+                offering.getId(),
+                offering.getBoardClass().getBoard().getCode(),
+                offering.getBoardClass().getClassLevel().getOrdinal(),
+                offering.getBoardClass().getDisplayName(),
+                offering.getSubject().getCode(),
+                offering.getSubject().getName(),
                 contentPack.getVersion(),
                 contentPack.isActive(),
                 contentPack.getPackType(),

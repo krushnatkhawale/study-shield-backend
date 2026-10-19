@@ -35,6 +35,11 @@ public class ClassLevelController {
         return ResponseEntity.ok(service.getAll());
     }
 
+    @GetMapping("/ordinal/{ordinal}")
+    public ResponseEntity<ClassLevelResponse> getByOrdinal(@PathVariable int ordinal) {
+        return ResponseEntity.ok(service.getByOrdinal(ordinal));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ClassLevelResponse> update(@PathVariable Long id,
                                                      @Valid @RequestBody ClassLevelRequest request) {

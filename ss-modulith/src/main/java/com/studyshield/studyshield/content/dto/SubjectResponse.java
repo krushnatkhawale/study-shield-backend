@@ -7,8 +7,6 @@ public record SubjectResponse(
     String name,
     String code,
     String description,
-    Long classGradeId,
-    String classGradeName,
     boolean active,
     int displayOrder,
     LocalDateTime createdAt,

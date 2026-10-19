@@ -1,11 +1,15 @@
 package com.studyshield.studyshield.content.dto;
 
+import java.time.LocalDateTime;
+
 public record BoardClassResponse(
         Long id,
         Long boardId,
-        Long classLevelId,
-        String displayName,
-        Integer ordinal,
         String boardCode,
-        String boardName
+        String boardName,
+        Long classLevelId,
+        int ordinal,
+        String displayName,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {}

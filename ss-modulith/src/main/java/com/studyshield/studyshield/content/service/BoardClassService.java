@@ -94,10 +94,12 @@ public class BoardClassService {
         return new BoardClassResponse(
                 entity.getId(),
                 entity.getBoard().getId(),
-                entity.getClassLevel().getId(),
-                entity.getDisplayName(),
-                entity.getClassLevel().getOrdinal(),
                 entity.getBoard().getCode(),
-                entity.getBoard().getName());
+                entity.getBoard().getName(),
+                entity.getClassLevel().getId(),
+                entity.getClassLevel().getOrdinal(),
+                entity.getDisplayName(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt());
     }
 }

@@ -7,12 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
-    List<Subject> findByClassGradeId(Long classGradeId);
-    List<Subject> findByClassGradeIdOrderByDisplayOrderAscIdAsc(Long classGradeId);
     List<Subject> findByActiveTrue();
     Optional<Subject> findByCode(String code);
-    boolean existsByCode(String code);
-    Optional<Subject> findByCodeAndClassGradeIsNull(String code);
-    boolean existsByCodeAndClassGradeIsNull(String code);
-    Optional<Subject> findByClassGradeIdAndNameIgnoreCase(Long classGradeId, String name);
+    Optional<Subject> findByCodeIgnoreCase(String code);
+    boolean existsByCodeIgnoreCase(String code);
 }

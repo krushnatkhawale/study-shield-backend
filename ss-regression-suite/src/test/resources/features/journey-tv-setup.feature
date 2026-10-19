@@ -7,7 +7,7 @@ Feature: Cross-Service Journey - TV Device
   Scenario: TV setup journey - create network and connect device
     # Step 1: Create parent
     When I create a parent user with name "TV Parent"
-    Then the response status should be 201
+    Then the response status should be 200
 
     # Step 2: Create WiFi network
     When I create a WiFi network with SSID "Home WiFi"

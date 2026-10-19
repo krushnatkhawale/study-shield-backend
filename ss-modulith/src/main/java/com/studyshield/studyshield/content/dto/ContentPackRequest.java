@@ -9,8 +9,7 @@ import java.time.LocalDate;
 public record ContentPackRequest(
     @NotBlank(message = "Content pack name is required") String name,
     String description,
-    @NotNull(message = "Subject ID is required") Long subjectId,
-    Long offeringId,
+    @NotNull(message = "Offering ID is required") Long offeringId,
     int version,
     boolean active,
     ContentTier packType,

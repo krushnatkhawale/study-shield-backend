@@ -1,0 +1,728 @@
+[
+  {
+    "id": 1,
+    "boardCode": "ALL",
+    "classOrdinal": 2,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 2,
+    "boardCode": "ALL",
+    "classOrdinal": 2,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 3,
+    "boardCode": "ALL",
+    "classOrdinal": 2,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 4,
+    "boardCode": "ALL",
+    "classOrdinal": 3,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 5,
+    "boardCode": "ALL",
+    "classOrdinal": 3,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 6,
+    "boardCode": "ALL",
+    "classOrdinal": 3,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 7,
+    "boardCode": "ALL",
+    "classOrdinal": 4,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 8,
+    "boardCode": "ALL",
+    "classOrdinal": 4,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 9,
+    "boardCode": "ALL",
+    "classOrdinal": 4,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 10,
+    "boardCode": "ALL",
+    "classOrdinal": 5,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 11,
+    "boardCode": "ALL",
+    "classOrdinal": 5,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 12,
+    "boardCode": "ALL",
+    "classOrdinal": 5,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 13,
+    "boardCode": "ALL",
+    "classOrdinal": 6,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 14,
+    "boardCode": "ALL",
+    "classOrdinal": 6,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 15,
+    "boardCode": "ALL",
+    "classOrdinal": 6,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 16,
+    "boardCode": "ALL",
+    "classOrdinal": 7,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 17,
+    "boardCode": "ALL",
+    "classOrdinal": 7,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 18,
+    "boardCode": "ALL",
+    "classOrdinal": 7,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 19,
+    "boardCode": "ALL",
+    "classOrdinal": 8,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 20,
+    "boardCode": "ALL",
+    "classOrdinal": 8,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 21,
+    "boardCode": "ALL",
+    "classOrdinal": 8,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 22,
+    "boardCode": "ALL",
+    "classOrdinal": 9,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 23,
+    "boardCode": "ALL",
+    "classOrdinal": 9,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 24,
+    "boardCode": "ALL",
+    "classOrdinal": 9,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 25,
+    "boardCode": "ALL",
+    "classOrdinal": 10,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 26,
+    "boardCode": "ALL",
+    "classOrdinal": 10,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 27,
+    "boardCode": "ALL",
+    "classOrdinal": 10,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 28,
+    "boardCode": "ALL",
+    "classOrdinal": 10,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 29,
+    "boardCode": "ALL",
+    "classOrdinal": 10,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 30,
+    "boardCode": "ALL",
+    "classOrdinal": 11,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 31,
+    "boardCode": "ALL",
+    "classOrdinal": 11,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 32,
+    "boardCode": "ALL",
+    "classOrdinal": 11,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 33,
+    "boardCode": "ALL",
+    "classOrdinal": 11,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 34,
+    "boardCode": "ALL",
+    "classOrdinal": 11,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 35,
+    "boardCode": "ALL",
+    "classOrdinal": 12,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 36,
+    "boardCode": "ALL",
+    "classOrdinal": 12,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 37,
+    "boardCode": "ALL",
+    "classOrdinal": 12,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 38,
+    "boardCode": "ALL",
+    "classOrdinal": 12,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 39,
+    "boardCode": "ALL",
+    "classOrdinal": 12,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 40,
+    "boardCode": "ALL",
+    "classOrdinal": 13,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 41,
+    "boardCode": "ALL",
+    "classOrdinal": 13,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 42,
+    "boardCode": "ALL",
+    "classOrdinal": 13,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 43,
+    "boardCode": "ALL",
+    "classOrdinal": 13,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 44,
+    "boardCode": "ALL",
+    "classOrdinal": 13,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 45,
+    "boardCode": "ALL",
+    "classOrdinal": 14,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 46,
+    "boardCode": "ALL",
+    "classOrdinal": 14,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 47,
+    "boardCode": "ALL",
+    "classOrdinal": 14,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 48,
+    "boardCode": "ALL",
+    "classOrdinal": 14,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 49,
+    "boardCode": "ALL",
+    "classOrdinal": 14,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 50,
+    "boardCode": "ALL",
+    "classOrdinal": 15,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 51,
+    "boardCode": "ALL",
+    "classOrdinal": 15,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 52,
+    "boardCode": "ALL",
+    "classOrdinal": 15,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 53,
+    "boardCode": "ALL",
+    "classOrdinal": 15,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 54,
+    "boardCode": "ALL",
+    "classOrdinal": 15,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 55,
+    "boardCode": "ALL",
+    "classOrdinal": 16,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 56,
+    "boardCode": "ALL",
+    "classOrdinal": 16,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 57,
+    "boardCode": "ALL",
+    "classOrdinal": 16,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 58,
+    "boardCode": "ALL",
+    "classOrdinal": 16,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 59,
+    "boardCode": "ALL",
+    "classOrdinal": 16,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 60,
+    "boardCode": "CBSE",
+    "classOrdinal": 1,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 61,
+    "boardCode": "CBSE",
+    "classOrdinal": 1,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 62,
+    "boardCode": "CBSE",
+    "classOrdinal": 1,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 63,
+    "boardCode": "CBSE",
+    "classOrdinal": 2,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 64,
+    "boardCode": "CBSE",
+    "classOrdinal": 2,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 65,
+    "boardCode": "CBSE",
+    "classOrdinal": 2,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 66,
+    "boardCode": "CBSE",
+    "classOrdinal": 3,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 67,
+    "boardCode": "CBSE",
+    "classOrdinal": 3,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 68,
+    "boardCode": "CBSE",
+    "classOrdinal": 3,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 69,
+    "boardCode": "CBSE",
+    "classOrdinal": 4,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 70,
+    "boardCode": "CBSE",
+    "classOrdinal": 4,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 71,
+    "boardCode": "CBSE",
+    "classOrdinal": 4,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 72,
+    "boardCode": "CBSE",
+    "classOrdinal": 5,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 73,
+    "boardCode": "CBSE",
+    "classOrdinal": 5,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 74,
+    "boardCode": "CBSE",
+    "classOrdinal": 5,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 75,
+    "boardCode": "CBSE",
+    "classOrdinal": 6,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 76,
+    "boardCode": "CBSE",
+    "classOrdinal": 6,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 77,
+    "boardCode": "CBSE",
+    "classOrdinal": 6,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 78,
+    "boardCode": "CBSE",
+    "classOrdinal": 7,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 79,
+    "boardCode": "CBSE",
+    "classOrdinal": 7,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 80,
+    "boardCode": "CBSE",
+    "classOrdinal": 7,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 81,
+    "boardCode": "CBSE",
+    "classOrdinal": 8,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 82,
+    "boardCode": "CBSE",
+    "classOrdinal": 8,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 83,
+    "boardCode": "CBSE",
+    "classOrdinal": 8,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 84,
+    "boardCode": "CBSE",
+    "classOrdinal": 9,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 85,
+    "boardCode": "CBSE",
+    "classOrdinal": 9,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 86,
+    "boardCode": "CBSE",
+    "classOrdinal": 9,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 87,
+    "boardCode": "CBSE",
+    "classOrdinal": 10,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 88,
+    "boardCode": "CBSE",
+    "classOrdinal": 10,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 89,
+    "boardCode": "CBSE",
+    "classOrdinal": 10,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 90,
+    "boardCode": "CBSE",
+    "classOrdinal": 10,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 91,
+    "boardCode": "CBSE",
+    "classOrdinal": 10,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 92,
+    "boardCode": "CBSE",
+    "classOrdinal": 11,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 93,
+    "boardCode": "CBSE",
+    "classOrdinal": 11,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 94,
+    "boardCode": "CBSE",
+    "classOrdinal": 11,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 95,
+    "boardCode": "CBSE",
+    "classOrdinal": 11,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 96,
+    "boardCode": "CBSE",
+    "classOrdinal": 11,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 97,
+    "boardCode": "CBSE",
+    "classOrdinal": 12,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 98,
+    "boardCode": "CBSE",
+    "classOrdinal": 12,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 99,
+    "boardCode": "CBSE",
+    "classOrdinal": 12,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 100,
+    "boardCode": "CBSE",
+    "classOrdinal": 12,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 101,
+    "boardCode": "CBSE",
+    "classOrdinal": 12,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 102,
+    "boardCode": "CBSE",
+    "classOrdinal": 13,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 103,
+    "boardCode": "CBSE",
+    "classOrdinal": 13,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 104,
+    "boardCode": "CBSE",
+    "classOrdinal": 13,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 105,
+    "boardCode": "CBSE",
+    "classOrdinal": 13,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 106,
+    "boardCode": "CBSE",
+    "classOrdinal": 13,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 107,
+    "boardCode": "CBSE",
+    "classOrdinal": 14,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 108,
+    "boardCode": "CBSE",
+    "classOrdinal": 14,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 109,
+    "boardCode": "CBSE",
+    "classOrdinal": 14,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 110,
+    "boardCode": "CBSE",
+    "classOrdinal": 14,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 111,
+    "boardCode": "CBSE",
+    "classOrdinal": 14,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 112,
+    "boardCode": "CBSE",
+    "classOrdinal": 15,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 113,
+    "boardCode": "CBSE",
+    "classOrdinal": 15,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 114,
+    "boardCode": "CBSE",
+    "classOrdinal": 15,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 115,
+    "boardCode": "CBSE",
+    "classOrdinal": 15,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 116,
+    "boardCode": "CBSE",
+    "classOrdinal": 15,
+    "subjectCode": "SST"
+  },
+  {
+    "id": 117,
+    "boardCode": "CBSE",
+    "classOrdinal": 16,
+    "subjectCode": "MATH"
+  },
+  {
+    "id": 118,
+    "boardCode": "CBSE",
+    "classOrdinal": 16,
+    "subjectCode": "ENG"
+  },
+  {
+    "id": 119,
+    "boardCode": "CBSE",
+    "classOrdinal": 16,
+    "subjectCode": "EVS"
+  },
+  {
+    "id": 120,
+    "boardCode": "CBSE",
+    "classOrdinal": 16,
+    "subjectCode": "SCI"
+  },
+  {
+    "id": 121,
+    "boardCode": "CBSE",
+    "classOrdinal": 16,
+    "subjectCode": "SST"
+  }
+]

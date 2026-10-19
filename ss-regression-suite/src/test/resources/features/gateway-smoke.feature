@@ -14,6 +14,7 @@ Feature: API Gateway Smoke Tests
     And the response body should be a JSON array
 
   Scenario: User service is reachable through gateway
+    When I am authenticated as an admin user
     When I GET "/api/v1/users"
     Then the response status should be 200
     And the response body should be a JSON array

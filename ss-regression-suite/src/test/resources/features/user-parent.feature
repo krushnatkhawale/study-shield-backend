@@ -5,8 +5,8 @@ Feature: Parent User CRUD Operations
 
   Scenario Outline: Create a parent user with valid data
     When I create a parent user with name "<name>"
-    Then the response status should be 201
-    And the response should have an id field
+    Then the response status should be 200
+    And the response JSON path "accountId" should be present
 
     Examples:
       | name              |
@@ -16,11 +16,13 @@ Feature: Parent User CRUD Operations
 
   Scenario: Retrieve a parent user by id
     Given a parent user exists
+    When I am authenticated as an admin user
     When I get user by id
     Then the response status should be 200
     And the response body should contain "parent@test.com"
 
   Scenario: List all users
+    When I am authenticated as an admin user
     When I get all users
     Then the response status should be 200
     And the response body should be a JSON array

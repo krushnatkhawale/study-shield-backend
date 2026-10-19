@@ -27,9 +27,10 @@ public class ContentSteps {
 
     @Given("a board named {string} exists")
     public void aBoardNamedExists(String name) throws Exception {
+        String code = context.uniqueName(name.toUpperCase().replace(" ", "_"));
         String json = mapper.writeValueAsString(Map.of(
                 "name", context.uniqueName(name),
-                "code", context.uniqueName(name.toUpperCase().replace(" ", "_")),
+                "code", code,
                 "description", "Created by regression suite",
                 "active", true
         ));
@@ -39,14 +40,16 @@ public class ContentSteps {
         context.setLastStatusCode(response.getStatusCode());
         Long id = response.jsonPath().getLong("id");
         context.setCurrentBoardId(id);
+        context.setCurrentBoardCode(code);
         registry.register("board", id);
     }
 
     @When("I create a board with name {string} and code {string}")
     public void iCreateBoardWithNameAndCode(String name, String code) throws Exception {
+        String uniqueCode = context.uniqueName(code);
         String json = mapper.writeValueAsString(Map.of(
                 "name", context.uniqueName(name),
-                "code", context.uniqueName(code),
+                "code", uniqueCode,
                 "description", "Regression test",
                 "active", true
         ));
@@ -55,6 +58,7 @@ public class ContentSteps {
         if (response.getStatusCode() == 201) {
             Long id = response.jsonPath().getLong("id");
             context.setCurrentBoardId(id);
+            context.setCurrentBoardCode(uniqueCode);
             registry.register("board", id);
         }
     }
@@ -71,51 +75,88 @@ public class ContentSteps {
         updateContext(response);
     }
 
+    @When("I load the board with code {string}")
+    public void iLoadBoardWithCode(String code) {
+        Response response = contentApi.getAllBoards();
+        assertThat(response.getStatusCode()).isEqualTo(200);
+        java.util.List<Map<String, Object>> boards = response.jsonPath().getList("$");
+        Map<String, Object> match = boards.stream()
+                .filter(b -> code.equals(String.valueOf(b.get("code"))))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("Seeded board " + code + " not found"));
+        context.setCurrentBoardId(((Number) match.get("id")).longValue());
+        context.setCurrentBoardCode(code);
+        updateContext(response);
+    }
+
+    @When("I get board classes for current board")
+    public void iGetBoardClassesForCurrentBoard() {
+        Response response = contentApi.getBoardClassesByBoard(context.getCurrentBoardId());
+        updateContext(response);
+    }
+
+    @When("I get offerings for current board class")
+    public void iGetOfferingsForCurrentBoardClass() {
+        Response response = contentApi.getOfferingsByBoardClass(context.getCurrentBoardClassId());
+        updateContext(response);
+    }
+
     @When("I delete the current board")
     public void iDeleteCurrentBoard() {
         Response response = contentApi.deleteBoard(context.getCurrentBoardId());
         updateContext(response);
     }
 
-    @Given("a class grade {string} exists under current board")
-    public void aClassGradeExistsUnderCurrentBoard(String className) throws Exception {
+    @Given("a board class {string} exists at ordinal {int} under current board")
+    public void aBoardClassExistsUnderCurrentBoard(String displayName, int ordinal) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
-                "name", className,
-                "description", "Regression test",
-                "boardId", context.getCurrentBoardId()
+                "boardId", context.getCurrentBoardId(),
+                "ordinal", ordinal,
+                "displayName", displayName
         ));
-        Response response = contentApi.createClassGrade(json);
+        Response response = contentApi.createBoardClass(json);
         assertThat(response.getStatusCode()).isEqualTo(201);
         context.setLastResponse(response);
         context.setLastStatusCode(response.getStatusCode());
-        Long id = response.jsonPath().getLong("id");
-        context.setCurrentClassGradeId(id);
-        registry.register("class-grade", id);
+        context.setCurrentBoardClassId(response.jsonPath().getLong("id"));
     }
 
-    @When("I create a class grade {string} under current board")
-    public void iCreateClassGradeUnderCurrentBoard(String className) throws Exception {
+    @When("I create a board class {string} at ordinal {int} under current board")
+    public void iCreateBoardClassUnderCurrentBoard(String displayName, int ordinal) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
-                "name", context.uniqueName(className),
                 "boardId", context.getCurrentBoardId(),
-                "active", true
+                "ordinal", ordinal,
+                "displayName", displayName
         ));
-        Response response = contentApi.createClassGrade(json);
+        Response response = contentApi.createBoardClass(json);
         updateContext(response);
         if (response.getStatusCode() == 201) {
-            Long id = response.jsonPath().getLong("id");
-            context.setCurrentClassGradeId(id);
-            registry.register("class-grade", id);
+            context.setCurrentBoardClassId(response.jsonPath().getLong("id"));
         }
     }
 
-    @Given("a subject {string} exists under current class grade")
-    public void aSubjectExistsUnderCurrentClassGrade(String name) throws Exception {
+    @Given("an offering for subject {string} exists under current board class")
+    public void anOfferingForSubjectExistsUnderCurrentBoardClass(String subject) throws Exception {
+        Response boardClassResponse = contentApi.getBoardClass(context.getCurrentBoardClassId());
+        assertThat(boardClassResponse.getStatusCode()).isEqualTo(200);
+        String json = mapper.writeValueAsString(Map.of(
+                "boardCode", boardClassResponse.jsonPath().getString("boardCode"),
+                "className", boardClassResponse.jsonPath().getString("displayName"),
+                "subject", subject
+        ));
+        Response response = contentApi.createOffering(json);
+        assertThat(response.getStatusCode()).isEqualTo(201);
+        context.setLastResponse(response);
+        context.setLastStatusCode(response.getStatusCode());
+        context.setCurrentOfferingId(response.jsonPath().getLong("id"));
+    }
+
+    @Given("a global subject {string} exists")
+    public void aGlobalSubjectExists(String name) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
                 "name", context.uniqueName(name),
                 "code", context.uniqueName(name.toUpperCase().replace(" ", "_")),
                 "description", "Regression test",
-                "classGradeId", context.getCurrentClassGradeId(),
                 "active", true
         ));
         Response response = contentApi.createSubject(json);
@@ -127,12 +168,35 @@ public class ContentSteps {
         registry.register("subject", id);
     }
 
-    @Given("a content pack {string} exists under current subject")
-    public void aContentPackExistsUnderCurrentSubject(String name) throws Exception {
+    @When("I create a subject with name {string}")
+    public void iCreateSubjectWithName(String name) throws Exception {
+        String json = mapper.writeValueAsString(Map.of(
+                "name", context.uniqueName(name),
+                "code", context.uniqueName(name.toUpperCase().replace(" ", "_")),
+                "description", "Regression test",
+                "active", true
+        ));
+        Response response = contentApi.createSubject(json);
+        updateContext(response);
+        if (response.getStatusCode() == 201) {
+            Long id = response.jsonPath().getLong("id");
+            context.setCurrentSubjectId(id);
+            registry.register("subject", id);
+        }
+    }
+
+    @When("I get all subjects")
+    public void iGetAllSubjects() {
+        Response response = contentApi.getSubjects();
+        updateContext(response);
+    }
+
+    @Given("a content pack {string} exists under current offering")
+    public void aContentPackExistsUnderCurrentOffering(String name) throws Exception {
         String json = mapper.writeValueAsString(Map.of(
                 "name", context.uniqueName(name),
                 "description", "Regression test",
-                "subjectId", context.getCurrentSubjectId(),
+                "offeringId", context.getCurrentOfferingId(),
                 "version", 1,
                 "active", true
         ));

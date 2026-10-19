@@ -1,12 +1,19 @@
 package com.studyshield.studyshield.content.dto;
 
+import com.studyshield.studyshield.content.entity.ClassLevel.Stage;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 public record ClassLevelResponse(
         Long id,
-        Integer ordinal,
+        int ordinal,
         String slug,
         String canonicalName,
-        Double ageMinYears,
-        Double ageMaxYears,
-        String stage,
-        String notes
+        BigDecimal ageMinYears,
+        BigDecimal ageMaxYears,
+        Stage stage,
+        String notes,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {}

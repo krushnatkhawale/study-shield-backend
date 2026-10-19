@@ -1,0 +1,160 @@
+[
+  {
+    "id": 1,
+    "ordinal": 1,
+    "slug": "playgroup",
+    "canonicalName": "Playgroup",
+    "ageMinYears": 1.5,
+    "ageMaxYears": 3.0,
+    "stage": "EARLY_YEARS",
+    "notes": "Foundation/Nursery play age"
+  },
+  {
+    "id": 2,
+    "ordinal": 2,
+    "slug": "nursery",
+    "canonicalName": "Nursery",
+    "ageMinYears": 3.0,
+    "ageMaxYears": 4.0,
+    "stage": "EARLY_YEARS",
+    "notes": "Trial/Exp resolve here"
+  },
+  {
+    "id": 3,
+    "ordinal": 3,
+    "slug": "junior-kg",
+    "canonicalName": "Junior KG",
+    "ageMinYears": 4.0,
+    "ageMaxYears": 5.0,
+    "stage": "EARLY_YEARS",
+    "notes": "LKG"
+  },
+  {
+    "id": 4,
+    "ordinal": 4,
+    "slug": "senior-kg",
+    "canonicalName": "Senior KG",
+    "ageMinYears": 5.0,
+    "ageMaxYears": 6.0,
+    "stage": "EARLY_YEARS",
+    "notes": "UKG/Reception/Kindergarten"
+  },
+  {
+    "id": 5,
+    "ordinal": 5,
+    "slug": "class-1",
+    "canonicalName": "Class 1",
+    "ageMinYears": 6.0,
+    "ageMaxYears": 7.0,
+    "stage": "PRIMARY"
+  },
+  {
+    "id": 6,
+    "ordinal": 6,
+    "slug": "class-2",
+    "canonicalName": "Class 2",
+    "ageMinYears": 7.0,
+    "ageMaxYears": 8.0,
+    "stage": "PRIMARY"
+  },
+  {
+    "id": 7,
+    "ordinal": 7,
+    "slug": "class-3",
+    "canonicalName": "Class 3",
+    "ageMinYears": 8.0,
+    "ageMaxYears": 9.0,
+    "stage": "PRIMARY"
+  },
+  {
+    "id": 8,
+    "ordinal": 8,
+    "slug": "class-4",
+    "canonicalName": "Class 4",
+    "ageMinYears": 9.0,
+    "ageMaxYears": 10.0,
+    "stage": "PRIMARY"
+  },
+  {
+    "id": 9,
+    "ordinal": 9,
+    "slug": "class-5",
+    "canonicalName": "Class 5",
+    "ageMinYears": 10.0,
+    "ageMaxYears": 11.0,
+    "stage": "PRIMARY"
+  },
+  {
+    "id": 10,
+    "ordinal": 10,
+    "slug": "class-6",
+    "canonicalName": "Class 6",
+    "ageMinYears": 11.0,
+    "ageMaxYears": 12.0,
+    "stage": "LOWER_SECONDARY"
+  },
+  {
+    "id": 11,
+    "ordinal": 11,
+    "slug": "class-7",
+    "canonicalName": "Class 7",
+    "ageMinYears": 12.0,
+    "ageMaxYears": 13.0,
+    "stage": "LOWER_SECONDARY"
+  },
+  {
+    "id": 12,
+    "ordinal": 12,
+    "slug": "class-8",
+    "canonicalName": "Class 8",
+    "ageMinYears": 13.0,
+    "ageMaxYears": 14.0,
+    "stage": "LOWER_SECONDARY"
+  },
+  {
+    "id": 13,
+    "ordinal": 13,
+    "slug": "class-9",
+    "canonicalName": "Class 9",
+    "ageMinYears": 14.0,
+    "ageMaxYears": 15.0,
+    "stage": "LOWER_SECONDARY"
+  },
+  {
+    "id": 14,
+    "ordinal": 14,
+    "slug": "class-10",
+    "canonicalName": "Class 10",
+    "ageMinYears": 15.0,
+    "ageMaxYears": 16.0,
+    "stage": "LOWER_SECONDARY"
+  },
+  {
+    "id": 15,
+    "ordinal": 15,
+    "slug": "class-11",
+    "canonicalName": "Class 11",
+    "ageMinYears": 16.0,
+    "ageMaxYears": 17.0,
+    "stage": "UPPER_SECONDARY"
+  },
+  {
+    "id": 16,
+    "ordinal": 16,
+    "slug": "class-12",
+    "canonicalName": "Class 12",
+    "ageMinYears": 17.0,
+    "ageMaxYears": 18.0,
+    "stage": "UPPER_SECONDARY"
+  },
+  {
+    "id": 17,
+    "ordinal": 17,
+    "slug": "class-13",
+    "canonicalName": "Class 13",
+    "ageMinYears": 18.0,
+    "ageMaxYears": 19.0,
+    "stage": "UPPER_SECONDARY",
+    "notes": "Beyond India boards (ENG Y13)"
+  }
+]

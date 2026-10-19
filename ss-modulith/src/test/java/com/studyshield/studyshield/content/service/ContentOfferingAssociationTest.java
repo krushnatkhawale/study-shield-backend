@@ -12,18 +12,17 @@ import com.studyshield.studyshield.content.dto.QuizRequest;
 import com.studyshield.studyshield.content.dto.SubjectRequest;
 import com.studyshield.studyshield.content.entity.Board;
 import com.studyshield.studyshield.content.entity.BoardClass;
+import com.studyshield.studyshield.content.entity.BoardClassSubject;
 import com.studyshield.studyshield.content.entity.ClassLevel;
 import com.studyshield.studyshield.content.entity.ContentPack;
 import com.studyshield.studyshield.content.entity.ContentTier;
-import com.studyshield.studyshield.content.entity.Offering;
 import com.studyshield.studyshield.content.entity.Quiz;
 import com.studyshield.studyshield.content.entity.Subject;
 import com.studyshield.studyshield.content.repository.BoardClassRepository;
+import com.studyshield.studyshield.content.repository.BoardClassSubjectRepository;
 import com.studyshield.studyshield.content.repository.BoardRepository;
-import com.studyshield.studyshield.content.repository.ClassGradeRepository;
 import com.studyshield.studyshield.content.repository.ClassLevelRepository;
 import com.studyshield.studyshield.content.repository.ContentPackRepository;
-import com.studyshield.studyshield.content.repository.OfferingRepository;
 import com.studyshield.studyshield.content.repository.QuestionRepository;
 import com.studyshield.studyshield.content.repository.QuizRepository;
 import com.studyshield.studyshield.content.repository.SubjectRepository;
@@ -41,7 +40,7 @@ import static org.mockito.Mockito.when;
 /**
  * Academic-structure + offering association coverage: class-levels CRUD,
  * board-classes (+GET /board/{boardId}), offerings (+GET /board-class/{boardClassId}),
- * content-packs by offering, quizzes by offering, global subject (null classGrade).
+ * content-packs by offering, quizzes by offering, global subject (no class scope).
  */
 class ContentOfferingAssociationTest {
 
@@ -103,7 +102,7 @@ class ContentOfferingAssociationTest {
     void offeringsListByBoardClass() {
         BoardClassRepository bcRepo = mock(BoardClassRepository.class);
         SubjectRepository subjectRepo = mock(SubjectRepository.class);
-        OfferingRepository repo = mock(OfferingRepository.class);
+        BoardClassSubjectRepository repo = mock(BoardClassSubjectRepository.class);
         OfferingService service = new OfferingService(repo, bcRepo, subjectRepo);
 
         BoardClass bc = new BoardClass();
@@ -120,7 +119,7 @@ class ContentOfferingAssociationTest {
         bc.setDisplayName("CBSE Class 3");
         Subject subject = Subject.builder().name("Maths").code("MATH").build();
         subject.setId(5L);
-        Offering offering = new Offering();
+        BoardClassSubject offering = new BoardClassSubject();
         offering.setId(11L);
         offering.setBoardClass(bc);
         offering.setSubject(subject);
@@ -144,22 +143,34 @@ class ContentOfferingAssociationTest {
     @Test
     void contentPacksByOfferingPersistOfferingId() {
         ContentPackRepository packRepo = mock(ContentPackRepository.class);
-        SubjectRepository subjectRepo = mock(SubjectRepository.class);
-        OfferingRepository offeringRepo = mock(OfferingRepository.class);
-        ContentPackService service = new ContentPackService(packRepo, subjectRepo, offeringRepo);
+        BoardClassSubjectRepository offeringRepo = mock(BoardClassSubjectRepository.class);
+        ContentPackService service = new ContentPackService(packRepo, offeringRepo);
 
         Subject subject = Subject.builder().name("Maths").code("MATH").build();
         subject.setId(5L);
-        Offering offering = new Offering();
+        Board board = new Board();
+        board.setId(2L);
+        board.setCode("CBSE");
+        board.setName("CBSE");
+        ClassLevel level = new ClassLevel();
+        level.setId(3L);
+        level.setOrdinal(7);
+        BoardClass bc = new BoardClass();
+        bc.setId(9L);
+        bc.setBoard(board);
+        bc.setClassLevel(level);
+        bc.setDisplayName("CBSE Class 3");
+        BoardClassSubject offering = new BoardClassSubject();
         offering.setId(11L);
-        ContentPack pack = ContentPack.builder().name("Pack").subject(subject).offering(offering).build();
+        offering.setBoardClass(bc);
+        offering.setSubject(subject);
+        ContentPack pack = ContentPack.builder().name("Pack").offering(offering).build();
         pack.setId(21L);
-        when(subjectRepo.findById(5L)).thenReturn(Optional.of(subject));
         when(offeringRepo.findById(11L)).thenReturn(Optional.of(offering));
         when(packRepo.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(packRepo.findByOfferingId(11L)).thenReturn(List.of(pack));
 
-        var created = service.create(new ContentPackRequest("Pack", null, 5L, 11L, 1, true,
+        var created = service.create(new ContentPackRequest("Pack", null, 11L, 1, true,
                 ContentTier.FREEMIUM, null, null));
         assertThat(created.offeringId()).isEqualTo(11L);
         assertThat(service.getByOfferingId(11L)).hasSize(1);
@@ -167,29 +178,21 @@ class ContentOfferingAssociationTest {
 
         ContentPackController controller = new ContentPackController(service);
         assertThat(((List<?>) controller.getByOfferingId(11L).getBody())).hasSize(1);
-
-        // legacy path still works: null offering
-        var legacy = service.create(new ContentPackRequest("Legacy", null, 5L, null, 1, true,
-                ContentTier.FREEMIUM, null, null));
-        assertThat(legacy.offeringId()).isNull();
     }
 
     @Test
     void quizzesByOfferingPersistOfferingId() {
         QuizRepository quizRepo = mock(QuizRepository.class);
         ContentPackRepository packRepo = mock(ContentPackRepository.class);
-        OfferingRepository offeringRepo = mock(OfferingRepository.class);
-        SubjectRepository subjectRepo = mock(SubjectRepository.class);
+        BoardClassSubjectRepository offeringRepo = mock(BoardClassSubjectRepository.class);
         QuestionRepository questionRepo = mock(QuestionRepository.class);
         QuestionService questionService = new QuestionService(questionRepo, quizRepo);
-        QuizService service = new QuizService(quizRepo, packRepo, offeringRepo, subjectRepo,
+        QuizService service = new QuizService(quizRepo, packRepo, offeringRepo,
                 questionRepo, questionService);
 
-        Subject subject = Subject.builder().name("Maths").code("MATH").build();
-        subject.setId(5L);
-        ContentPack pack = ContentPack.builder().name("Pack").subject(subject).build();
+        ContentPack pack = ContentPack.builder().name("Pack").build();
         pack.setId(21L);
-        Offering offering = new Offering();
+        BoardClassSubject offering = new BoardClassSubject();
         offering.setId(11L);
         Quiz quiz = Quiz.builder().title("Q1").contentPack(pack).offering(offering).build();
         quiz.setId(31L);
@@ -213,15 +216,15 @@ class ContentOfferingAssociationTest {
     }
 
     @Test
-    void globalSubjectWithNullClassGrade() {
+    void globalSubjectCreatedWithoutClassScope() {
         SubjectRepository subjectRepo = mock(SubjectRepository.class);
-        ClassGradeRepository gradeRepo = mock(ClassGradeRepository.class);
-        SubjectService service = new SubjectService(subjectRepo, gradeRepo);
-        Subject global = Subject.builder().name("General Knowledge").code("GK").classGrade(null).build();
+        SubjectService service = new SubjectService(subjectRepo);
+        Subject global = Subject.builder().name("General Knowledge").code("GK").build();
         global.setId(77L);
         when(subjectRepo.save(any())).thenReturn(global);
+        when(subjectRepo.findByCodeIgnoreCase("GK")).thenReturn(Optional.empty());
 
-        var created = service.create(new SubjectRequest("General Knowledge", "GK", null, null, true, 0));
+        var created = service.create(new SubjectRequest("General Knowledge", "GK", null, true, 0));
         assertThat(created.name()).isEqualTo("General Knowledge");
     }
 }

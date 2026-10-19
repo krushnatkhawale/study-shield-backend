@@ -41,6 +41,12 @@ spring:
 app:
   catalog-seeding:
     enabled: false
+  # Academic structure data loop: JSON files in this repo, fetched at a pinned ref.
+  # Pin ref to a tag or commit SHA (never a branch) via env; blank = not configured.
+  academic-data:
+    source: github
+    repo: krushnatkhawale/study-shield-backend
+    ref: ${ACADEMIC_DATA_REF:}
   freemium-rebuild-on-startup: ${FREEMIUM_REBUILD_ON_STARTUP:false}
   admin-bootstrap:
     enabled: ${ADMIN_BOOTSTRAP_ENABLED:true}

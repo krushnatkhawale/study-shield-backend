@@ -14,7 +14,7 @@ public class SuiteConfig {
     public SuiteConfig() {
         this.gatewayBaseUrl = System.getenv("GATEWAY_BASE_URL") != null
                 ? System.getenv("GATEWAY_BASE_URL")
-                : "http://localhost:8080";
+                : "http://localhost:" + System.getenv().getOrDefault("SUITE_BACKEND_PORT", "8080");
         // Freemium first-issue may seed many rows on Aiven; allow longer default timeout
         this.readTimeoutMs = Long.parseLong(System.getenv().getOrDefault("SUITE_TIMEOUT_MS", "120000"));
         this.connectTimeoutMs = Long.parseLong(System.getenv().getOrDefault("SUITE_CONNECT_TIMEOUT_MS", "15000"));

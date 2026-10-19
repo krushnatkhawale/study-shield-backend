@@ -1,0 +1,650 @@
+[
+  {
+    "id": 1,
+    "boardCode": "ALL",
+    "classOrdinal": 2,
+    "displayName": "Nursery"
+  },
+  {
+    "id": 2,
+    "boardCode": "ALL",
+    "classOrdinal": 3,
+    "displayName": "Junior KG"
+  },
+  {
+    "id": 3,
+    "boardCode": "ALL",
+    "classOrdinal": 4,
+    "displayName": "Senior KG"
+  },
+  {
+    "id": 4,
+    "boardCode": "ALL",
+    "classOrdinal": 5,
+    "displayName": "Class 1"
+  },
+  {
+    "id": 5,
+    "boardCode": "ALL",
+    "classOrdinal": 6,
+    "displayName": "Class 2"
+  },
+  {
+    "id": 6,
+    "boardCode": "ALL",
+    "classOrdinal": 7,
+    "displayName": "Class 3"
+  },
+  {
+    "id": 7,
+    "boardCode": "ALL",
+    "classOrdinal": 8,
+    "displayName": "Class 4"
+  },
+  {
+    "id": 8,
+    "boardCode": "ALL",
+    "classOrdinal": 9,
+    "displayName": "Class 5"
+  },
+  {
+    "id": 9,
+    "boardCode": "ALL",
+    "classOrdinal": 10,
+    "displayName": "Class 6"
+  },
+  {
+    "id": 10,
+    "boardCode": "ALL",
+    "classOrdinal": 11,
+    "displayName": "Class 7"
+  },
+  {
+    "id": 11,
+    "boardCode": "ALL",
+    "classOrdinal": 12,
+    "displayName": "Class 8"
+  },
+  {
+    "id": 12,
+    "boardCode": "ALL",
+    "classOrdinal": 13,
+    "displayName": "Class 9"
+  },
+  {
+    "id": 13,
+    "boardCode": "ALL",
+    "classOrdinal": 14,
+    "displayName": "Class 10"
+  },
+  {
+    "id": 14,
+    "boardCode": "ALL",
+    "classOrdinal": 15,
+    "displayName": "Class 11"
+  },
+  {
+    "id": 15,
+    "boardCode": "ALL",
+    "classOrdinal": 16,
+    "displayName": "Class 12"
+  },
+  {
+    "id": 16,
+    "boardCode": "CBSE",
+    "classOrdinal": 1,
+    "displayName": "Playgroup"
+  },
+  {
+    "id": 17,
+    "boardCode": "CBSE",
+    "classOrdinal": 2,
+    "displayName": "Nursery"
+  },
+  {
+    "id": 18,
+    "boardCode": "CBSE",
+    "classOrdinal": 3,
+    "displayName": "Junior KG"
+  },
+  {
+    "id": 19,
+    "boardCode": "CBSE",
+    "classOrdinal": 4,
+    "displayName": "Senior KG"
+  },
+  {
+    "id": 20,
+    "boardCode": "CBSE",
+    "classOrdinal": 5,
+    "displayName": "Class 1"
+  },
+  {
+    "id": 21,
+    "boardCode": "CBSE",
+    "classOrdinal": 6,
+    "displayName": "Class 2"
+  },
+  {
+    "id": 22,
+    "boardCode": "CBSE",
+    "classOrdinal": 7,
+    "displayName": "Class 3"
+  },
+  {
+    "id": 23,
+    "boardCode": "CBSE",
+    "classOrdinal": 8,
+    "displayName": "Class 4"
+  },
+  {
+    "id": 24,
+    "boardCode": "CBSE",
+    "classOrdinal": 9,
+    "displayName": "Class 5"
+  },
+  {
+    "id": 25,
+    "boardCode": "CBSE",
+    "classOrdinal": 10,
+    "displayName": "Class 6"
+  },
+  {
+    "id": 26,
+    "boardCode": "CBSE",
+    "classOrdinal": 11,
+    "displayName": "Class 7"
+  },
+  {
+    "id": 27,
+    "boardCode": "CBSE",
+    "classOrdinal": 12,
+    "displayName": "Class 8"
+  },
+  {
+    "id": 28,
+    "boardCode": "CBSE",
+    "classOrdinal": 13,
+    "displayName": "Class 9"
+  },
+  {
+    "id": 29,
+    "boardCode": "CBSE",
+    "classOrdinal": 14,
+    "displayName": "Class 10"
+  },
+  {
+    "id": 30,
+    "boardCode": "CBSE",
+    "classOrdinal": 15,
+    "displayName": "Class 11"
+  },
+  {
+    "id": 31,
+    "boardCode": "CBSE",
+    "classOrdinal": 16,
+    "displayName": "Class 12"
+  },
+  {
+    "id": 32,
+    "boardCode": "MH",
+    "classOrdinal": 1,
+    "displayName": "Playgroup"
+  },
+  {
+    "id": 33,
+    "boardCode": "MH",
+    "classOrdinal": 2,
+    "displayName": "Nursery"
+  },
+  {
+    "id": 34,
+    "boardCode": "MH",
+    "classOrdinal": 3,
+    "displayName": "Junior KG"
+  },
+  {
+    "id": 35,
+    "boardCode": "MH",
+    "classOrdinal": 4,
+    "displayName": "Senior KG"
+  },
+  {
+    "id": 36,
+    "boardCode": "MH",
+    "classOrdinal": 5,
+    "displayName": "Class 1"
+  },
+  {
+    "id": 37,
+    "boardCode": "MH",
+    "classOrdinal": 6,
+    "displayName": "Class 2"
+  },
+  {
+    "id": 38,
+    "boardCode": "MH",
+    "classOrdinal": 7,
+    "displayName": "Class 3"
+  },
+  {
+    "id": 39,
+    "boardCode": "MH",
+    "classOrdinal": 8,
+    "displayName": "Class 4"
+  },
+  {
+    "id": 40,
+    "boardCode": "MH",
+    "classOrdinal": 9,
+    "displayName": "Class 5"
+  },
+  {
+    "id": 41,
+    "boardCode": "MH",
+    "classOrdinal": 10,
+    "displayName": "Class 6"
+  },
+  {
+    "id": 42,
+    "boardCode": "MH",
+    "classOrdinal": 11,
+    "displayName": "Class 7"
+  },
+  {
+    "id": 43,
+    "boardCode": "MH",
+    "classOrdinal": 12,
+    "displayName": "Class 8"
+  },
+  {
+    "id": 44,
+    "boardCode": "MH",
+    "classOrdinal": 13,
+    "displayName": "Class 9"
+  },
+  {
+    "id": 45,
+    "boardCode": "MH",
+    "classOrdinal": 14,
+    "displayName": "Class 10"
+  },
+  {
+    "id": 46,
+    "boardCode": "MH",
+    "classOrdinal": 15,
+    "displayName": "Class 11"
+  },
+  {
+    "id": 47,
+    "boardCode": "MH",
+    "classOrdinal": 16,
+    "displayName": "Class 12"
+  },
+  {
+    "id": 48,
+    "boardCode": "ICSE",
+    "classOrdinal": 1,
+    "displayName": "Playgroup"
+  },
+  {
+    "id": 49,
+    "boardCode": "ICSE",
+    "classOrdinal": 2,
+    "displayName": "Nursery"
+  },
+  {
+    "id": 50,
+    "boardCode": "ICSE",
+    "classOrdinal": 3,
+    "displayName": "Junior KG"
+  },
+  {
+    "id": 51,
+    "boardCode": "ICSE",
+    "classOrdinal": 4,
+    "displayName": "Senior KG"
+  },
+  {
+    "id": 52,
+    "boardCode": "ICSE",
+    "classOrdinal": 5,
+    "displayName": "Class 1"
+  },
+  {
+    "id": 53,
+    "boardCode": "ICSE",
+    "classOrdinal": 6,
+    "displayName": "Class 2"
+  },
+  {
+    "id": 54,
+    "boardCode": "ICSE",
+    "classOrdinal": 7,
+    "displayName": "Class 3"
+  },
+  {
+    "id": 55,
+    "boardCode": "ICSE",
+    "classOrdinal": 8,
+    "displayName": "Class 4"
+  },
+  {
+    "id": 56,
+    "boardCode": "ICSE",
+    "classOrdinal": 9,
+    "displayName": "Class 5"
+  },
+  {
+    "id": 57,
+    "boardCode": "ICSE",
+    "classOrdinal": 10,
+    "displayName": "Class 6"
+  },
+  {
+    "id": 58,
+    "boardCode": "ICSE",
+    "classOrdinal": 11,
+    "displayName": "Class 7"
+  },
+  {
+    "id": 59,
+    "boardCode": "ICSE",
+    "classOrdinal": 12,
+    "displayName": "Class 8"
+  },
+  {
+    "id": 60,
+    "boardCode": "ICSE",
+    "classOrdinal": 13,
+    "displayName": "Class 9"
+  },
+  {
+    "id": 61,
+    "boardCode": "ICSE",
+    "classOrdinal": 14,
+    "displayName": "Class 10"
+  },
+  {
+    "id": 62,
+    "boardCode": "ICSE",
+    "classOrdinal": 15,
+    "displayName": "Class 11"
+  },
+  {
+    "id": 63,
+    "boardCode": "ICSE",
+    "classOrdinal": 16,
+    "displayName": "Class 12"
+  },
+  {
+    "id": 64,
+    "boardCode": "ENG",
+    "classOrdinal": 2,
+    "displayName": "Nursery"
+  },
+  {
+    "id": 65,
+    "boardCode": "ENG",
+    "classOrdinal": 3,
+    "displayName": "Nursery"
+  },
+  {
+    "id": 66,
+    "boardCode": "ENG",
+    "classOrdinal": 4,
+    "displayName": "Reception"
+  },
+  {
+    "id": 67,
+    "boardCode": "ENG",
+    "classOrdinal": 5,
+    "displayName": "Year 1"
+  },
+  {
+    "id": 68,
+    "boardCode": "ENG",
+    "classOrdinal": 6,
+    "displayName": "Year 2"
+  },
+  {
+    "id": 69,
+    "boardCode": "ENG",
+    "classOrdinal": 7,
+    "displayName": "Year 3"
+  },
+  {
+    "id": 70,
+    "boardCode": "ENG",
+    "classOrdinal": 8,
+    "displayName": "Year 4"
+  },
+  {
+    "id": 71,
+    "boardCode": "ENG",
+    "classOrdinal": 9,
+    "displayName": "Year 5"
+  },
+  {
+    "id": 72,
+    "boardCode": "ENG",
+    "classOrdinal": 10,
+    "displayName": "Year 6"
+  },
+  {
+    "id": 73,
+    "boardCode": "ENG",
+    "classOrdinal": 11,
+    "displayName": "Year 7"
+  },
+  {
+    "id": 74,
+    "boardCode": "ENG",
+    "classOrdinal": 12,
+    "displayName": "Year 8"
+  },
+  {
+    "id": 75,
+    "boardCode": "ENG",
+    "classOrdinal": 13,
+    "displayName": "Year 9"
+  },
+  {
+    "id": 76,
+    "boardCode": "ENG",
+    "classOrdinal": 14,
+    "displayName": "Year 10"
+  },
+  {
+    "id": 77,
+    "boardCode": "ENG",
+    "classOrdinal": 15,
+    "displayName": "Year 11"
+  },
+  {
+    "id": 78,
+    "boardCode": "ENG",
+    "classOrdinal": 16,
+    "displayName": "Year 12"
+  },
+  {
+    "id": 79,
+    "boardCode": "US",
+    "classOrdinal": 2,
+    "displayName": "Preschool"
+  },
+  {
+    "id": 80,
+    "boardCode": "US",
+    "classOrdinal": 3,
+    "displayName": "Preschool"
+  },
+  {
+    "id": 81,
+    "boardCode": "US",
+    "classOrdinal": 4,
+    "displayName": "Kindergarten"
+  },
+  {
+    "id": 82,
+    "boardCode": "US",
+    "classOrdinal": 5,
+    "displayName": "Grade 1"
+  },
+  {
+    "id": 83,
+    "boardCode": "US",
+    "classOrdinal": 6,
+    "displayName": "Grade 2"
+  },
+  {
+    "id": 84,
+    "boardCode": "US",
+    "classOrdinal": 7,
+    "displayName": "Grade 3"
+  },
+  {
+    "id": 85,
+    "boardCode": "US",
+    "classOrdinal": 8,
+    "displayName": "Grade 4"
+  },
+  {
+    "id": 86,
+    "boardCode": "US",
+    "classOrdinal": 9,
+    "displayName": "Grade 5"
+  },
+  {
+    "id": 87,
+    "boardCode": "US",
+    "classOrdinal": 10,
+    "displayName": "Grade 6"
+  },
+  {
+    "id": 88,
+    "boardCode": "US",
+    "classOrdinal": 11,
+    "displayName": "Grade 7"
+  },
+  {
+    "id": 89,
+    "boardCode": "US",
+    "classOrdinal": 12,
+    "displayName": "Grade 8"
+  },
+  {
+    "id": 90,
+    "boardCode": "US",
+    "classOrdinal": 13,
+    "displayName": "Grade 9"
+  },
+  {
+    "id": 91,
+    "boardCode": "US",
+    "classOrdinal": 14,
+    "displayName": "Grade 10"
+  },
+  {
+    "id": 92,
+    "boardCode": "US",
+    "classOrdinal": 15,
+    "displayName": "Grade 11"
+  },
+  {
+    "id": 93,
+    "boardCode": "US",
+    "classOrdinal": 16,
+    "displayName": "Grade 12"
+  },
+  {
+    "id": 94,
+    "boardCode": "IB",
+    "classOrdinal": 2,
+    "displayName": "PYP (Class -2)"
+  },
+  {
+    "id": 95,
+    "boardCode": "IB",
+    "classOrdinal": 3,
+    "displayName": "PYP (Class -1)"
+  },
+  {
+    "id": 96,
+    "boardCode": "IB",
+    "classOrdinal": 4,
+    "displayName": "PYP (Class 0)"
+  },
+  {
+    "id": 97,
+    "boardCode": "IB",
+    "classOrdinal": 5,
+    "displayName": "PYP (Class 1)"
+  },
+  {
+    "id": 98,
+    "boardCode": "IB",
+    "classOrdinal": 6,
+    "displayName": "PYP (Class 2)"
+  },
+  {
+    "id": 99,
+    "boardCode": "IB",
+    "classOrdinal": 7,
+    "displayName": "PYP (Class 3)"
+  },
+  {
+    "id": 100,
+    "boardCode": "IB",
+    "classOrdinal": 8,
+    "displayName": "PYP (Class 4)"
+  },
+  {
+    "id": 101,
+    "boardCode": "IB",
+    "classOrdinal": 9,
+    "displayName": "MYP (Class 5)"
+  },
+  {
+    "id": 102,
+    "boardCode": "IB",
+    "classOrdinal": 10,
+    "displayName": "MYP (Class 6)"
+  },
+  {
+    "id": 103,
+    "boardCode": "IB",
+    "classOrdinal": 11,
+    "displayName": "MYP (Class 7)"
+  },
+  {
+    "id": 104,
+    "boardCode": "IB",
+    "classOrdinal": 12,
+    "displayName": "MYP (Class 8)"
+  },
+  {
+    "id": 105,
+    "boardCode": "IB",
+    "classOrdinal": 13,
+    "displayName": "MYP (Class 9)"
+  },
+  {
+    "id": 106,
+    "boardCode": "IB",
+    "classOrdinal": 14,
+    "displayName": "DP (Class 10)"
+  },
+  {
+    "id": 107,
+    "boardCode": "IB",
+    "classOrdinal": 15,
+    "displayName": "DP (Class 11)"
+  },
+  {
+    "id": 108,
+    "boardCode": "IB",
+    "classOrdinal": 16,
+    "displayName": "DP (Class 12)"
+  }
+]

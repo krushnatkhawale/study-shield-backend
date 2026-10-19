@@ -9,6 +9,7 @@ Feature: API Contract Validation
     And the response body should be a JSON array
 
   Scenario: User list response has expected structure
+    When I am authenticated as an admin user
     When I GET "/api/v1/users"
     Then the response status should be 200
     And the response body should be a JSON array

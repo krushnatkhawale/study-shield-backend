@@ -130,7 +130,8 @@ class GuestDataMigrationControllerTest {
         mockMvc.perform(post("/api/students")
                         .header("Authorization", "Bearer " + guestToken)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json(new StudentRequest("Aarav", "M", 2019, "Nursery"))))
+                        .content(json(new StudentRequest("Aarav", "M", 2019, "Nursery",
+                                null, null, null, null))))
                 .andExpect(status().isCreated());
 
         // Signing up auto-creates a default "Kid 1" child.

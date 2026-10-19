@@ -31,4 +31,11 @@ public class AuthApi {
     public Response signOut() {
         return client.post("/api/auth/signout", "{}");
     }
+
+    public Response adminSignIn(String loginId, String password) {
+        String json = String.format(
+                "{\"loginId\": \"%s\", \"password\": \"%s\"}",
+                loginId, password);
+        return client.post("/api/auth/admin-signin", json);
+    }
 }
