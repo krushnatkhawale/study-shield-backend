@@ -19,7 +19,12 @@ spring:
 
 app:
   academic-structure-seeding:
+    # AcademicStructureBootSeeder: loads the matrix from classpath:academic-structure
+    # through the real load service. Regression/CI bootstrap only — production has
+    # no seeder; structure arrives via POST /api/v1/academic-structure/load.
     enabled: true
+  academic-data:
+    source: classpath
   catalog-seeding:
     enabled: false
   admin-bootstrap:

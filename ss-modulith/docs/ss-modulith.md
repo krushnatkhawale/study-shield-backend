@@ -21,9 +21,9 @@ Single deployable Spring Boot application containing all business modules. Repla
 
 ### content/ (Content Module)
 - **Entities**: ClassLevel, Country, Board, BoardClass, BoardClassSubject (offering), Subject (global), ContentPack, Quiz, Question, QuizBundle
-- **Controllers**: ClassLevelController, BoardController, BoardClassController, OfferingController, SubjectController, ContentPackController, QuizController, QuestionController, QuizBundleController
-- **API Paths**: `/api/v1/class-levels/**`, `/api/v1/boards/**`, `/api/v1/board-classes/**`, `/api/v1/offerings/**`, `/api/v1/subjects/**`, `/api/v1/content-packs/**`, `/api/v1/quizzes/**`, `/api/v1/questions/**`, `/api/v1/quiz-bundles/**`
-- **Seeding**: `AcademicStructureSeeder` (@Order 1, gated `app.academic-structure-seeding.enabled`) builds the global matrix; `AcademicCatalogResolver` resolves display text → ordinals → offerings; `CatalogStartupSeeder` + `QuestionBankContent` fill freemium content.
+- **Controllers**: ClassLevelController, BoardController, BoardClassController, OfferingController, SubjectController, ContentPackController, QuizController, QuestionController, QuizBundleController, AcademicStructureController (ADMIN-only load/export/purge/status loop)
+- **API Paths**: `/api/v1/class-levels/**`, `/api/v1/boards/**`, `/api/v1/board-classes/**`, `/api/v1/offerings/**`, `/api/v1/subjects/**`, `/api/v1/content-packs/**`, `/api/v1/quizzes/**`, `/api/v1/questions/**`, `/api/v1/quiz-bundles/**`, `/api/v1/academic-structure/**`
+- **Seeding**: GitHub JSON at a pinned ref is the source of truth (`/api/v1/academic-structure/load`, see `ACADEMIC_STRUCTURE.md`); `AcademicStructureBootSeeder` (@Order 1, gated `app.academic-structure-seeding.enabled`, default false — regression/CI only) builds the same matrix from classpath fixtures; `AcademicCatalogResolver` resolves display text → ordinals → offerings; `CatalogStartupSeeder` + `QuestionBankContent` fill freemium content.
 - **Dependencies**: None (standalone module)
 
 ### user/ (User Module)
@@ -103,7 +103,7 @@ Flyway was removed (commit `30c6fed`). Schema is managed by:
 Content is anchored to **offerings** (`board_class_subject` = board + class ordinal + global subject), never to display names. The `class_levels` ordinal is the single source of truth for age banding; board labels are presentation.
 
 - **Full reference**: see [`ACADEMIC_STRUCTURE.md`](ACADEMIC_STRUCTURE.md) — the matrix, seed coverage, and how to add a board.
-- New boards = insert `boards` + `board_class` rows (ordinals 1–16 cover). `AcademicStructureSeeder` ships ALL, CBSE, MH, ICSE, ENG, US, IB from code; gated by `app.academic-structure-seeding.enabled` (default true).
+- New boards = insert `boards` + `board_class` rows (ordinals 1–16 cover). ALL, CBSE, MH, ICSE, ENG, US, IB ship in the canonical GitHub/classpath JSON; load them via `POST /api/v1/academic-structure/load/all` (prod) or the regression-only `AcademicStructureBootSeeder` (gated by `app.academic-structure-seeding.enabled`, default false).
 
 ## Question Bank
 - **Full process & rules**: see [`QUESTION_BANK_GUIDE.md`](QUESTION_BANK_GUIDE.md) — structure, authorship rules, difficulty ramp, and how to author/load content for new subjects or grades.

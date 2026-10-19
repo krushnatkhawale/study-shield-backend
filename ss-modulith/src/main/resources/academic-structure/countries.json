@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "iso2": "IN",
+    "name": "India"
+  },
+  {
+    "id": 2,
+    "iso2": "GB",
+    "name": "United Kingdom"
+  },
+  {
+    "id": 3,
+    "iso2": "US",
+    "name": "United States"
+  }
+]

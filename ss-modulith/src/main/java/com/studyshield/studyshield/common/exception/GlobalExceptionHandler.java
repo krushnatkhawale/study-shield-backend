@@ -78,6 +78,17 @@ public class GlobalExceptionHandler {
                 "message", "Not found"));
     }
 
+    @ExceptionHandler(com.studyshield.studyshield.content.academicstructure.AcademicStructureConflictException.class)
+    public ResponseEntity<java.util.Map<String, Object>> handleAcademicStructureConflict(
+            com.studyshield.studyshield.content.academicstructure.AcademicStructureConflictException ex) {
+        log.warn("Academic-structure conflict: {}", ex.getMessage());
+        java.util.Map<String, Object> body = new java.util.LinkedHashMap<>(ex.getPayload());
+        body.putIfAbsent("status", "conflict");
+        body.putIfAbsent("message", ex.getMessage());
+        body.put("timestamp", LocalDateTime.now().toString());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneral(Exception ex) {
         log.error("Unexpected error", ex);

@@ -6,7 +6,10 @@
 
 ## Spine: `class_levels`
 
-A single global ordinal spine (the *age band*), defined in `AcademicStructureSeeder`:
+A single global ordinal spine (the *age band*), defined by the canonical load file
+`src/main/resources/academic-structure/class-levels.json` (regression/CI bootstrap
+via `AcademicStructureBootSeeder`; production loads the same files through the
+data loop below):
 
 | ordinal | age (years) | canonical name | stage |
 |--------:|------------:|----------------|-------|
@@ -31,11 +34,15 @@ A single global ordinal spine (the *age band*), defined in `AcademicStructureSee
 **Same ordinal = same age band**, nothing more. India "Class n" ↔ ordinal `n+4`;
 ENG "Year n" ↔ ordinal `n+4`; US "Grade n" ↔ ordinal `n+4`.
 
-## Boards seeded at boot
+## Boards in the matrix
 
-`AcademicStructureSeeder` runs once per boot (`@Order(1)`, gated by
-`app.academic-structure-seeding.enabled`, default true). It is idempotent — rows are
-created only when missing.
+Seven boards ship in the canonical files (ALL, CBSE, MH, ICSE, ENG, US, IB).
+Regression/CI databases get them at boot from `AcademicStructureBootSeeder`
+(`@Order(1)`, gated `app.academic-structure-seeding.enabled`, **default false** —
+only `application-regression.yml` enables it). Production databases get them
+through the load endpoint (`POST /api/v1/academic-structure/load/all`), never
+from a seeder. The seeder and the load path are idempotent-by-guard: rows are
+created only into empty tables.
 
 | board | country | min/max ordinal | labels |
 |-------|---------|-----------------|--------|
@@ -114,6 +121,31 @@ Content then arrives through the normal pipeline: `POST /api/v1/questions/load` 
 `boardCode: "TN"` (or manual `content_pack`/`quiz`/`question` writes against the offering),
 and a bundle request for `boardCode: "TN"` serves it. Restart finishes the job by aligning
 `boards.min_ordinal/max_ordinal` with the matrix (only widened, never narrowed).
+
+## Data loop: load / export / purge (`/api/v1/academic-structure/**`, ADMIN only)
+
+GitHub JSON at a **pinned ref** is the single source of truth
+(`app.academic-data`: `source: github`, `repo`, `ref: ${ACADEMIC_DATA_REF:}`;
+`main`/`master` are rejected as refs so deploys stay reproducible). Regression
+profiles switch to `source: classpath` (`academic-structure/*.json`).
+
+| Method | Path | Behaviour |
+|--------|------|-----------|
+| POST | `/load/{entity?}?dryRun` | Initialize-only: refuses (409) if any target table has rows; loads the file array or an uploaded JSON body; parent FKs validated, never stub-created. |
+| GET | `/export/{entity?}` | Same schema as load, sorted by id — download, commit by hand (`?publish` dropped from v1). Empty tables → 409. |
+| DELETE | `/{entity}?confirm=true` | Row purge only. Single-entity refuses (409, naming blocking tables) while children reference the target; `all` walks the content chain first, then structure in reverse FK order. |
+| GET | `/status` | Source description, repo, pinned ref, per-entity row counts. |
+
+Load inserts **explicit ids from the file** (native SQL — Hibernate IDENTITY
+generation rejects explicit ids on both persist and merge) and then bumps each
+identity sequence past the max id, so `load(export(x))` round-trips exactly and
+history FK targets stay stable. Each entity is one transaction; a mid-sequence
+failure leaves resumable state (rerun fills only the still-empty tables).
+
+The guided operator flow lives in the admin UI
+(`study-shield-backend-admin` → Operations → **Academic restore**):
+status → export/download backup → human commits JSON + re-pins the ref →
+confirm-purge → load (pinned ref or uploaded file) → count report.
 
 ## className resolution order (`AcademicCatalogResolver`)
 

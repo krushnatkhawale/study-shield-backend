@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "name": "All Boards",
+    "code": "ALL",
+    "description": "Generic / board-agnostic common-core content",
+    "minOrdinal": 2,
+    "maxOrdinal": 16,
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "CBSE",
+    "code": "CBSE",
+    "description": "Central Board of Secondary Education (India)",
+    "minOrdinal": 1,
+    "maxOrdinal": 16,
+    "active": true,
+    "countryIso2": "IN"
+  },
+  {
+    "id": 3,
+    "name": "Maharashtra",
+    "code": "MH",
+    "description": "Maharashtra State Board (India)",
+    "minOrdinal": 1,
+    "maxOrdinal": 16,
+    "active": true,
+    "countryIso2": "IN"
+  },
+  {
+    "id": 4,
+    "name": "ICSE",
+    "code": "ICSE",
+    "description": "CISCE (India)",
+    "minOrdinal": 1,
+    "maxOrdinal": 16,
+    "active": true,
+    "countryIso2": "IN"
+  },
+  {
+    "id": 5,
+    "name": "England",
+    "code": "ENG",
+    "description": "National Curriculum (England)",
+    "minOrdinal": 2,
+    "maxOrdinal": 16,
+    "active": true,
+    "countryIso2": "GB"
+  },
+  {
+    "id": 6,
+    "name": "USA",
+    "code": "US",
+    "description": "Common Core (United States)",
+    "minOrdinal": 2,
+    "maxOrdinal": 16,
+    "active": true,
+    "countryIso2": "US"
+  },
+  {
+    "id": 7,
+    "name": "IB",
+    "code": "IB",
+    "description": "International Baccalaureate (global)",
+    "minOrdinal": 2,
+    "maxOrdinal": 16,
+    "active": true
+  }
+]

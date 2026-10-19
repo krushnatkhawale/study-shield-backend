@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "code": "MATH",
+    "name": "Math",
+    "description": "Arithmetic / numeracy",
+    "active": true,
+    "displayOrder": 1
+  },
+  {
+    "id": 2,
+    "code": "ENG",
+    "name": "English",
+    "description": "English language",
+    "active": true,
+    "displayOrder": 2
+  },
+  {
+    "id": 3,
+    "code": "EVS",
+    "name": "EVS",
+    "description": "Environmental Studies",
+    "active": true,
+    "displayOrder": 3
+  },
+  {
+    "id": 4,
+    "code": "SCI",
+    "name": "Science",
+    "description": "General Science",
+    "active": true,
+    "displayOrder": 4
+  },
+  {
+    "id": 5,
+    "code": "SST",
+    "name": "Social Studies",
+    "description": "History / Geography / Civics",
+    "active": true,
+    "displayOrder": 5
+  },
+  {
+    "id": 6,
+    "code": "HI",
+    "name": "Hindi",
+    "description": "Hindi language",
+    "active": true,
+    "displayOrder": 6
+  },
+  {
+    "id": 7,
+    "code": "OTHER",
+    "name": "Other",
+    "description": "Any other subject",
+    "active": true,
+    "displayOrder": 7
+  }
+]
