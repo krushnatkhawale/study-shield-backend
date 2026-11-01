@@ -129,6 +129,45 @@ public class AcademicCatalogResolver {
     }
 
     /**
+     * Read-only twin of {@link #resolveBoardClass}: the same display-name, ALL-board and
+     * heuristic lookups, but it never creates a board, class level or board class. Returns
+     * empty when the academic structure does not carry the class yet — the caller decides
+     * whether to schedule a background seed instead of writing inside a request.
+     */
+    @Transactional(readOnly = true)
+    public Optional<BoardClass> findBoardClass(String boardCode, String className) {
+        String code = normalizeBoardCode(boardCode);
+        String name = className == null ? "" : className.trim();
+
+        Optional<BoardClass> byBoard = findBoardClassByDisplayName(code, name);
+        if (byBoard.isPresent()) {
+            return byBoard;
+        }
+        if (!GENERIC_BOARD_CODE.equals(code)) {
+            Optional<BoardClass> byAll = findBoardClassByDisplayName(GENERIC_BOARD_CODE, name);
+            if (byAll.isPresent()) {
+                return byAll;
+            }
+        }
+        int ordinal = ordinalForClassName(name);
+        if (ordinal < 0) {
+            return Optional.empty();
+        }
+        for (String candidate : List.of(code, GENERIC_BOARD_CODE)) {
+            Optional<Board> board = boardRepository.findByCode(candidate);
+            if (board.isEmpty()) {
+                continue;
+            }
+            Optional<BoardClass> boardClass = boardClassRepository
+                    .findByBoard_IdAndClassLevel_Ordinal(board.get().getId(), ordinal);
+            if (boardClass.isPresent()) {
+                return boardClass;
+            }
+        }
+        return Optional.empty();
+    }
+
+    /**
      * Resolve the board-local class label ({@link BoardClass}) for a request's className.
      * Tries the board's own labels, then the ALL board's labels, then the heuristic.
      */
@@ -178,6 +217,9 @@ public class AcademicCatalogResolver {
         String lower = t.toLowerCase(Locale.ROOT);
         if (lower.isBlank()) return -1;
         if (containsWord(lower, "playgroup") || lower.startsWith("play group")) return 1;
+        // PreNursery sits on the foundation level (ordinal 1), not the Nursery class.
+        if (lower.startsWith("prenursery") || lower.startsWith("pre nursery")
+                || lower.startsWith("pre-nursery")) return 1;
         if (containsWord(lower, "nursery") || lower.equals("trial") || lower.equals("exp")
                 || lower.equals("experimental") || lower.equals("promo")) return 2;
         if (containsWord(lower, "lkg") || containsWord(lower, "junior")) return 3;

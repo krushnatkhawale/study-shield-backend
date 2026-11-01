@@ -4,7 +4,7 @@ Feature: Quiz bundle download (content API)
   I want quiz bundles via the gateway
   So that after a kid is added I can cache quizzes offline
 
-  Scenario: Issue quiz bundle seeds catalog and returns quizzes with questions
+  Scenario: Issue quiz bundle reads the pre-seeded catalog and returns quizzes with questions
     When I request a quiz bundle for class "1" with device id "smoke-device"
     Then the response status should be 200
     And the response body should be a JSON object

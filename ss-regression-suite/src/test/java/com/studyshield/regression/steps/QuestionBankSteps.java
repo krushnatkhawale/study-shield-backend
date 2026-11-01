@@ -30,7 +30,8 @@ public class QuestionBankSteps {
 
     @Given("the question bank is seeded")
     public void theQuestionBankIsSeeded() {
-        // Seeding happens lazily on first bundle request per class (QuizBundleSeeder).
+        // CatalogStartupSeeder pre-seeds every curated band at startup; the bundle
+        // request itself only reads (TD-1).
     }
 
     @When("I request a quiz bundle for a child aged {int} with device id {string}")

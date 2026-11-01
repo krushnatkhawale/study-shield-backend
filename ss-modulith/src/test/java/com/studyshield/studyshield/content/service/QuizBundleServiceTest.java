@@ -5,12 +5,15 @@ import com.studyshield.studyshield.content.dto.QuizBundleResponse;
 import com.studyshield.studyshield.content.dto.QuestionResponse;
 import com.studyshield.studyshield.content.entity.*;
 import com.studyshield.studyshield.content.repository.*;
+import com.studyshield.studyshield.content.seed.CatalogMissSeeder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +39,11 @@ class QuizBundleServiceTest {
     private QuizRepository quizRepository;
     private QuestionRepository questionRepository;
     private QuestionService questionService;
+    private CatalogMissSeeder catalogMissSeeder;
     private QuizBundleService service;
+
+    private final AtomicInteger seedCalls = new AtomicInteger();
+    private final List<Runnable> queuedSeeds = new ArrayList<>();
 
     private static final BoardClass BOARD_CLASS = boardClass(5L, 7);
     private static final BoardClassSubject MATH_OFFERING = offering(900L, "Math");
@@ -66,18 +73,24 @@ class QuizBundleServiceTest {
                 catalogResolver, contentPackRepository, quizRepository, questionRepository) {
             @Override
             public BoardClass ensureCatalogForClass(String className, String boardCode) {
+                seedCalls.incrementAndGet();
                 return BOARD_CLASS;
             }
         };
-        service = new QuizBundleService(quizBundleRepository, catalogSeeder, catalogResolver,
-                classLevelRepository, contentPackRepository, quizRepository, questionRepository,
-                questionService);
+        // Queue seeds without running them so the request path stays side-effect free in tests.
+        catalogMissSeeder = new CatalogMissSeeder(catalogSeeder, queuedSeeds::add, true);
+        service = new QuizBundleService(quizBundleRepository, catalogSeeder, catalogMissSeeder,
+                catalogResolver, classLevelRepository, contentPackRepository, quizRepository,
+                questionRepository, questionService);
 
         // No existing bundle for this holder; offerings resolve to the two preset ones.
         when(quizBundleRepository.findByIdempotencyKey(any())).thenReturn(Optional.empty());
         when(quizBundleRepository.saveAndFlush(any())).thenAnswer(inv -> inv.getArgument(0));
         when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
                 .thenReturn(List.of(MATH_OFFERING, EVS_OFFERING));
+        // The request path resolves the class read-only, never creating catalog rows.
+        when(boardClassRepository.findByBoardBoardCodeAndDisplayNameEnumerable(anyString(), anyString()))
+                .thenReturn(List.of(BOARD_CLASS));
     }
 
     @Test
@@ -141,6 +154,41 @@ class QuizBundleServiceTest {
                         service.issue(new QuizBundleRequest(
                                 "Class 7", null, null, null, null, "dev-1", null, false)))
                 .isInstanceOf(com.studyshield.studyshield.common.exception.InsufficientStockException.class);
+    }
+
+    @Test
+    void issuingABundleNeverSeedsTheCatalogInTheRequestPath() {
+        ContentPack mathPack = contentPack("Freemium Math", 100L);
+        when(contentPackRepository.findByOfferingId(MATH_OFFERING.getId())).thenReturn(List.of(mathPack));
+        Quiz mathQuiz = quiz("Math · Quiz 1", 200L, mathPack);
+        when(quizRepository.findByContentPackIdAndContentTierAndActiveTrueOrderByFreemiumIndexAsc(
+                100L, ContentTier.FREEMIUM)).thenReturn(List.of(mathQuiz));
+        when(questionRepository.findByQuizIdAndBlacklistedFalse(any())).thenReturn(
+                List.of(question(), question(), question()));
+        when(quizRepository.findById(200L)).thenReturn(Optional.of(mathQuiz));
+
+        service.issue(new QuizBundleRequest(
+                "Class 7", null, null, null, null, "dev-1", null, false));
+
+        assertThat(seedCalls).as("ensureCatalogForClass must not run in a request").hasValue(0);
+        assertThat(queuedSeeds).isEmpty();
+    }
+
+    @Test
+    void aMissQueuesOneBackgroundSeedForRepeatedRequestsAndFailsFast() {
+        when(boardClassSubjectRepository.findByBoardCodeAndOrdinal("ALL", 7))
+                .thenReturn(List.of(MATH_OFFERING));
+        when(contentPackRepository.findByOfferingId(MATH_OFFERING.getId())).thenReturn(Collections.emptyList());
+
+        for (int i = 0; i < 2; i++) {
+            org.assertj.core.api.Assertions.assertThatThrownBy(() ->
+                            service.issue(new QuizBundleRequest(
+                                    "Class 7", null, null, null, null, "dev-1", null, false)))
+                    .isInstanceOf(com.studyshield.studyshield.common.exception.InsufficientStockException.class);
+        }
+
+        assertThat(seedCalls).as("seeding runs on the catalog thread, not in the request").hasValue(0);
+        assertThat(queuedSeeds).as("concurrent misses share one queued seed").hasSize(1);
     }
 
     @Test

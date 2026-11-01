@@ -102,6 +102,16 @@ public class QuizBundleSeeder {
         return list != null && !list.isEmpty();
     }
 
+    /**
+     * True when the curated bank can fill a class — i.e. background seeding on a bundle
+     * miss can help. Classes outside the bank (Class 11/12, unknown labels) return false
+     * so a miss is a fast, final answer instead of an endless re-seed loop.
+     */
+    public static boolean hasCuratedBank(String className) {
+        String band = QuestionBankContent.bandForClassName(className);
+        return band != null && !QuestionBankContent.BANK.getOrDefault(band, Map.of()).isEmpty();
+    }
+
     private void ensureQuizBundleForOffering(BoardClassSubject offering, String band) {
         Subject subject = offering.getSubject();
         ContentPack existing = pickActiveDeliveryPack(

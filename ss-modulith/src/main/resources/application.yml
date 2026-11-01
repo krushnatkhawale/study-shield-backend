@@ -40,7 +40,12 @@ spring:
 
 app:
   catalog-seeding:
-    enabled: false
+    # Pre-seed the freemium catalog at startup so POST /api/v1/quiz-bundles only reads.
+    # Set CATALOG_SEEDING_ENABLED=false to skip (e.g. when ops pre-loads catalogs).
+    enabled: ${CATALOG_SEEDING_ENABLED:true}
+    # A request for a curated class missing after boot queues a background seed and
+    # fails fast instead of writing rows inside the request transaction.
+    async-on-miss: ${CATALOG_SEEDING_ASYNC_ON_MISS:true}
   # Academic structure data loop: JSON files in this repo, fetched at a pinned ref.
   # Pin ref to a tag or commit SHA (never a branch) via env; blank = not configured.
   academic-data:

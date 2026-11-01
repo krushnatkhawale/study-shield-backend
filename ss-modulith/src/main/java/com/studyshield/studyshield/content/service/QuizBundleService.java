@@ -5,6 +5,7 @@ import com.studyshield.studyshield.content.dto.QuizBundleRequest;
 import com.studyshield.studyshield.content.dto.QuizBundleResponse;
 import com.studyshield.studyshield.content.dto.QuestionResponse;
 import com.studyshield.studyshield.content.dto.QuizResponse;
+import com.studyshield.studyshield.content.seed.CatalogMissSeeder;
 import com.studyshield.studyshield.content.seed.QuestionBankContent;
 import com.studyshield.studyshield.content.entity.*;
 import com.studyshield.studyshield.common.exception.InsufficientStockException;
@@ -31,6 +32,7 @@ public class QuizBundleService {
 
     private final QuizBundleRepository quizBundleRepository;
     private final QuizBundleSeeder catalogSeeder;
+    private final CatalogMissSeeder catalogMissSeeder;
     private final AcademicCatalogResolver catalogResolver;
     private final ClassLevelRepository classLevelRepository;
     private final ContentPackRepository contentPackRepository;
@@ -41,6 +43,7 @@ public class QuizBundleService {
     public QuizBundleService(
             QuizBundleRepository quizBundleRepository,
             QuizBundleSeeder catalogSeeder,
+            CatalogMissSeeder catalogMissSeeder,
             AcademicCatalogResolver catalogResolver,
             ClassLevelRepository classLevelRepository,
             ContentPackRepository contentPackRepository,
@@ -50,6 +53,7 @@ public class QuizBundleService {
     ) {
         this.quizBundleRepository = quizBundleRepository;
         this.catalogSeeder = catalogSeeder;
+        this.catalogMissSeeder = catalogMissSeeder;
         this.catalogResolver = catalogResolver;
         this.classLevelRepository = classLevelRepository;
         this.contentPackRepository = contentPackRepository;
@@ -65,7 +69,10 @@ public class QuizBundleService {
         String boardCode = blankToDefault(request.boardCode(), "all");
         boolean allowPartial = Boolean.TRUE.equals(request.allowPartial());
 
-        BoardClass boardClass = catalogSeeder.ensureCatalogForClass(className, boardCode);
+        // TD-1: the request path only reads the catalog. A miss queues a background seed
+        // and fails fast; the next request is served from the pre-seeded catalog.
+        BoardClass boardClass = catalogResolver.findBoardClass(boardCode, className)
+                .orElseThrow(() -> catalogMiss(className, boardCode));
         List<BoardClassSubject> offerings = catalogResolver.resolveOfferings(
                 boardCode, boardClass.getClassLevel().getOrdinal());
         if (offerings.isEmpty()) {
@@ -80,7 +87,7 @@ public class QuizBundleService {
         return quizBundleRepository.findByIdempotencyKey(idempotencyKey)
                 .map(this::toResponse)
                 .orElseGet(() -> createBundle(
-                        request, boardClass, offerings, offeringIds,
+                        request, className, boardClass, offerings, offeringIds,
                         language, boardCode, idempotencyKey, allowPartial));
     }
 
@@ -98,6 +105,7 @@ public class QuizBundleService {
 
     private QuizBundleResponse createBundle(
             QuizBundleRequest request,
+            String className,
             BoardClass boardClass,
             List<BoardClassSubject> offerings,
             List<Long> offeringIds,
@@ -136,7 +144,7 @@ public class QuizBundleService {
         }
 
         if (quizIds.isEmpty()) {
-            throw new InsufficientStockException("No freemium quizzes available", 0, 1);
+            throw catalogMiss(className, boardCode);
         }
 
         QuizBundle issued = new QuizBundle();
@@ -159,6 +167,20 @@ public class QuizBundleService {
                     .map(this::toResponse)
                     .orElseThrow(() -> e);
         }
+    }
+
+    /**
+     * A bundle miss: queue a background seed when the curated bank can fill this class,
+     * then fail fast. Seeding never runs in the caller's transaction (TD-1), so the
+     * client is not held on the request while rows are written.
+     */
+    private InsufficientStockException catalogMiss(String className, String boardCode) {
+        if (QuizBundleSeeder.hasCuratedBank(className)) {
+            catalogMissSeeder.seedAsync(className, boardCode);
+            return new InsufficientStockException(
+                    "Catalog for class " + className + " is being prepared; retry shortly", 0, 1);
+        }
+        return new InsufficientStockException("No freemium quizzes available", 0, 1);
     }
 
     private QuizBundleResponse toResponse(QuizBundle bundle) {

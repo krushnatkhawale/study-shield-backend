@@ -26,7 +26,10 @@ app:
   academic-data:
     source: classpath
   catalog-seeding:
-    enabled: false
+    # Pre-seed the curated bands after AcademicStructureBootSeeder (order 1) loads the
+    # matrix, so bundle scenarios exercise the read-only request path, not lazy seeding.
+    enabled: true
+    async-on-miss: true
   admin-bootstrap:
     enabled: true
     email: admin@tests.local
